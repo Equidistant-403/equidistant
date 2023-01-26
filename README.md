@@ -33,3 +33,7 @@ to get your MSW worker going (1 time execution)
 ### Backend
 
 Relevant files can be found in `./backend`
+
+### Reports
+
+Weekly progress reports can be found in `./reports`
