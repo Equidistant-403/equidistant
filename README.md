@@ -31,5 +31,7 @@ to get your MSW worker going (1 time execution)
 `npx msw init public/ --save`
 
 ### Backend
-
 Relevant files can be found in `./backend`
+
+### Reports
+Weekly progress reports can be found in `./reports`
