@@ -176,7 +176,7 @@ Error Response:
 
 ### Respond to Friend Request
 
-POST /friend/repspond
+POST /friend/respond
 
 Params:
 ```json
