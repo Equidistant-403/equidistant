@@ -13,14 +13,14 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "typescript": "^4.9.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --fix --ext .ts,.tsx ./src"
   },
   "eslintConfig": {
     "extends": [
@@ -41,7 +41,15 @@
     ]
   },
   "devDependencies": {
-    "msw": "^0.49.3"
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "eslint": "^8.33.0",
+    "eslint-config-standard-with-typescript": "^33.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.32.2",
+    "msw": "^0.49.3",
+    "typescript": "^4.9.5"
   },
   "msw": {
     "workerDirectory": "public"
