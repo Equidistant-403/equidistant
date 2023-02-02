@@ -45,6 +45,10 @@ Success Response:
 ```json
 {
   "bearer": "[token string]",
+  "user": {
+            "email": "[string]",
+            "address": "[string]"
+          },
   "friends": [<user_1>, <user_2>, <user_n>],
   "friend_requests": [<user_1>, <user_2>, <user_n>]
 }
@@ -98,6 +102,40 @@ Error Response:
 }
 ```
 
+### Get Self Profile
+
+GET /user
+
+Params:
+
+```json
+{
+  "email": "[string]"
+}
+```
+
+Header:
+- Authorization Bearer
+
+Success Response:
+- Code: 200
+- Content:
+```json
+{
+  "email": "[string]",
+  "address": "[string]"
+}
+```
+
+Error Response:
+- Code: 401
+- Content:
+```json
+{
+  "error": "access forbidden"
+}
+```
+
 ## POST Requests
 
 ### Create Account
@@ -119,7 +157,8 @@ Success Response:
 - Content:
 ```json
 {
-  
+  "email": "[string]",
+  "address": "[string]"
 }
 ```
 
@@ -129,13 +168,13 @@ Error Response:
 
 ```json
 {
-  "error": "cannot make account with provided parameters"
+  "error": "Cannot make account with provided parameters"
 }
 ```
 
 ### Send Friend Request
 
-POST /friend/send
+POST /sendFriendReq
 
 Params:
 
@@ -176,7 +215,7 @@ Error Response:
 
 ### Respond to Friend Request
 
-POST /friend/respond
+POST /respondFriendReq
 
 Params:
 ```json

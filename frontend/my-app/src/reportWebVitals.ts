@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import { type ReportHandler } from 'web-vitals'
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const reportWebVitals = (onPerfEntry?: ReportHandler) => {
   if ((onPerfEntry != null) && onPerfEntry instanceof Function) {
     import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
