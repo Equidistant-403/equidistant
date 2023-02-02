@@ -30,6 +30,14 @@ to rebuild your dependencies
 to get your MSW worker going (1 time execution)
 `npx msw init public/ --save`
 
+to run the formatter and receive information on errors in the terminal
+`npm run lint`
+
+to run the formatter and automatically fix all errors, add
+`--fix`
+to the lint command in `package.json` so it looks like
+`eslint --fix --ext .ts,.tsx ./src`
+
 ### Backend
 Relevant files can be found in `./backend`
 
