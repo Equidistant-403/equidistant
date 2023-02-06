@@ -19,6 +19,11 @@ afterAll(() => {
   server.close()
 })
 
+test('test test', () => {
+  render(<App />)
+  console.log('this test ran')
+})
+
 test('renders learn react link', () => {
   render(<App />)
   const linkElement = screen.getByText(/learn react/i)
