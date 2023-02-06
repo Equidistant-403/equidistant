@@ -15,6 +15,9 @@ Params:
 ```
 Note that "users" should include the user requesting the search.
 
+Header:
+- Authorization Bearer
+
 Success Response:
 - Code: 200
 - Content:
@@ -141,7 +144,8 @@ Params:
 
 ```json
 {
-  "email": "[string]"
+  "requester_email": "[string]",
+  "receiver_email": "[string]"
 }
 ```
 
@@ -181,7 +185,8 @@ POST /friend/respond
 Params:
 ```json
 {
-  "email": "[string]",
+  "requester_email": "[string]",
+  "receiever_email": "[string]",
   "response": boolean
 }
 ```
