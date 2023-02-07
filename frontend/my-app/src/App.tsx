@@ -1,9 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import logo from './logo.svg'
 import './App.css'
+import type { EquidistantRequest } from './requestObjects'
+import { LoginRequest } from './requestObjects'
+import type { LoginResponse } from './responseTypes'
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-function App () {
+async function makeRequest (request: EquidistantRequest): Promise<LoginResponse> {
+  const response = await fetch(request.path, request)
+  const json = await response.json()
+  return json
+}
+
+function App (): React.ReactElement {
+  useEffect(() => {
+    makeRequest(new LoginRequest('user', 'password'))
+      .then(res => {
+        console.log(res.listOfFriends)
+      })
+      .catch((e) => { console.error(e) })
+  }, [])
   return (
     <div className="App">
       <header className="App-header">
