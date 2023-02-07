@@ -1,2 +1,2 @@
-def test_something(self):
+def test_something():
     assert (True and True) == (True or True)
