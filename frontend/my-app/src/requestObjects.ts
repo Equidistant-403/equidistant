@@ -89,22 +89,22 @@ class UserRequest extends BearerRequest {
 
 // Friend request
 class SendFriendRequest extends BearerRequest {
-  constructor (email: string, friendEmail: string, bearer: string) {
+  constructor (requesterEmail: string, receiverEmail: string, bearer: string) {
     super(HttpMethods.POST, '/sendFriendReq', bearer)
     this.path = super.addParams(new URLSearchParams({
-      email: email,
-      friendEmail: friendEmail
+      requesterEmail: requesterEmail,
+      receiverEmail: receiverEmail
     }))
   }
 }
 
 // Friend request response
 class FriendRequestResponse extends BearerRequest {
-  constructor (email: string, requestEmail: string, bearer: string) {
+  constructor (receiverEmail: string, requesterEmail: string, bearer: string) {
     super(HttpMethods.POST, '/respondFriendReq', bearer)
     this.path = super.addParams(new URLSearchParams({
-      email: email,
-      requestEmail: requestEmail
+      receiverEmail: receiverEmail,
+      requesterEmail: requesterEmail
     }))
   }
 }
