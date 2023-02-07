@@ -13,19 +13,15 @@ export const handlers: RestHandler[] = [
       ctx.json({
         locations: [
           {
-            id: 1,
+            place: [1, 1],
             name: 'CSE1',
-            rating: '4 stars',
-            address: 'Paul Allen Center, 185 E Stevens Way NE AE100R, Seattle, WA 98195',
-            linkToDirections: 'www.directions.com',
+            rating: 4,
             travelTimes: [12, 20, 8, 15, 16]
           },
           {
-            id: 2,
+            place: [2, 2],
             name: 'CSE2',
-            rating: '5 stars',
-            address: 'Bill & Melinda Gates Center For Computer Science & Engineering, 3800 E Stevens Way NE, Seattle, WA 98195',
-            linkToDirections: 'www.directions.com',
+            rating: 5,
             travelTimes: [12, 20, 8, 15, 16]
           }
         ]
@@ -50,13 +46,11 @@ export const handlers: RestHandler[] = [
           },
           listOfFriends: [
             {
-              id: 1,
-              name: 'Joe',
+              email: 'Joe@gmail.com',
               address: 'Paul Allen Center, 185 E Stevens Way NE AE100R, Seattle, WA 98195'
             },
             {
-              id: 2,
-              name: 'Nelson',
+              email: 'Nelson@gmail.com',
               address: 'Bill & Melinda Gates Center For Computer Science & Engineering, 3800 E Stevens Way NE, Seattle, WA 98195'
             }
           ],
@@ -92,12 +86,12 @@ export const handlers: RestHandler[] = [
           listOfFriends: [
             {
               id: 1,
-              name: 'Joe',
+              email: 'Joe@gmail.com',
               address: 'Paul Allen Center, 185 E Stevens Way NE AE100R, Seattle, WA 98195'
             },
             {
               id: 2,
-              name: 'Nelson',
+              name: 'Nelson@gmail.com',
               address: 'Bill & Melinda Gates Center For Computer Science & Engineering, 3800 E Stevens Way NE, Seattle, WA 98195'
             }
           ],
@@ -176,11 +170,11 @@ export const handlers: RestHandler[] = [
   }),
 
   rest.post('/sendFriendReq', (req, res, ctx) => {
-    const email = req.url.searchParams.get('email')
-    const friendEmail = req.url.searchParams.get('friendEmail')
+    const requesterEmail = req.url.searchParams.get('requesterEmail')
+    const receiverEmail = req.url.searchParams.get('receiverEmail')
     // TODO - remove console.log
-    console.log(email)
-    console.log(friendEmail)
+    console.log(requesterEmail)
+    console.log(receiverEmail)
 
     // TODO - right now this if there is any header called 'auth' the request will go through
     const auth = req.headers.has('auth')
@@ -203,12 +197,12 @@ export const handlers: RestHandler[] = [
   }),
 
   rest.post('/respondFriendReq', (req, res, ctx) => {
-    const email = req.url.searchParams.get('email')
-    const friendEmail = req.url.searchParams.get('friendEmail')
+    const requesterEmail = req.url.searchParams.get('requesterEmail')
+    const receiverEmail = req.url.searchParams.get('receiverEmail')
     const resp = req.url.searchParams.get('response')
     // TODO - remove console.log
-    console.log(email)
-    console.log(friendEmail)
+    console.log(requesterEmail)
+    console.log(receiverEmail)
     console.log(resp)
 
     // TODO - right now this if there is any header called 'auth' the request will go through
@@ -219,14 +213,14 @@ export const handlers: RestHandler[] = [
         return res(
           ctx.status(200),
           ctx.json({
-            message: 'Friend request accepted'
+            response: true
           })
         )
       } else {
         return res(
           ctx.status(200),
           ctx.json({
-            message: 'Friend request denied'
+            message: false
           })
         )
       }
