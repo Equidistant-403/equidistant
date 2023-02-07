@@ -27,7 +27,7 @@ to start the app
 to rebuild your dependencies 
 `npm rebuild`
 
-to get your MSW worker going (1 time execution)
+to get your MSW worker going for local development (1 time execution)
 `npx msw init public/ --save`
 
 to run the formatter and receive information on errors in the terminal
@@ -37,6 +37,9 @@ to run the formatter and automatically fix all errors, add
 `--fix`
 to the lint command in `package.json` so it looks like
 `eslint --fix --ext .ts,.tsx ./src`
+
+to run the suite of all unit and integration tests
+`npm test`
 
 ### Backend
 Relevant files can be found in `./backend`
