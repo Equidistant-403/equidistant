@@ -6,26 +6,24 @@ interface LoginResponse {
   bearer: string
   user: User
   listOfFriends: User[]
-  friendRequests: User[]
+  listOfRequests: User[]
 }
 
 interface FriendsResponse {
-  friends: User[]
-  friend_requests: User[]
+  listOfFriends: User[]
+  listOfRequests: User[]
 }
 
 interface ProfileResponse {
-  email: string
-  address: string
+  user: User
 }
 
 interface CreateAccountResponse {
-  email: string
-  address: string
+  user: User
 }
 
 interface SendRequestResponse {
-
+  message: string
 }
 
 interface RespondFriendResponse {
@@ -33,7 +31,7 @@ interface RespondFriendResponse {
 }
 
 interface ErrorResponse {
-  error: string
+  errorMessage: string
 }
 
 interface Location {
