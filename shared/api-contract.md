@@ -183,8 +183,8 @@ Params:
 
 ```json
 {
-  "requester_email": "[string]",
-  "receiver_email": "[string]"
+  "requesterEmail": "[string]",
+  "receiverEmail": "[string]"
 }
 ```
 
@@ -224,8 +224,8 @@ POST /respondFriendReq
 Params:
 ```json
 {
-  "requester_email": "[string]",
-  "receiever_email": "[string]",
+  "requesterEmail": "[string]",
+  "receiverEmail": "[string]",
   "response": boolean
 }
 ```
