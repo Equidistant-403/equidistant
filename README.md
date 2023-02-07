@@ -21,26 +21,26 @@ Equidistant is an app to help you and your group get over the decision fatigue o
 
 Guide to some basic commands. all should be run from the `./frontend/my-app` directory
 
-# to start the app
+#### to start the app
 `npm start`
 
-# to rebuild your dependencies 
+#### to rebuild your dependencies 
 `npm rebuild`
 
-# to get your MSW worker going for local development (1 time execution)
+#### to get your MSW worker going for local development (1 time execution)
 `npx msw init public/ --save`
 
-# to run the formatter and receive information on errors in the terminal
+#### to run the formatter and receive information on errors in the terminal
 `npm run lint`
 
-# to run the formatter and automatically fix all errors, add
+#### to run the formatter and automatically fix all errors, add
 `--fix` to the lint command in `package.json` so it looks like
 `eslint --fix --ext .ts,.tsx ./src`
 
-# to run the suite of all unit and integration tests
+#### to run the suite of all unit and integration tests
 `npm test`
 
-# to run a specific test suite
+#### to run a specific test suite
 `npm test <filename>`
 
 ### Backend
