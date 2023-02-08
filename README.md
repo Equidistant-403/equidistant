@@ -48,3 +48,6 @@ Relevant files can be found in `./backend`
 
 ### Reports
 Weekly progress reports can be found in `./reports`
+
+### Shared
+Any documents / files relevant to both frontend and backend teams can be found in `./reports`
