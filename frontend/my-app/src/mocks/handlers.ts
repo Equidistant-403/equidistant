@@ -1,7 +1,7 @@
 import { rest } from 'msw'
-import type { RequestHandler } from 'msw'
+import type { RestHandler } from 'msw'
 
-export const handlers: RequestHandler[] = [
+export const handlers: RestHandler[] = [
 
   rest.get('/locations', (req, res, ctx) => {
     const users = req.url.searchParams.getAll('users')
