@@ -2,14 +2,39 @@ import React, { useState } from 'react'
 import './LoginPage.css'
 import { useNavigate } from 'react-router-dom'
 
+import { makeRequest } from '../requests'
+import { LoginRequest } from '../requestObjects'
+import type { LoginResponse } from '../responseTypes'
+import { isError } from '../responseTypes'
+
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
   const handleLogin = (): void => {
+    makeRequest(new LoginRequest(email, password))
+      .then((res) => {
+        if (isError(res)) {
+          // TODO: Display the error message
+          console.log(res)
+          return
+        }
+
+        const response = (res as LoginResponse)
+        console.log(response)
+        navigate('/landing', {
+          state: {
+            user: response.user,
+            friends: response.listOfFriends,
+            requests: response.listOfRequests
+          }
+        })
+      })
+      .catch((e) => {
+        console.error(e)
+      })
     console.log('dummy login authentication')
-    navigate('/landing')
   }
 
   return (
