@@ -34,17 +34,35 @@ interface ErrorResponse {
   errorMessage: string
 }
 
-interface Location {
+class Location {
   place: [number, number]
   name: string
   rating: number
   travelTimes: number[]
+
+  constructor(place: [number, number], name: string, rating: number, travelTimes: number[]) {
+    this.place = place
+    this.name = name
+    this.rating = rating
+    this.travelTimes = travelTimes
+  }
 }
 
-interface User {
-  id: number
+class User {
   name: string
   address: string
+
+  constructor (name: string, address: string) {
+    this.name = name
+    this.address = address
+  }
 }
 
-export type { Location, User, LoginResponse, LocationResponse }
+type EquidistantResponse = LocationResponse | LoginResponse | FriendsResponse |
+                           ProfileResponse | CreateAccountResponse | SendRequestResponse |
+                           RespondFriendResponse | ErrorResponse
+
+export { User, Location }
+export type { EquidistantResponse, LocationResponse, LoginResponse,
+              FriendsResponse, ProfileResponse, CreateAccountResponse,
+              SendRequestResponse, RespondFriendResponse, ErrorResponse }

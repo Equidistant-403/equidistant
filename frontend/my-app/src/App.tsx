@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react'
-import logo from './logo.svg'
 import './App.css'
 import type { EquidistantRequest } from './requestObjects'
 import { LoginRequest } from './requestObjects'
 import type { LoginResponse } from './responseTypes'
+import { Route, Routes } from 'react-router-dom'
+import LoginPage from './Pages/LoginPage'
+import LandingPage from './Pages/LandingPage'
+import Results from './Pages/Results'
+import Account from './Pages/Account'
 
 async function makeRequest (request: EquidistantRequest): Promise<LoginResponse> {
   const response = await fetch(request.path, request)
@@ -20,22 +24,12 @@ function App (): React.ReactElement {
       .catch((e) => { console.error(e) })
   }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<LoginPage/>} />
+      <Route path="/landing" element={<LandingPage/>} />
+      <Route path="/results" element={<Results/>} />
+      <Route path="/account" element={<Account/>} />
+    </Routes>
   )
 }
 
