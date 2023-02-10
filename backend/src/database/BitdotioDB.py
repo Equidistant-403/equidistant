@@ -24,6 +24,7 @@ class BitdotioDB(Database):
             arr = cursor.fetchall()
         except psycopg2.ProgrammingError:  # nothing to fetch
             arr = ()
+        conn.commit()
         cursor.close()
         conn.close()
         return arr
