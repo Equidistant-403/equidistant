@@ -29,6 +29,8 @@ CREATE TABLE Users(email text NOT NULL PRIMARY KEY,
 Stores friend relations between users.
 
 ```sql
-CREATE TABLE Friends(user1 text NOT NULL FOREIGN KEY REFERENCES Users(email),
-                     user2 text NOT NULL FOREIGN KEY REFERENCES Users(email))
+CREATE TABLE Friends(user1 text NOT NULL,
+                     user2 text NOT NULL,
+                     CONSTRAINT u1 FOREIGN KEY (user1) REFERENCES users(email),
+                     CONSTRAINT u2 FOREIGN KEY (user2) REFERENCES users(email))
 ```
