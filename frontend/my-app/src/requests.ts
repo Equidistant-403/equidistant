@@ -7,4 +7,6 @@ async function makeRequest (request: EquidistantRequest): Promise<EquidistantRes
   return json
 }
 
+// TODO: If we don't add anything else update file name to makeRequest and make this:
+// export default async function makeRequest
 export { makeRequest }
