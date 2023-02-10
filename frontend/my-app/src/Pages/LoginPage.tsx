@@ -17,11 +17,13 @@ const LoginPage: React.FC = () => {
       .then((res) => {
         if (isError(res)) {
           // TODO: Display the error message
+          // TODO: Remove console.log
           console.log(res)
           return
         }
 
         const response = (res as LoginResponse)
+        // TODO: Remove console.log
         console.log(response)
         navigate('/landing', {
           state: {
@@ -34,6 +36,7 @@ const LoginPage: React.FC = () => {
       .catch((e) => {
         console.error(e)
       })
+    // TODO: Remove console.log
     console.log('dummy login authentication')
   }
 
