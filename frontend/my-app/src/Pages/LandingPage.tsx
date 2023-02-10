@@ -5,7 +5,6 @@ import type { User } from '../responseTypes'
 
 const LandingPage: React.FC = () => {
   const location = useLocation()
-  console.log(location.state.friends)
 
   const navigate = useNavigate()
   const [friends, setFriends] = useState<User[]>(location.state.friends)
