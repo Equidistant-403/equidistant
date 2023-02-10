@@ -40,7 +40,7 @@ class Location {
   rating: number
   travelTimes: number[]
 
-  constructor(place: [number, number], name: string, rating: number, travelTimes: number[]) {
+  constructor (place: [number, number], name: string, rating: number, travelTimes: number[]) {
     this.place = place
     this.name = name
     this.rating = rating
@@ -49,19 +49,28 @@ class Location {
 }
 
 class User {
-  name: string
+  email: string
   address: string
+  checked: boolean
 
-  constructor (name: string, address: string) {
-    this.name = name
+  constructor (email: string, address: string, checked: boolean) {
+    this.email = email
     this.address = address
+    this.checked = checked
   }
 }
 
-type EquidistantResponse = LocationResponse | LoginResponse | FriendsResponse |
-                           ProfileResponse | CreateAccountResponse | SendRequestResponse |
-                           RespondFriendResponse | ErrorResponse
+function isError (object: any): object is ErrorResponse {
+  return 'errorMessage' in object
+}
 
-export type { EquidistantResponse, LocationResponse, LoginResponse, FriendsResponse, ProfileResponse,
-              CreateAccountResponse, SendRequestResponse, RespondFriendResponse, ErrorResponse }
+type EquidistantResponse = LocationResponse | LoginResponse | FriendsResponse |
+ProfileResponse | CreateAccountResponse | SendRequestResponse |
+RespondFriendResponse | ErrorResponse
+
+export type {
+  EquidistantResponse, LocationResponse, LoginResponse, FriendsResponse, ProfileResponse,
+  CreateAccountResponse, SendRequestResponse, RespondFriendResponse, ErrorResponse
+}
 export { Location, User }
+export { isError }

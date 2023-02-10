@@ -1,31 +1,30 @@
 import React, { useState } from 'react'
 import './LandingPage.css'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import type { User } from '../responseTypes'
 
 const LandingPage: React.FC = () => {
+  const location = useLocation()
+
   const navigate = useNavigate()
-  const [friends, setFriends] = useState([
-    { id: 1, name: 'John Doe', checked: false },
-    { id: 2, name: 'Jane Doe', checked: false },
-    { id: 3, name: 'Jim Smith', checked: false }
-  ])
+  const [friends, setFriends] = useState<User[]>(location.state.friends)
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [checkedFriends, setCheckedFriends] = useState<number[]>([]) // holds checked friends list
+  const [checkedFriends, setCheckedFriends] = useState<string[]>([]) // holds checked friends list
 
-  const toggleCheckbox = (id: number): void => {
+  const toggleCheckbox = (email: string): void => {
     setFriends((prevFriends) => prevFriends.map((friend) => {
-      if (friend.id === id) {
+      if (friend.email === email) {
         return { ...friend, checked: !friend.checked }
       }
       return friend
     }))
 
     setCheckedFriends((prevCheckedFriends) => {
-      if (prevCheckedFriends.includes(id)) {
-        return prevCheckedFriends.filter((f) => f !== id)
+      if (prevCheckedFriends.includes(email)) {
+        return prevCheckedFriends.filter((f) => f !== email)
       } else {
-        return [...prevCheckedFriends, id]
+        return [...prevCheckedFriends, email]
       }
     })
   }
@@ -53,9 +52,9 @@ const LandingPage: React.FC = () => {
       </div>
       <ul className="friends-list">
         {friends.map((friend) => (
-          <li key={friend.id}>
-            <input type="checkbox" checked={friend.checked} onChange={() => { toggleCheckbox(friend.id) }} />
-            <span>{friend.name}</span>
+          <li key={friend.email}>
+            <input type="checkbox" checked={friend.checked} onChange={() => { toggleCheckbox(friend.email) }} />
+            <span>{friend.email}</span>
           </li>
         ))}
       </ul>
