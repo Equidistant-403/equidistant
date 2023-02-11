@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import './Account.css'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Account: React.FC = () => {
+  const location = useLocation()
   const navigate = useNavigate()
-  const [email, setEmail] = useState('')
-  const [location, setLocation] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordConfirm, setPasswordConfirm] = useState('')
+
+  const [email, setEmail] = useState<string>(location.state.email)
+  const [userLocation, setLocation] = useState<string>(location.state.location)
+  const [password, setPassword] = useState<string>('')
+  const [passwordConfirm, setPasswordConfirm] = useState<string>('')
 
   const handleDeleteAccount = (): void => {
     console.log('Delete Account dummy function')
@@ -64,14 +66,14 @@ const Account: React.FC = () => {
             <input
                 className="location"
                 type="location"
-                value={location}
+                value={userLocation}
                 onChange={e => { setLocation(e.target.value) }}
                 placeholder="Location"
             />
             <button className="update-location" onClick={handleUpdateLocation}>
             Update
             </button>
-            <div className="password-title">Password</div>
+            <div className="password-title">Update Password</div>
             <input
                 type="password"
                 className="password"

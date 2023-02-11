@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import App from './App'
 import { setupServer } from 'msw/node'
 import { handlers } from './mocks/handlers'
@@ -26,5 +26,6 @@ test('test test', () => {
       <App />
     </Router>
   )
+  // TODO: remove console.log
   console.log('this test ran')
 })

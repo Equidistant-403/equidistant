@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Results.css'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import type { Location } from '../responseTypes'
 
 const Results: React.FC = () => {
+  const location = useLocation()
   const navigate = useNavigate()
 
+  const results = location.state.locations
+  const [index, setIndex] = useState<number>(0)
+  const [result, setResult] = useState<Location>(results[0])
+
   const handleNextClick = (): void => {
-    console.log('dummy next result actuation')
+    setResult(results[index + 1])
+    setIndex(index + 1)
   }
 
   const handleDoneClick = (): void => {
@@ -17,6 +24,9 @@ const Results: React.FC = () => {
   return (
         <div className="container">
         <h1>Results</h1>
+        <div className="location">
+          <p>Current location: {result.name}</p>
+        </div>
         <div className="buttons">
             <button onClick={handleNextClick}>Next</button>
             <button onClick={handleDoneClick} className="right">Done</button>

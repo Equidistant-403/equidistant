@@ -29,7 +29,8 @@ const LoginPage: React.FC = () => {
           state: {
             user: response.user,
             friends: response.listOfFriends,
-            requests: response.listOfRequests
+            requests: response.listOfRequests,
+            bearer: response.bearer
           }
         })
       })
