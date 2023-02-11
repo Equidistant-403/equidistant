@@ -34,7 +34,7 @@ const LandingPage: React.FC = () => {
     const users: User[] = friends.filter((friend, index) => checkedFriends[index])
     return users
   }
-  
+
   const handleGenerateClick = (): void => {
     makeRequest(new LocationRequest([user.email, ...getCheckedFriends()], bearer))
       .then((res) => {
