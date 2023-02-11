@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import './LoginPage.css'
 import { useNavigate } from 'react-router-dom'
-
-import { makeRequest } from '../requests'
+import makeRequest from '../makeRequest'
 import { LoginRequest } from '../requestObjects'
 import type { LoginResponse } from '../responseTypes'
 import { isError } from '../responseTypes'
