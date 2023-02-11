@@ -21,7 +21,7 @@ const Account: React.FC = () => {
 
   const handleBack = (): void => {
     console.log('Back dummy function')
-    navigate('/landing')
+    navigate(-1)
   }
 
   const handleUpdateEmail = (): void => {
