@@ -4,10 +4,6 @@ import type { RequestHandler } from 'msw'
 export const handlers: RequestHandler[] = [
 
   rest.get('/locations', (req, res, ctx) => {
-    const users = req.url.searchParams.getAll('users')
-    // TODO - remove console.log
-    console.log(users)
-
     return res(
       ctx.status(200),
       ctx.json({
@@ -32,9 +28,6 @@ export const handlers: RequestHandler[] = [
   rest.get('/login', (req, res, ctx) => {
     const email = req.url.searchParams.get('email')
     const password = req.url.searchParams.get('password')
-    // TODO - remove console.log
-    console.log(email)
-    console.log(password)
 
     if (password === 'password') {
       return res(
@@ -72,10 +65,6 @@ export const handlers: RequestHandler[] = [
   }),
 
   rest.get('/friends', (req, res, ctx) => {
-    const email = req.url.searchParams.get('email')
-    // TODO - remove console.log
-    console.log(email)
-
     // TODO - right now this if there is any header called 'auth' the request will go through
     const auth = req.headers.has('auth')
 
@@ -114,8 +103,6 @@ export const handlers: RequestHandler[] = [
 
   rest.get('/user', (req, res, ctx) => {
     const email = req.url.searchParams.get('email')
-    // TODO - remove console.log
-    console.log(email)
 
     // TODO - right now this if there is any header called 'auth' the request will go through
     const auth = req.headers.has('auth')
@@ -144,10 +131,6 @@ export const handlers: RequestHandler[] = [
     const email = req.url.searchParams.get('email')
     const password = req.url.searchParams.get('password')
     const address = req.url.searchParams.get('address')
-    // TODO - remove console.log
-    console.log(email)
-    console.log(password)
-    console.log(address)
 
     if (email === null || password === null || address === null) {
       return res(
@@ -170,12 +153,6 @@ export const handlers: RequestHandler[] = [
   }),
 
   rest.post('/sendFriendReq', (req, res, ctx) => {
-    const requesterEmail = req.url.searchParams.get('requesterEmail')
-    const receiverEmail = req.url.searchParams.get('receiverEmail')
-    // TODO - remove console.log
-    console.log(requesterEmail)
-    console.log(receiverEmail)
-
     // TODO - right now this if there is any header called 'auth' the request will go through
     const auth = req.headers.has('auth')
 
@@ -197,13 +174,7 @@ export const handlers: RequestHandler[] = [
   }),
 
   rest.post('/respondFriendReq', (req, res, ctx) => {
-    const requesterEmail = req.url.searchParams.get('requesterEmail')
-    const receiverEmail = req.url.searchParams.get('receiverEmail')
     const resp = req.url.searchParams.get('response')
-    // TODO - remove console.log
-    console.log(requesterEmail)
-    console.log(receiverEmail)
-    console.log(resp)
 
     // TODO - right now this if there is any header called 'auth' the request will go through
     const auth = req.headers.has('auth')
