@@ -120,8 +120,8 @@ const LandingPage: React.FC = () => {
                     }
                   }}
                   key={index}
+                  onClick={handleFriendMenu}
                 >
-                  <div onClick={handleFriendMenu}></div>
                   <Typography variant="h5" component="h2">
                     {user.email[0]}
                   </Typography>
@@ -145,8 +145,8 @@ const LandingPage: React.FC = () => {
                     opacity: [0.8, 0.8, 0.8]
                   }
                 }}
+                onClick={handlAccountClick}
               >
-                <div onClick={handlAccountClick}></div>
               </IconButton>
             </Toolbar>
           </AppBar>
@@ -201,8 +201,8 @@ const LandingPage: React.FC = () => {
                         }
                       }}
                       key={index}
+                      onClick={handleFriendMenu}
                     >
-                      <div onClick={handleFriendMenu}></div>
                       <Typography variant="h5" component="h2">
                         {friend.email[0]}
                       </Typography>
