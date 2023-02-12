@@ -45,6 +45,26 @@ export const handlers: RequestHandler[] = [
             {
               email: 'Nelson@gmail.com',
               address: 'Bill & Melinda Gates Center For Computer Science & Engineering, 3800 E Stevens Way NE, Seattle, WA 98195'
+            },
+            {
+              email: 'Alex@gmail.com',
+              address: 'Loew Hall, 3920 Montlake Blvd NE, Seattle, WA 98195'
+            },
+            {
+              email: 'Zach@gmail.com',
+              address: 'Mary Gates Hall, University of Washington, Seattle, WA 98195'
+            },
+            {
+              email: 'Gursameep@gmail.com',
+              address: 'Suzzallo and Allen Libraries, 4000 15th Ave NE, Seattle, WA 98195'
+            },
+            {
+              email: 'Aarushi@gmail.com',
+              address: 'Physics/Astronomy Auditorium (PAA), 3910 15th Ave NE, Seattle, WA 98105'
+            },
+            {
+              email: 'Apollo@gmail.com',
+              address: 'Odegaard Undergraduate Library, 4060 George Washington Lane Northeast, Seattle, WA 98195'
             }
           ],
           listOfRequests: [
@@ -80,8 +100,33 @@ export const handlers: RequestHandler[] = [
             },
             {
               id: 2,
-              name: 'Nelson@gmail.com',
+              email: 'Nelson@gmail.com',
               address: 'Bill & Melinda Gates Center For Computer Science & Engineering, 3800 E Stevens Way NE, Seattle, WA 98195'
+            },
+            {
+              id: 3,
+              email: 'Alex@gmail.com',
+              address: 'Loew Hall, 3920 Montlake Blvd NE, Seattle, WA 98195'
+            },
+            {
+              id: 4,
+              email: 'Zach@gmail.com',
+              address: 'Mary Gates Hall, University of Washington, Seattle, WA 98195'
+            },
+            {
+              id: 5,
+              email: 'Gursameep@gmail.com',
+              address: 'Suzzallo and Allen Libraries, 4000 15th Ave NE, Seattle, WA 98195'
+            },
+            {
+              id: 6,
+              email: 'Aarushi@gmail.com',
+              address: 'Physics/Astronomy Auditorium (PAA), 3910 15th Ave NE, Seattle, WA 98105'
+            },
+            {
+              id: 7,
+              email: 'Apollo@gmail.com',
+              address: 'Odegaard Undergraduate Library, 4060 George Washington Lane Northeast, Seattle, WA 98195'
             }
           ],
           listOfRequests: [
