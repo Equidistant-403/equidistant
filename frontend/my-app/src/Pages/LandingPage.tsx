@@ -13,7 +13,6 @@ import {
   Paper,
   Toolbar,
   IconButton,
-  Avatar,
   Button,
   Stack,
   Typography
@@ -116,7 +115,7 @@ const LandingPage: React.FC = () => {
                     height: 50,
                     backgroundColor: 'primary.dark',
                     '&:hover': {
-                      backgroundColor: 'primary.dark',
+                      backgroundColor: 'success.main',
                       opacity: [0.8, 0.8, 0.8]
                     }
                   }}
@@ -142,7 +141,7 @@ const LandingPage: React.FC = () => {
                   height: 50,
                   backgroundColor: 'primary.dark',
                   '&:hover': {
-                    backgroundColor: 'primary.dark',
+                    backgroundColor: 'success.main',
                     opacity: [0.8, 0.8, 0.8]
                   }
                 }}
@@ -174,7 +173,11 @@ const LandingPage: React.FC = () => {
                 backgroundColor: 'secondary.main',
                 ml: 2,
                 my: 0.3,
-                py: 1
+                py: 1,
+                '&:hover': {
+                  backgroundColor: 'secondary.main',
+                  opacity: [0.8, 0.8, 0.8]
+                }
               }}
                 key={friend.email}
                 control={
@@ -187,27 +190,22 @@ const LandingPage: React.FC = () => {
                     alignItems="center"
                     spacing={2}
                   >
-                    <IconButton
-                      edge="start"
-                      color="inherit"
-                      aria-label="menu"
+                    <IconButton color="primary" aria-label="upload picture" component="label"
+                      sx={{
+                        width: 50,
+                        height: 50,
+                        backgroundColor: 'primary.dark',
+                        '&:hover': {
+                          backgroundColor: 'success.main',
+                          opacity: [0.6, 0.6, 0.6]
+                        }
+                      }}
+                      key={index}
                     >
-                      <div onClick={handleFriendMenu}>
-                        <Avatar
-                        color="inherit"
-                        sx={{
-                          width: 50,
-                          height: 50,
-                          ml: 3,
-                          '&:hover': {
-                            backgroundColor: 'primary.dark',
-                            opacity: [0.8, 0.8, 0.8]
-                          }
-                        }}
-                        >
-                          User
-                        </Avatar>
-                      </div>
+                      <div onClick={handleFriendMenu}></div>
+                      <Typography variant="h5" component="h2">
+                        {friend.email[0]}
+                      </Typography>
                     </IconButton>
                     <Typography variant="h5" component="h2">
                       {friend.email}
