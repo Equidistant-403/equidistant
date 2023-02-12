@@ -110,9 +110,23 @@ const LandingPage: React.FC = () => {
                 }}
               >
                 {getCheckedFriends().map((user, index) => (
-                  <Avatar key={index}>
+                  <IconButton color="primary" aria-label="upload picture" component="label"
+                  sx={{
+                    width: 50,
+                    height: 50,
+                    backgroundColor: 'primary.dark',
+                    '&:hover': {
+                      backgroundColor: 'primary.dark',
+                      opacity: [0.8, 0.8, 0.8]
+                    }
+                  }}
+                  key={index}
+                >
+                  <div onClick={handleFriendMenu}></div>
+                  <Typography variant="h5" component="h2">
                     {user.email[0]}
-                  </Avatar>
+                  </Typography>
+                </IconButton>
                 ))}
               </Stack>
               <Button color='secondary' variant='contained' onClick={handleGenerateClick}
@@ -122,27 +136,18 @@ const LandingPage: React.FC = () => {
                 mr: 3
               }}
               >Generate</Button>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-              >
-                <div onClick={handlAccountClick}>
-                <Avatar
-                color="inherit"
+              <IconButton color="primary" aria-label="upload picture" component="label"
                 sx={{
                   width: 50,
                   height: 50,
+                  backgroundColor: 'primary.dark',
                   '&:hover': {
                     backgroundColor: 'primary.dark',
                     opacity: [0.8, 0.8, 0.8]
                   }
                 }}
-                >
-                  User
-                </Avatar>
-              </div>
+              >
+                <div onClick={handlAccountClick}></div>
               </IconButton>
             </Toolbar>
           </AppBar>
@@ -183,7 +188,6 @@ const LandingPage: React.FC = () => {
                     spacing={2}
                   >
                     <IconButton
-                      size="large"
                       edge="start"
                       color="inherit"
                       aria-label="menu"
