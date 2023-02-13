@@ -1,11 +1,11 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import LoginPage from './pages/LoginPage'
-import LandingPage from './pages/LandingPage'
-import Results from './pages/Results'
-import Account from './pages/Account'
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material'
+import Account from './pages/Account'
 import CreateAccount from './pages/CreateAccount'
+import LandingPage from './pages/LandingPage'
+import LoginPage from './pages/LoginPage'
+import Results from './pages/Results'
 
 const theme = createTheme({
   palette: {
