@@ -12,13 +12,17 @@ const Results: React.FC = () => {
   const [result, setResult] = useState<Location>(results[0])
 
   const handleNextClick = (): void => {
-    setResult(results[index + 1])
-    setIndex(index + 1)
+    if (index < results.length - 1) {
+      setResult(results[index + 1])
+      setIndex(index + 1)
+    } else {
+      // TODO: Display out of options or make another query to backend for more
+    }
   }
 
   const handleDoneClick = (): void => {
     console.log('dummy results done actuation')
-    navigate('/landing')
+    navigate(-1)
   }
 
   return (
