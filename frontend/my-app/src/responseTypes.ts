@@ -19,6 +19,7 @@ interface ProfileResponse {
 }
 
 interface CreateAccountResponse {
+  bearer: string
   user: User
 }
 
