@@ -84,58 +84,72 @@ const LandingPage: React.FC = () => {
 
   return (
       <div className="container">
-          <AppBar position="relative"
-          sx={{
-            color: '1a7fc1',
-            alignSelf: 'start',
-            width: 'auto',
-            minWidth: 4 / 5,
-            mb: 'auto',
-            mt: 5,
-            mx: 'auto'
-          }}
+          <AppBar
+            position="relative"
+            sx={{
+              color: '1a7fc1',
+              alignSelf: 'start',
+              width: 'auto',
+              minWidth: 4 / 5,
+              mb: 'auto',
+              mt: 5,
+              mx: 'auto'
+            }}
           >
             <Toolbar>
               <Button color='secondary' variant='contained' onClick={handleLogoutClick}>Logout</Button>
-              <Stack
-                direction="row"
-                justifyContent="flex-start"
-                alignItems="center"
-                spacing={2}
+                <Stack
+                  direction="row"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  spacing={2}
+                  sx={{
+                    display: 'flex',
+                    flexWarp: 'wrap',
+                    m: 'auto'
+                  }}
+                >
+                  {getCheckedFriends().map((user, index) => (
+                    <IconButton
+                      color="primary"
+                      aria-label="upload picture"
+                      component="label"
+                      sx={{
+                        width: 50,
+                        height: 50,
+                        backgroundColor: 'primary.dark',
+                        '&:hover': {
+                          backgroundColor: 'success.main',
+                          opacity: [0.8, 0.8, 0.8]
+                        }
+                      }}
+                      key={index}
+                      onClick={handleFriendMenu}
+                    >
+                      <Typography
+                        variant="h5"
+                        component="h2">
+                        {user.email[0]}
+                      </Typography>
+                    </IconButton>
+                  ))}
+                </Stack>
+              <Button
+                color='secondary'
+                variant='contained'
+                onClick={handleGenerateClick}
                 sx={{
                   display: 'flex',
                   flexWarp: 'wrap',
-                  m: 'auto'
+                  mr: 3
                 }}
-              >
-                {getCheckedFriends().map((user, index) => (
-                  <IconButton color="primary" aria-label="upload picture" component="label"
-                  sx={{
-                    width: 50,
-                    height: 50,
-                    backgroundColor: 'primary.dark',
-                    '&:hover': {
-                      backgroundColor: 'success.main',
-                      opacity: [0.8, 0.8, 0.8]
-                    }
-                  }}
-                  key={index}
-                  onClick={handleFriendMenu}
                 >
-                  <Typography variant="h5" component="h2">
-                    {user.email[0]}
-                  </Typography>
-                </IconButton>
-                ))}
-              </Stack>
-              <Button color='secondary' variant='contained' onClick={handleGenerateClick}
-              sx={{
-                display: 'flex',
-                flexWarp: 'wrap',
-                mr: 3
-              }}
-              >Generate</Button>
-              <IconButton color="primary" aria-label="upload picture" component="label"
+                  Generate
+              </Button>
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="label"
                 sx={{
                   width: 50,
                   height: 50,
@@ -150,47 +164,54 @@ const LandingPage: React.FC = () => {
               </IconButton>
             </Toolbar>
           </AppBar>
-        <Box component="span" sx={{ p: 5 }}>
-        </Box>
+          <Box
+            component="span"
+            sx={{ p: 5 }}
+          >
+          </Box>
         <div />
         <Paper
-        sx={{
-          minWidth: 1 / 3,
-          maxHeight: 1 / 2,
-          overflow: 'auto',
-          mb: 'auto'
-        }}
+          sx={{
+            minWidth: 1 / 3,
+            maxHeight: 1 / 2,
+            overflow: 'auto',
+            mb: 'auto'
+          }}
         >
           <FormGroup
-          sx={{
-            backgroundColor: 'primary.main',
-            py: 1
-          }}
+            sx={{
+              backgroundColor: 'primary.main',
+              py: 1
+            }}
           >
             {friends.map((friend, index) => (
               <FormControlLabel
-              sx={{
-                backgroundColor: 'secondary.main',
-                ml: 2,
-                my: 0.3,
-                py: 1,
-                '&:hover': {
+                sx={{
                   backgroundColor: 'secondary.main',
-                  opacity: [0.8, 0.8, 0.8]
-                }
-              }}
+                  ml: 2,
+                  my: 0.3,
+                  py: 1,
+                  '&:hover': {
+                    backgroundColor: 'secondary.main',
+                    opacity: [0.8, 0.8, 0.8]
+                  }
+                }}
                 key={friend.email}
                 control={
                   <Checkbox
                     checked={checkedFriends[index]}
-                    onChange={(e) => { toggleCheckbox(index, e.target.checked) } } />}
-                label={
+                    onChange={(e) => { toggleCheckbox(index, e.target.checked) } }
+                  />}
+                  label={
                   <Stack
                     direction="row"
                     alignItems="center"
                     spacing={2}
                   >
-                    <IconButton color="primary" aria-label="upload picture" component="label"
+                    <IconButton
+                      color="primary"
+                      aria-label="upload picture"
+                      component="label"
                       sx={{
                         width: 50,
                         height: 50,
