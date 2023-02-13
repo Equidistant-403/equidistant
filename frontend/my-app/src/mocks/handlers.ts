@@ -175,7 +175,7 @@ export const handlers: RequestHandler[] = [
     const password = req.url.searchParams.get('password')
     const address = req.url.searchParams.get('address')
 
-    if (email === null || password === null || address === null) {
+    if (email === '' || password === '' || address === '') {
       return res(
         ctx.status(400),
         ctx.json({
