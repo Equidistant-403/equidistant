@@ -20,7 +20,6 @@ const Account: React.FC = () => {
   }
 
   const handleBack = (): void => {
-    console.log('Back dummy function')
     navigate(-1)
   }
 

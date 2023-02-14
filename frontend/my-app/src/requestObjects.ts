@@ -32,7 +32,7 @@ class LoginRequest extends EquidistantRequest {
 }
 
 // Create
-class CreateRequest extends EquidistantRequest {
+class CreateAccountRequest extends EquidistantRequest {
   constructor (email: string, password: string, address: string) {
     super(HttpMethods.POST, '/create')
     this.path = super.addParams(new URLSearchParams({
@@ -43,7 +43,7 @@ class CreateRequest extends EquidistantRequest {
   }
 }
 
-export { LoginRequest, CreateRequest }
+export { LoginRequest, CreateAccountRequest }
 
 class BearerRequest extends EquidistantRequest {
   headers: Record<string, unknown>

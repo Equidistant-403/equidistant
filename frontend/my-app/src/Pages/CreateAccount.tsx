@@ -2,17 +2,18 @@ import React, { useState } from 'react'
 import './LoginPage.css'
 import { useNavigate } from 'react-router-dom'
 import makeRequest from '../makeRequest'
-import { LoginRequest } from '../requestObjects'
-import type { LoginResponse } from '../responseTypes'
+import { CreateAccountRequest } from '../requestObjects'
+import type { CreateAccountResponse } from '../responseTypes'
 import { isError } from '../responseTypes'
 
-const LoginPage: React.FC = () => {
+const CreateAccount: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [address, setAddress] = useState('')
   const navigate = useNavigate()
 
-  const handleLogin = (): void => {
-    makeRequest(new LoginRequest(email, password))
+  const handleCreate = (): void => {
+    makeRequest(new CreateAccountRequest(email, password, address))
       .then((res) => {
         if (isError(res)) {
           // TODO: Display the error message
@@ -21,14 +22,14 @@ const LoginPage: React.FC = () => {
           return
         }
 
-        const response = (res as LoginResponse)
+        const response = (res as CreateAccountResponse)
         // TODO: Remove console.log
-        console.log(response)
+        console.log('response', response)
         navigate('/landing', {
           state: {
             user: response.user,
-            friends: response.listOfFriends,
-            requests: response.listOfRequests,
+            friends: [],
+            requests: [],
             bearer: response.bearer
           }
         })
@@ -37,7 +38,7 @@ const LoginPage: React.FC = () => {
         console.error(e)
       })
     // TODO: Remove console.log
-    console.log('dummy login authentication')
+    console.log('dummy create account authentication')
   }
 
   return (
@@ -57,11 +58,18 @@ const LoginPage: React.FC = () => {
         onChange={(e) => { setPassword(e.target.value) }}
         placeholder="Password"
       />
-      <button onClick={handleLogin}>Login</button>
+      <input
+        className="form"
+        type="address"
+        value={address}
+        onChange={(e) => { setAddress(e.target.value) }}
+        placeholder="Address"
+      />
+      <button onClick={handleCreate}>Create Account</button>
       <a href="/forgot-password" className="links">Forgot password?</a>
-      <a href="/create-account" className="links">Create account</a>
+      <a href="/" className="links">Login to existing account</a>
     </div>
   )
 }
 
-export default LoginPage
+export default CreateAccount

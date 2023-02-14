@@ -85,10 +85,9 @@ export const handlers: RequestHandler[] = [
   }),
 
   rest.get('/friends', (req, res, ctx) => {
-    // TODO - right now this if there is any header called 'auth' the request will go through
-    const auth = req.headers.has('auth')
+    const authorization = req.headers.get('authorization')
 
-    if (auth) {
+    if (!((authorization?.startsWith('Bearer ')) ?? false)) {
       return res(
         ctx.status(200),
         ctx.json({
@@ -149,10 +148,9 @@ export const handlers: RequestHandler[] = [
   rest.get('/user', (req, res, ctx) => {
     const email = req.url.searchParams.get('email')
 
-    // TODO - right now this if there is any header called 'auth' the request will go through
-    const auth = req.headers.has('auth')
+    const authorization = req.headers.get('authorization')
 
-    if (auth) {
+    if (!((authorization?.startsWith('Bearer ')) ?? false)) {
       return res(
         ctx.status(200),
         ctx.json({
@@ -177,7 +175,7 @@ export const handlers: RequestHandler[] = [
     const password = req.url.searchParams.get('password')
     const address = req.url.searchParams.get('address')
 
-    if (email === null || password === null || address === null) {
+    if (email === '' || password === '' || address === '') {
       return res(
         ctx.status(400),
         ctx.json({
@@ -198,10 +196,9 @@ export const handlers: RequestHandler[] = [
   }),
 
   rest.post('/sendFriendReq', (req, res, ctx) => {
-    // TODO - right now this if there is any header called 'auth' the request will go through
-    const auth = req.headers.has('auth')
+    const authorization = req.headers.get('authorization')
 
-    if (auth) {
+    if (!((authorization?.startsWith('Bearer ')) ?? false)) {
       return res(
         ctx.status(201),
         ctx.json({
@@ -221,10 +218,9 @@ export const handlers: RequestHandler[] = [
   rest.post('/respondFriendReq', (req, res, ctx) => {
     const resp = req.url.searchParams.get('response')
 
-    // TODO - right now this if there is any header called 'auth' the request will go through
-    const auth = req.headers.has('auth')
+    const authorization = req.headers.get('authorization')
 
-    if (auth) {
+    if (!((authorization?.startsWith('Bearer ')) ?? false)) {
       if (resp === 'true') {
         return res(
           ctx.status(200),

@@ -1,10 +1,11 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import LoginPage from './Pages/LoginPage'
-import LandingPage from './Pages/LandingPage'
-import Results from './Pages/Results'
-import Account from './Pages/Account'
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material'
+import Account from './Pages/Account'
+import CreateAccount from './Pages/CreateAccount'
+import LandingPage from './Pages/LandingPage'
+import LoginPage from './Pages/LoginPage'
+import Results from './Pages/Results'
 
 const theme = createTheme({
   palette: {
@@ -35,6 +36,7 @@ function App (): React.ReactElement {
       <CssBaseline />
       <Routes>
         <Route path="/" element={<LoginPage/>} />
+        <Route path="/create-account" element={<CreateAccount/>} />
         <Route path="/landing" element={<LandingPage/>} />
         <Route path="/results" element={<Results/>} />
         <Route path="/account" element={<Account/>} />

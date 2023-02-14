@@ -149,6 +149,7 @@ Params:
 
 ```json
 {
+  "bearer": "[token string]",
   "email": "[string]",
   "password": "[encrypted string]",
   "address": "[string]"
