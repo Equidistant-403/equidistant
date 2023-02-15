@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { isError, type LocationResponse, type User } from '../responseTypes'
+import { isError } from '../responseTypes'
 import { LocationRequest } from '../requestObjects'
 import makeRequest from '../makeRequest'
-import './LandingPage.css'
 import {
   AppBar,
   Box,
@@ -17,6 +16,7 @@ import {
   Stack,
   Typography
 } from '@mui/material'
+import type { LocationResponse, User } from '../responseTypes'
 
 const LandingPage: React.FC = () => {
   const location = useLocation()
@@ -83,9 +83,15 @@ const LandingPage: React.FC = () => {
   }
 
   return (
-      <div className="container">
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
           <AppBar
-            position="relative"
+            position='relative'
             sx={{
               color: '1a7fc1',
               alignSelf: 'start',
@@ -167,9 +173,7 @@ const LandingPage: React.FC = () => {
           <Box
             component="span"
             sx={{ p: 5 }}
-          >
-          </Box>
-        <div />
+          />
         <Paper
           sx={{
             minWidth: 1 / 3,
@@ -236,7 +240,7 @@ const LandingPage: React.FC = () => {
             ))}
           </FormGroup>
         </Paper>
-      </div>
+      </Box>
   )
 }
 
