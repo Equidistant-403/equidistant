@@ -55,7 +55,7 @@ By next week, we plan to have the following items completed:
 
 ### Plans for next week
 
-## Zach Shafer
+## Zack Shafer
 
 ### Goals from last week
 
