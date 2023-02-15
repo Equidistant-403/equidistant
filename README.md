@@ -57,7 +57,7 @@ Any documents / files relevant to both frontend and backend teams can be found i
 -Log in to an existing account
 
 ## Non-Operational Use Cases
--Start a search with a list of people
--Password reset
--Cycle through results until a satisfactory one is found
--Search and friend another user
+- Start a search with a list of people
+- Password reset
+- Cycle through results until a satisfactory one is found
+- Search and friend another user
