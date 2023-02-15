@@ -4,10 +4,6 @@ import type { RequestHandler } from 'msw'
 export const handlers: RequestHandler[] = [
 
   rest.get('/locations', (req, res, ctx) => {
-    const users = req.url.searchParams.getAll('users')
-    // TODO - remove console.log
-    console.log(users)
-
     return res(
       ctx.status(200),
       ctx.json({
@@ -32,9 +28,6 @@ export const handlers: RequestHandler[] = [
   rest.get('/login', (req, res, ctx) => {
     const email = req.url.searchParams.get('email')
     const password = req.url.searchParams.get('password')
-    // TODO - remove console.log
-    console.log(email)
-    console.log(password)
 
     if (password === 'password') {
       return res(
@@ -52,6 +45,26 @@ export const handlers: RequestHandler[] = [
             {
               email: 'Nelson@gmail.com',
               address: 'Bill & Melinda Gates Center For Computer Science & Engineering, 3800 E Stevens Way NE, Seattle, WA 98195'
+            },
+            {
+              email: 'Alex@gmail.com',
+              address: 'Loew Hall, 3920 Montlake Blvd NE, Seattle, WA 98195'
+            },
+            {
+              email: 'Zach@gmail.com',
+              address: 'Mary Gates Hall, University of Washington, Seattle, WA 98195'
+            },
+            {
+              email: 'Gursameep@gmail.com',
+              address: 'Suzzallo and Allen Libraries, 4000 15th Ave NE, Seattle, WA 98195'
+            },
+            {
+              email: 'Aarushi@gmail.com',
+              address: 'Physics/Astronomy Auditorium (PAA), 3910 15th Ave NE, Seattle, WA 98105'
+            },
+            {
+              email: 'Apollo@gmail.com',
+              address: 'Odegaard Undergraduate Library, 4060 George Washington Lane Northeast, Seattle, WA 98195'
             }
           ],
           listOfRequests: [
@@ -72,14 +85,9 @@ export const handlers: RequestHandler[] = [
   }),
 
   rest.get('/friends', (req, res, ctx) => {
-    const email = req.url.searchParams.get('email')
-    // TODO - remove console.log
-    console.log(email)
+    const authorization = req.headers.get('authorization')
 
-    // TODO - right now this if there is any header called 'auth' the request will go through
-    const auth = req.headers.has('auth')
-
-    if (auth) {
+    if (!((authorization?.startsWith('Bearer ')) ?? false)) {
       return res(
         ctx.status(200),
         ctx.json({
@@ -91,8 +99,33 @@ export const handlers: RequestHandler[] = [
             },
             {
               id: 2,
-              name: 'Nelson@gmail.com',
+              email: 'Nelson@gmail.com',
               address: 'Bill & Melinda Gates Center For Computer Science & Engineering, 3800 E Stevens Way NE, Seattle, WA 98195'
+            },
+            {
+              id: 3,
+              email: 'Alex@gmail.com',
+              address: 'Loew Hall, 3920 Montlake Blvd NE, Seattle, WA 98195'
+            },
+            {
+              id: 4,
+              email: 'Zach@gmail.com',
+              address: 'Mary Gates Hall, University of Washington, Seattle, WA 98195'
+            },
+            {
+              id: 5,
+              email: 'Gursameep@gmail.com',
+              address: 'Suzzallo and Allen Libraries, 4000 15th Ave NE, Seattle, WA 98195'
+            },
+            {
+              id: 6,
+              email: 'Aarushi@gmail.com',
+              address: 'Physics/Astronomy Auditorium (PAA), 3910 15th Ave NE, Seattle, WA 98105'
+            },
+            {
+              id: 7,
+              email: 'Apollo@gmail.com',
+              address: 'Odegaard Undergraduate Library, 4060 George Washington Lane Northeast, Seattle, WA 98195'
             }
           ],
           listOfRequests: [
@@ -114,13 +147,10 @@ export const handlers: RequestHandler[] = [
 
   rest.get('/user', (req, res, ctx) => {
     const email = req.url.searchParams.get('email')
-    // TODO - remove console.log
-    console.log(email)
 
-    // TODO - right now this if there is any header called 'auth' the request will go through
-    const auth = req.headers.has('auth')
+    const authorization = req.headers.get('authorization')
 
-    if (auth) {
+    if (!((authorization?.startsWith('Bearer ')) ?? false)) {
       return res(
         ctx.status(200),
         ctx.json({
@@ -144,12 +174,8 @@ export const handlers: RequestHandler[] = [
     const email = req.url.searchParams.get('email')
     const password = req.url.searchParams.get('password')
     const address = req.url.searchParams.get('address')
-    // TODO - remove console.log
-    console.log(email)
-    console.log(password)
-    console.log(address)
 
-    if (email === null || password === null || address === null) {
+    if (email === '' || password === '' || address === '') {
       return res(
         ctx.status(400),
         ctx.json({
@@ -170,16 +196,9 @@ export const handlers: RequestHandler[] = [
   }),
 
   rest.post('/sendFriendReq', (req, res, ctx) => {
-    const requesterEmail = req.url.searchParams.get('requesterEmail')
-    const receiverEmail = req.url.searchParams.get('receiverEmail')
-    // TODO - remove console.log
-    console.log(requesterEmail)
-    console.log(receiverEmail)
+    const authorization = req.headers.get('authorization')
 
-    // TODO - right now this if there is any header called 'auth' the request will go through
-    const auth = req.headers.has('auth')
-
-    if (auth) {
+    if (!((authorization?.startsWith('Bearer ')) ?? false)) {
       return res(
         ctx.status(201),
         ctx.json({
@@ -197,18 +216,11 @@ export const handlers: RequestHandler[] = [
   }),
 
   rest.post('/respondFriendReq', (req, res, ctx) => {
-    const requesterEmail = req.url.searchParams.get('requesterEmail')
-    const receiverEmail = req.url.searchParams.get('receiverEmail')
     const resp = req.url.searchParams.get('response')
-    // TODO - remove console.log
-    console.log(requesterEmail)
-    console.log(receiverEmail)
-    console.log(resp)
 
-    // TODO - right now this if there is any header called 'auth' the request will go through
-    const auth = req.headers.has('auth')
+    const authorization = req.headers.get('authorization')
 
-    if (auth) {
+    if (!((authorization?.startsWith('Bearer ')) ?? false)) {
       if (resp === 'true') {
         return res(
           ctx.status(200),

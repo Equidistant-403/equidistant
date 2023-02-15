@@ -19,6 +19,7 @@ interface ProfileResponse {
 }
 
 interface CreateAccountResponse {
+  bearer: string
   user: User
 }
 
@@ -34,17 +35,43 @@ interface ErrorResponse {
   errorMessage: string
 }
 
-interface Location {
+class Location {
   place: [number, number]
   name: string
   rating: number
   travelTimes: number[]
+
+  constructor (place: [number, number], name: string, rating: number, travelTimes: number[]) {
+    this.place = place
+    this.name = name
+    this.rating = rating
+    this.travelTimes = travelTimes
+  }
 }
 
-interface User {
-  id: number
-  name: string
+class User {
+  email: string
   address: string
+  checked: boolean
+
+  constructor (email: string, address: string, checked: boolean) {
+    this.email = email
+    this.address = address
+    this.checked = checked
+  }
 }
 
-export type { Location, User, LoginResponse, LocationResponse }
+function isError (object: any): object is ErrorResponse {
+  return 'errorMessage' in object
+}
+
+type EquidistantResponse = LocationResponse | LoginResponse | FriendsResponse |
+ProfileResponse | CreateAccountResponse | SendRequestResponse |
+RespondFriendResponse | ErrorResponse
+
+export type {
+  EquidistantResponse, LocationResponse, LoginResponse, FriendsResponse, ProfileResponse,
+  CreateAccountResponse, SendRequestResponse, RespondFriendResponse, ErrorResponse
+}
+export { Location, User }
+export { isError }
