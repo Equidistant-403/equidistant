@@ -88,7 +88,8 @@ const LandingPage: React.FC = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          borderRadius: '16px'
         }}>
           <AppBar
             position='relative'
@@ -99,7 +100,8 @@ const LandingPage: React.FC = () => {
               minWidth: 4 / 5,
               mb: 'auto',
               mt: 5,
-              mx: 'auto'
+              mx: 'auto',
+              borderRadius: '40px'
             }}
           >
             <Toolbar>
@@ -179,7 +181,8 @@ const LandingPage: React.FC = () => {
             minWidth: 1 / 3,
             maxHeight: 1 / 2,
             overflow: 'auto',
-            mb: 'auto'
+            mb: 'auto',
+            borderRadius: '40px'
           }}
         >
           <FormGroup
@@ -195,6 +198,7 @@ const LandingPage: React.FC = () => {
                   ml: 2,
                   my: 0.3,
                   py: 1,
+                  borderRadius: '20px',
                   '&:hover': {
                     backgroundColor: 'secondary.main',
                     opacity: [0.8, 0.8, 0.8]
