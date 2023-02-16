@@ -105,7 +105,7 @@ const LandingPage: React.FC = () => {
             }}
           >
             <Toolbar>
-              <Button color='secondary' variant='contained' onClick={handleLogoutClick}>Logout</Button>
+              <Button color='secondary' variant='contained' sx={{ borderRadius: 28 }}onClick={handleLogoutClick}>Logout</Button>
                 <Stack
                   direction="row"
                   justifyContent="flex-start"
@@ -149,7 +149,8 @@ const LandingPage: React.FC = () => {
                 sx={{
                   display: 'flex',
                   flexWarp: 'wrap',
-                  mr: 3
+                  mr: 3,
+                  borderRadius: 28
                 }}
                 >
                   Generate
