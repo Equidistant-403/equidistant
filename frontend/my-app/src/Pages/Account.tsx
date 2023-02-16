@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './Account.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { AppBar, Box, Button, IconButton, Paper, Stack, TextField, Toolbar, Typography } from '@mui/material'
 
