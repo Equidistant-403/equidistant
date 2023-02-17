@@ -33,7 +33,7 @@ def test_travel_time():
 
 
 @responses.activate
-def test_error_time():
+def test_server_error_time():
     """
     Verifies that None is returned on server issue
     """
@@ -53,7 +53,7 @@ def test_error_time():
 
 
 @responses.activate
-def test_error_time():
+def test_json_error_time():
     """
     Verifies that None is returned when no path is found
     """

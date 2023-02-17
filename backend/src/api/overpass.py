@@ -43,7 +43,7 @@ class Node:
     def get_lat_long(self):
         """
         Returns this node's latitude and longitude
-        :return: A (lat, long) tuple 
+        :return: A (lat, long) tuple
         """
         return (self.lat, self.lon)
 

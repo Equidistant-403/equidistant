@@ -7,7 +7,8 @@ from backend.src.api.overpass import overpass_endpoint, bounding_query
 from backend.src.api.overpass import nearby_point
 
 epsilon = 1e-2
-response_files = os.path.join(os.path.dirname(os.path.abspath(__file__)), "responses")
+response_files = os.path.join(os.path.dirname(
+    os.path.abspath(__file__)), "responses")
 
 
 @responses.activate
@@ -41,7 +42,7 @@ def test_nearby_cs_building():
 
 
 @responses.activate
-def test_error_time():
+def test_server_error_time():
     """
     Verifies that None is returned on server issue
     """
@@ -59,7 +60,7 @@ def test_error_time():
 
 
 @responses.activate
-def test_error_time():
+def test_json_error_time():
     """
     Verifies that None is returned on json issue
     """

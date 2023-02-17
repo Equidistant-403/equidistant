@@ -6,6 +6,7 @@ from enum import Enum
 class TravelOptions(Enum):
     WALK = "foot"
 
+
 # Documentation: http://project-osrm.org/docs/v5.5.1/api/#general-options
 osrm_walk_endpoint = "https://routing.openstreetmap.de/routed-foot/route/v1/"
 travel_time_query = "{0}/{1},{2};{3},{4}?overview=false"

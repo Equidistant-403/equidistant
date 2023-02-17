@@ -145,15 +145,6 @@ def test_travel_time_error_two():
 
 
 @responses.activate
-def test_nearby_options_address():
-    """
-    """
-
-    handler = ApiHandler()
-    pass
-
-
-@responses.activate
 def test_nearby_options_lat_long():
     """
     Verifies the handler can find locations around a point
@@ -183,6 +174,7 @@ def test_nearby_options_lat_long():
     assert (result[0].get_address() ==
             "4002 University Way Northeast Seattle 98105")
 
+
 def test_nearby_options_lat_long_n():
     """
     Verifies the handler can find locations around a point
@@ -203,6 +195,7 @@ def test_nearby_options_lat_long_n():
 
     assert (result is not None)
     assert (len(result) == 1)
+
 
 def test_nearby_options_address():
     """
@@ -239,4 +232,3 @@ def test_nearby_options_address():
     assert (result[0].get_name() == "Basil Viet Kitchen")
     assert (result[0].get_address() ==
             "4002 University Way Northeast Seattle 98105")
-
