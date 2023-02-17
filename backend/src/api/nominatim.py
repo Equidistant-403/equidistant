@@ -14,11 +14,12 @@ def get_lat_long(address: str) -> Tuple[float, float]:
     """
     response = requests.get(nominatim_endpoint + address_query.format(address))
 
-    if response.status_code != 200:
+    if not response.ok:
         # TODO: What's an appropriate return type if the request errors?
         return None
 
     response_json = response.json()
+    print (response_json)
     if (len(response_json) == 0 or
             "lat" not in response_json[0] or "lon" not in response_json[0]):
         # TODO: What's an appropriate return type if the request errors?

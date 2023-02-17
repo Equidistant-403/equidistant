@@ -71,7 +71,7 @@ def nearby_point(lat_long: Tuple[float, float], radius: int) -> List[Node]:
         )
     })
 
-    if response.status_code != 200:
+    if not response.ok:
         # TODO: What's a useful response here
         return None
 

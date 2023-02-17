@@ -25,7 +25,7 @@ def determine_travel_time(start: Tuple[float, float], end: Tuple[float, float], 
         type.value, start[1], start[0], end[1], end[0]
     ))
 
-    if response.status_code != 200:
+    if not response.ok:
         # TODO: What's a useful response here
         return None
 
