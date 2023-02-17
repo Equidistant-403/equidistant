@@ -1,3 +1,4 @@
+import os
 import responses
 import json
 
@@ -6,6 +7,7 @@ from backend.src.api.osrm import osrm_walk_endpoint, travel_time_query
 from backend.src.api.osrm import determine_travel_time
 
 epsilon = 1e-2
+response_files = os.path.join(os.path.dirname(os.path.abspath(__file__)), "responses")
 
 
 @responses.activate
@@ -21,7 +23,7 @@ def test_travel_time():
         osrm_walk_endpoint + travel_time_query.format(
             type.value, start[1], start[0], end[1], end[0]
         ),
-        json=json.load(open('./responses/cs_plaza_walk.json')),
+        json=json.load(open(response_files + '/cs_plaza_walk.json')),
         status=200
     )
 
@@ -59,7 +61,7 @@ def test_error_time():
     end = (47.649378, -122.3077192)
     type = TravelOptions.WALK
 
-    loaded_json = json.load(open('./responses/cs_plaza_walk.json'))
+    loaded_json = json.load(open(response_files + '/cs_plaza_walk.json'))
     loaded_json['routes'] = []
     responses.add(
         responses.GET,

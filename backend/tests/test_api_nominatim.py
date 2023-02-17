@@ -1,3 +1,4 @@
+import os
 import responses
 import json
 
@@ -5,6 +6,7 @@ from backend.src.api.nominatim import nominatim_endpoint, address_query
 from backend.src.api.nominatim import get_lat_long
 
 epsilon = 1e-2
+response_files = os.path.join(os.path.dirname(os.path.abspath(__file__)), "responses")
 
 
 @responses.activate
@@ -16,7 +18,7 @@ def test_simple_convert():
     responses.add(
         responses.GET,
         nominatim_endpoint + address_query.format(address),
-        json=json.load(open('./responses/simple_convert.json')),
+        json=json.load(open(response_files + '/simple_convert.json')),
         status=200
     )
 
@@ -49,7 +51,7 @@ def test_missing_convert():
     """
     address = "3800 E Stevens Way NE, Seattle, WA 98195"
 
-    loaded_json = json.load(open('./responses/simple_convert.json'))
+    loaded_json = json.load(open(response_files + '/simple_convert.json'))
     loaded_json[0].pop('lat')
     responses.add(
         responses.GET,
