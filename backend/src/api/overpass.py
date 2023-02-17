@@ -2,10 +2,12 @@ import requests
 from typing import Tuple, List
 from collections import namedtuple
 
+
 class Node:
     """
     Represents a singular location, called a "node" in overpass
     """
+
     def __init__(self, id, lat, lon, tags, type):
         """
         Constructs a new node
@@ -16,28 +18,29 @@ class Node:
             can be found here: https://wiki.openstreetmap.org/wiki/Category:Tags
         """
         self.id, self.lat, self.lon, self.tags = id, lat, lon, tags
-    
+
     def get_address(self):
         """
         Returns an address representing this node's location
         :return: None if missing necessary tags, otherwise the address
         """
-        necessary_tags = ['addr:housenumber', 'addr:street', 'addr:city', 'addr:postcode']
+        necessary_tags = ['addr:housenumber',
+                          'addr:street', 'addr:city', 'addr:postcode']
         if not all(tag in self.tags for tag in necessary_tags):
             return None
-        
+
         address = ""
         for tag in necessary_tags:
             address += self.tags[tag] + " "
         return address.strip()
-    
+
     def get_name(self):
         """
         Returns this node's name
         :return: None if missing name tag, otherwise name
         """
         return self.tags.get('name', None)
-    
+
     def get_lat_long(self):
         """
         Returns this node's latitude and longitude
