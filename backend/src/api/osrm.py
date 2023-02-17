@@ -14,6 +14,13 @@ travel_time_query = "{0}/{1},{2};{3},{4}?overview=false"
 
 
 def determine_travel_time(start: Tuple[float, float], end: Tuple[float, float], type: TravelOptions) -> float:
+    """
+    Determines the amount of time in seconds to travel from 'start' to 'end' via 'type'
+    :param start: a latitude, longitude tuple representing the start position
+    :param end: a latitude, longitude tuple representing the destination
+    :param type: the means by which the user will be traveling
+    :return: None if error, else estimated travel time in seconds
+    """
     response = requests.get(osrm_endpoint + travel_time_query.format(
         type.value, start[1], start[0], end[1], end[0]
     ))
@@ -28,8 +35,3 @@ def determine_travel_time(start: Tuple[float, float], end: Tuple[float, float], 
         return None
 
     return response_json["routes"][0]['duration']
-
-
-if __name__ == "__main__":
-    print(determine_travel_time((47.6579925, -122.3133866),
-          (47.6594156, -122.313348), TravelOptions.WALK))
