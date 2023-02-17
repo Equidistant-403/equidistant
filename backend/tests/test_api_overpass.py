@@ -51,7 +51,9 @@ def test_server_error_time():
     responses.add(
         responses.GET,
         overpass_endpoint +
-        bounding_query.format(radius, lat_long[0], lat_long[1]),
+        "?data=" +
+        urllib.parse.quote(bounding_query.format(
+            radius, lat_long[0], lat_long[1])),
         status=400
     )
 
