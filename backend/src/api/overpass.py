@@ -1,6 +1,5 @@
 import requests
 from typing import Tuple, List
-from collections import namedtuple
 
 
 class Node:
