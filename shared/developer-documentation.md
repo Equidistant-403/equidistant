@@ -1,13 +1,30 @@
 ## Developer Documentation
 
 # How to obtain the source code.
-If your system uses multiple repositories or submodules, provide clear instructions for how to obtain all relevant sources.
+All source code is within the root `equidistant` directory, which can be cloned from the [Github Repo](https://github.com/pandabear15/equidistant)
 
 # The layout of your directory structure.
-What do the various directories (folders) contain, and where to find source files, tests, documentation, data files, etc.
+## General
+The `equidistant/shared` directory holds all documentation (user, developer, and API), and the `equidistant/reports`
+directory contains our weekly status reports.
+
+## Frontend
+Frontend code is in the `equidistant/frontend/my-app` directory. Upon first time cloning the repo,
+it will be necessary to run the `npm install` command from the `my-app` directory in order to install
+the dependencies. Within the `src` directory you will find both the application's Typescript source files
+and the test files alongside them. For example, the test file for `App.tsx` is the `App.test.tsx` file in the
+same directory.
+
+## Backend
+Backend code is in the `equidistant/backend` directory.
 
 # How to build the software.
-Provide clear instructions for how to use your project’s build system to build all system components.
+## Frontend
+To build the front end, make sure you have installed the dependendencies and then run `npm run build` from
+the `equidistant/frontend/my-app` directory.
+
+## Backend
+
 
 # How to test the software.
 Provide clear instructions for how to run the system’s test cases. In some cases, the instructions may need to include information such as how to access data sources or how to interact with external systems. You may reference the user documentation (e.g., prerequisites) to avoid duplication.
