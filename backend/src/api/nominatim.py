@@ -19,7 +19,6 @@ def get_lat_long(address: str) -> Tuple[float, float]:
         return None
 
     response_json = response.json()
-    print (response_json)
     if (len(response_json) == 0 or
             "lat" not in response_json[0] or "lon" not in response_json[0]):
         # TODO: What's an appropriate return type if the request errors?
