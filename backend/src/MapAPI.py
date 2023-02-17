@@ -1,4 +1,3 @@
-import array
 from abc import ABC, abstractmethod
 
 
@@ -20,7 +19,7 @@ class MapAPI(ABC):
         """
 
     @abstractmethod
-    def get_nearby_options(self, loc, radius: float, n: int) -> array:
+    def get_nearby_options(self, loc, radius: float, n: int) -> list:
         """
         Gets a list of recommended locations within a certain distance from
         a location.
