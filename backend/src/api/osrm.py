@@ -5,11 +5,9 @@ from enum import Enum
 
 class TravelOptions(Enum):
     WALK = "foot"
-    CAR = "car"
-    BIKE = "bike"
 
 # Documentation: http://project-osrm.org/docs/v5.5.1/api/#general-options
-osrm_endpoint = "http://router.project-osrm.org/route/v1/"
+osrm_walk_endpoint = "https://routing.openstreetmap.de/routed-foot/route/v1/"
 travel_time_query = "{0}/{1},{2};{3},{4}?overview=false"
 
 
@@ -21,7 +19,7 @@ def determine_travel_time(start: Tuple[float, float], end: Tuple[float, float], 
     :param type: the means by which the user will be traveling
     :return: None if error, else estimated travel time in seconds
     """
-    response = requests.get(osrm_endpoint + travel_time_query.format(
+    response = requests.get(osrm_walk_endpoint + travel_time_query.format(
         type.value, start[1], start[0], end[1], end[0]
     ))
 
