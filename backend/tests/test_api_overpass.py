@@ -1,5 +1,6 @@
 import responses
 import json
+import urllib.parse
 
 from backend.src.api.overpass import overpass_endpoint, bounding_query
 from backend.src.api.overpass import nearby_point
@@ -17,8 +18,10 @@ def test_nearby_cs_building():
     responses.add(
         responses.GET,
         overpass_endpoint +
-        bounding_query.format(radius, lat_long[0], lat_long[1]),
-        json=json.load(open('./responses/nearby_cs_buildling.json')),
+        "?data=" +
+        urllib.parse.quote(bounding_query.format(
+            radius, lat_long[0], lat_long[1])),
+        json=json.load(open('./responses/nearby_cs_building.json')),
         status=200
     )
 
@@ -66,7 +69,9 @@ def test_error_time():
     responses.add(
         responses.GET,
         overpass_endpoint +
-        bounding_query.format(radius, lat_long[0], lat_long[1]),
+        "?data=" +
+        urllib.parse.quote(bounding_query.format(
+            radius, lat_long[0], lat_long[1])),
         json=loaded_json,
         status=200
     )
