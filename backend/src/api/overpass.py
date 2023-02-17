@@ -49,6 +49,7 @@ class Node:
         return (self.lat, self.lon)
 
 
+# Documentation: https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL
 overpass_endpoint = "https://overpass-api.de/api/interpreter"
 bounding_query = """
   [out:json][timeout:5];

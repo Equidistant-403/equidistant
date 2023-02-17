@@ -1,6 +1,7 @@
 import requests
 from typing import Tuple
 
+# Documentation: https://nominatim.org/release-docs/develop/api/Overview/
 nominatim_endpoint = "https://nominatim.openstreetmap.org"
 address_query = "/search/{0}?format=json"
 

@@ -8,7 +8,7 @@ class TravelOptions(Enum):
     CAR = "car"
     BIKE = "bike"
 
-
+# Documentation: http://project-osrm.org/docs/v5.5.1/api/#general-options
 osrm_endpoint = "http://router.project-osrm.org/route/v1/"
 travel_time_query = "{0}/{1},{2};{3},{4}?overview=false"
 
