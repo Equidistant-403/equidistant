@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import './Results.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import type { Location } from '../responseTypes'
+import { Box, Button, Typography } from '@mui/material'
+import { Stack } from '@mui/system'
 
 const Results: React.FC = () => {
   const location = useLocation()
@@ -26,16 +28,57 @@ const Results: React.FC = () => {
   }
 
   return (
-        <div className="container">
-        <h1>Results</h1>
-        <div className="location">
-          <p>Current location: {result.name}</p>
-        </div>
-        <div className="buttons">
-            <button onClick={handleNextClick}>Next</button>
-            <button onClick={handleDoneClick} className="right">Done</button>
-        </div>
-        </div>
+        <Stack>
+        <Typography
+          variant="h3"
+          component="h2">
+            Results
+        </Typography>
+        <Box>
+          <Typography
+            variant="h5"
+            component="h2">
+              Current location: {result.name}
+          </Typography>
+        </Box>
+        <Stack
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="center"
+        spacing={2}
+        sx={{
+          display: 'flex',
+          flexWarp: 'wrap',
+          m: 'auto'
+        }}>
+        <Button
+        color='secondary'
+        variant='contained'
+        onClick={handleNextClick}
+        sx={{
+          display: 'flex',
+          flexWarp: 'wrap',
+          mr: 3,
+          borderRadius: 28
+        }}
+        >
+          Next
+      </Button>
+      <Button
+      color='secondary'
+      variant='contained'
+      onClick={handleDoneClick}
+      sx={{
+        display: 'flex',
+        flexWarp: 'wrap',
+        mr: 3,
+        borderRadius: 28
+      }}
+      >
+        Done
+    </Button>
+        </Stack>
+    </Stack>
   )
 }
 
