@@ -10,8 +10,21 @@ from backend.src.api.osrm import TravelOptions
 
 
 class ApiHandler(MapAPI):
+    """
+    Implements MapAPI by connecting to three APIs: nominatim, overpass, and OSRM
+    Nominatim handles converting addresses to lat, long pairs
+    Overpass handles searching for locations in a radius around a center
+    OSRM handles routing and time estimations
+    All are free and open source
+    """
 
     def convert(loc):
+        """
+        Helper method that converts a given address to a latitude, longitude representation.
+        If the given location is already lat, long nothing happens
+        :param loc: The given location, either address or lat, long form
+        :return: None if error, else the lat, long tuple
+        """
         if not isinstance(loc, Tuple):
             # Assume it's an address and convert
             loc = get_lat_long(loc)
@@ -20,12 +33,10 @@ class ApiHandler(MapAPI):
     def get_travel_time(self, loc_1, loc_2) -> float:
         loc_1 = self.convert(loc_1)
         if loc_1 is None:
-            # TODO: What's an appropriate error here?
             return None
 
         loc_2 = self.convert(loc_2)
         if loc_2 is None:
-            # TODO: What's an appropriate error here?
             return None
 
         travel_time = determine_travel_time(loc_1, loc_2, TravelOptions.WALK)
@@ -48,9 +59,3 @@ class ApiHandler(MapAPI):
 
         # TODO: Look at rating information and reorder list
         return points[:n]
-
-
-if __name__ == "__main__":
-    handler = ApiHandler()
-    print(handler.get_nearby_options(
-        '3800 E Stevens Way NE, Seattle, WA 98195', 1000, 5))
