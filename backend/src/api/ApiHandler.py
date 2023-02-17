@@ -1,4 +1,3 @@
-import array
 from typing import Tuple
 
 from backend.src.MapAPI import MapAPI
@@ -46,7 +45,7 @@ class ApiHandler(MapAPI):
 
         return travel_time
 
-    def get_nearby_options(self, loc, radius: float, n: int) -> array:
+    def get_nearby_options(self, loc, radius: float, n: int) -> list:
         loc = self.convert(loc)
         if loc is None:
             # TODO: What's an appropriate error here?
