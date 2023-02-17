@@ -17,7 +17,7 @@ class ApiHandler(MapAPI):
     All are free and open source
     """
 
-    def convert(loc):
+    def convert(self, loc):
         """
         Helper method that converts a given address to a latitude, longitude representation.
         If the given location is already lat, long nothing happens
