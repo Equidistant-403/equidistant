@@ -6,6 +6,8 @@ from backend.src.api.osrm import osrm_walk_endpoint, travel_time_query
 from backend.src.api.osrm import determine_travel_time
 
 epsilon = 1e-2
+
+
 @responses.activate
 def test_travel_time():
     """
@@ -24,8 +26,9 @@ def test_travel_time():
     )
 
     result = determine_travel_time(start, end, type)
-    assert(result is not None)
-    assert(abs(result - 427.8) <= epsilon)
+    assert (result is not None)
+    assert (abs(result - 427.8) <= epsilon)
+
 
 @responses.activate
 def test_error_time():
@@ -44,7 +47,8 @@ def test_error_time():
     )
 
     result = determine_travel_time(start, end, type)
-    assert(result is None)
+    assert (result is None)
+
 
 @responses.activate
 def test_error_time():
@@ -67,4 +71,4 @@ def test_error_time():
     )
 
     result = determine_travel_time(start, end, type)
-    assert(result is None)
+    assert (result is None)

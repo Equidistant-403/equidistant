@@ -5,6 +5,8 @@ from backend.src.api.nominatim import nominatim_endpoint, address_query
 from backend.src.api.nominatim import get_lat_long
 
 epsilon = 1e-2
+
+
 @responses.activate
 def test_simple_convert():
     """
@@ -19,9 +21,10 @@ def test_simple_convert():
     )
 
     result = get_lat_long(address)
-    assert(result is not None)
-    assert(abs(result[0] - 47.6530733) <= epsilon)
-    assert(abs(result[1] - -122.3050129) <= epsilon)
+    assert (result is not None)
+    assert (abs(result[0] - 47.6530733) <= epsilon)
+    assert (abs(result[1] - -122.3050129) <= epsilon)
+
 
 @responses.activate
 def test_error_convert():
@@ -36,7 +39,8 @@ def test_error_convert():
     )
 
     result = get_lat_long(address)
-    assert(result is None)
+    assert (result is None)
+
 
 @responses.activate
 def test_missing_convert():
@@ -44,7 +48,7 @@ def test_missing_convert():
     Verifies that None is returned on json missing key information
     """
     address = "3800 E Stevens Way NE, Seattle, WA 98195"
-    
+
     loaded_json = json.load('./responses/simple_convert.json')
     loaded_json[0].pop('lat')
     responses.add(
@@ -55,7 +59,8 @@ def test_missing_convert():
     )
 
     result = get_lat_long(address)
-    assert(result is None)
+    assert (result is None)
+
 
 @responses.activate
 def test_no_convert():
@@ -71,4 +76,4 @@ def test_no_convert():
     )
 
     result = get_lat_long(address)
-    assert(result is None)
+    assert (result is None)
