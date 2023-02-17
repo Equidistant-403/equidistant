@@ -16,7 +16,7 @@ def test_simple_convert():
     responses.add(
         responses.GET,
         nominatim_endpoint + address_query.format(address),
-        json=json.load('./responses/simple_convert.json'),
+        json=json.load(open('./responses/simple_convert.json')),
         status=200
     )
 
@@ -49,7 +49,7 @@ def test_missing_convert():
     """
     address = "3800 E Stevens Way NE, Seattle, WA 98195"
 
-    loaded_json = json.load('./responses/simple_convert.json')
+    loaded_json = json.load(open('./responses/simple_convert.json'))
     loaded_json[0].pop('lat')
     responses.add(
         responses.GET,

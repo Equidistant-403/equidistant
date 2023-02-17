@@ -18,7 +18,7 @@ def test_nearby_cs_building():
         responses.GET,
         overpass_endpoint +
         bounding_query.format(radius, lat_long[0], lat_long[1]),
-        json=json.load('./responses/nearby_cs_buildling.json'),
+        json=json.load(open('./responses/nearby_cs_buildling.json')),
         status=200
     )
 
@@ -61,7 +61,7 @@ def test_error_time():
     radius = 700
     lat_long = (47.6530733, -122.3050129)
 
-    loaded_json = json.load('./responses/nearby_cs_building.json')
+    loaded_json = json.load(open('./responses/nearby_cs_building.json'))
     loaded_json.pop("elements")
     responses.add(
         responses.GET,
