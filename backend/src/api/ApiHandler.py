@@ -30,6 +30,9 @@ class ApiHandler(MapAPI):
         return loc
 
     def get_travel_time(self, loc_1, loc_2) -> float:
+        """
+        Note that the input locations can be either in lat, long or address form
+        """
         loc_1 = self.convert(loc_1)
         if loc_1 is None:
             return None
@@ -46,6 +49,9 @@ class ApiHandler(MapAPI):
         return travel_time
 
     def get_nearby_options(self, loc, radius: float, n: int) -> list:
+        """
+        Note that the input location can be either in lat, long or address form
+        """
         loc = self.convert(loc)
         if loc is None:
             # TODO: What's an appropriate error here?
