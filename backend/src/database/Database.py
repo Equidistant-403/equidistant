@@ -1,4 +1,3 @@
-import array
 from abc import ABC, abstractmethod
 
 
@@ -17,7 +16,7 @@ class Database(ABC):
         pass
 
     @abstractmethod
-    def db_query(self, query: str) -> array:
+    def db_query(self, query: str) -> list:
         """
         Queries the database, returning all data matching the query.
         :param query: the query sent to the database in SQL-like language

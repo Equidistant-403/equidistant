@@ -2,7 +2,6 @@ import psycopg2
 
 from backend.src.database.Database import Database
 from backend.src import Constants
-import array
 import bitdotio
 
 
@@ -16,7 +15,7 @@ class BitdotioDB(Database):
         self.db = bitdotio.bitdotio(access_token=token)
         self.db_name = Constants.DB_NAME
 
-    def db_query(self, query: str) -> array:
+    def db_query(self, query: str) -> list:
         conn = self.db.get_connection(db_name=self.db_name)
         cursor = conn.cursor()
         cursor.execute(query)
