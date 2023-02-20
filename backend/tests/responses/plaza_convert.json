@@ -1,0 +1,95 @@
+[
+    {
+        "place_id": 165234164,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 242182549,
+        "boundingbox": [
+            "47.6483965",
+            "47.6504291",
+            "-122.3093119",
+            "-122.3057359"
+        ],
+        "lat": "47.649411549999996",
+        "lon": "-122.30763828060392",
+        "display_name": "University of Washington Medical Center - Montlake, 1959, Northeast Pacific Street, South Campus, University District, Seattle, King County, Washington, 98195, United States",
+        "class": "amenity",
+        "type": "hospital",
+        "importance": 0.9404394744122307,
+        "icon": "https://nominatim.openstreetmap.org/ui/mapicons/health_hospital.p.20.png"
+    },
+    {
+        "place_id": 346337046,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 10125149571,
+        "boundingbox": [
+            "47.6506921",
+            "47.6507921",
+            "-122.3087328",
+            "-122.3086328"
+        ],
+        "lat": "47.6507421",
+        "lon": "-122.3086828",
+        "display_name": "Health Sciences Library, 1959, Northeast Pacific Street, South Campus, University District, Seattle, King County, Washington, 98195, United States",
+        "class": "amenity",
+        "type": "library",
+        "importance": 0.6300099999999998,
+        "icon": "https://nominatim.openstreetmap.org/ui/mapicons/amenity_library.p.20.png"
+    },
+    {
+        "place_id": 36541852,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 2995199840,
+        "boundingbox": [
+            "47.649328",
+            "47.649428",
+            "-122.3077692",
+            "-122.3076692"
+        ],
+        "lat": "47.649378",
+        "lon": "-122.3077192",
+        "display_name": "Plaza Cafe, 1959, Northeast Pacific Street, South Campus, University District, Seattle, King County, Washington, 98195, United States",
+        "class": "amenity",
+        "type": "restaurant",
+        "importance": 0.6300099999999998,
+        "icon": "https://nominatim.openstreetmap.org/ui/mapicons/food_restaurant.p.20.png"
+    },
+    {
+        "place_id": 36099507,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 2995199837,
+        "boundingbox": [
+            "47.6491846",
+            "47.6492846",
+            "-122.3083969",
+            "-122.3082969"
+        ],
+        "lat": "47.6492346",
+        "lon": "-122.3083469",
+        "display_name": "1959, Northeast Pacific Street, South Campus, University District, Seattle, King County, Washington, 98195, United States",
+        "class": "place",
+        "type": "house",
+        "importance": 0.6300099999999998
+    },
+    {
+        "place_id": 309668219,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 1021047319,
+        "boundingbox": [
+            "47.650630675538",
+            "47.650730675538",
+            "-122.3081498701",
+            "-122.3080498701"
+        ],
+        "lat": "47.65068067553807",
+        "lon": "-122.30809987010468",
+        "display_name": "1959, Northeast Pacific Street, South Campus, University District, Seattle, King County, Washington, 98195, United States",
+        "class": "place",
+        "type": "house",
+        "importance": -0.52
+    }
+]

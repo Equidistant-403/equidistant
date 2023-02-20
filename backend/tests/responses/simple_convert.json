@@ -1,0 +1,57 @@
+[
+    {
+        "place_id": 68690415,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 6332022081,
+        "boundingbox": [
+            "47.6530233",
+            "47.6531233",
+            "-122.3050629",
+            "-122.3049629"
+        ],
+        "lat": "47.6530733",
+        "lon": "-122.3050129",
+        "display_name": "Microsoft Café, 3800, East Stevens Way Northeast, Central Campus, University District, Seattle, King County, Washington, 98195, United States",
+        "class": "amenity",
+        "type": "cafe",
+        "importance": 0.7300099999999999,
+        "icon": "https://nominatim.openstreetmap.org/ui/mapicons/food_cafe.p.20.png"
+    },
+    {
+        "place_id": 100051612,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+        "osm_type": "node",
+        "osm_id": 9866389651,
+        "boundingbox": [
+            "47.6526298",
+            "47.6527298",
+            "-122.3042044",
+            "-122.3041044"
+        ],
+        "lat": "47.6526798",
+        "lon": "-122.3041544",
+        "display_name": "PLSE lab, 3800, East Stevens Way Northeast, Central Campus, University District, Seattle, King County, Washington, 98195, United States",
+        "class": "office",
+        "type": "research",
+        "importance": 0.7300099999999999
+    },
+    {
+        "place_id": 299270017,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+        "osm_type": "relation",
+        "osm_id": 9098063,
+        "boundingbox": [
+            "47.652585",
+            "47.6531813",
+            "-122.3051537",
+            "-122.3037916"
+        ],
+        "lat": "47.65288435",
+        "lon": "-122.30447402318573",
+        "display_name": "Bill & Melinda Gates Center, 3800, East Stevens Way Northeast, Central Campus, University District, Seattle, King County, Washington, 98195, United States",
+        "class": "building",
+        "type": "university",
+        "importance": 0.7300099999999999
+    }
+]
