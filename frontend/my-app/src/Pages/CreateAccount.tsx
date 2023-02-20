@@ -5,6 +5,16 @@ import makeRequest from '../makeRequest'
 import { CreateAccountRequest } from '../requestObjects'
 import type { CreateAccountResponse } from '../responseTypes'
 import { isError } from '../responseTypes'
+import { Button, Box, Typography, TextField, Grid, Link, Stack, createTheme, ThemeProvider } from '@mui/material'
+
+const theme = createTheme({
+  palette: {
+    text: {
+      primary: 'rgba(255,255,255,0.87)',
+      secondary: 'rgba(255,255,255,0.87)'
+    }
+  }
+})
 
 const CreateAccount: React.FC = () => {
   const [email, setEmail] = useState('')
@@ -42,32 +52,105 @@ const CreateAccount: React.FC = () => {
   }
 
   return (
-    <div className="container">
-      <h1>Equidistant</h1>
-      <input
-        className="form"
-        type="email"
-        value={email}
-        onChange={(e) => { setEmail(e.target.value) }}
-        placeholder="Email"
-      />
-      <input
-        className="form"
-        type="password"
-        value={password}
-        onChange={(e) => { setPassword(e.target.value) }}
-        placeholder="Password"
-      />
-      <input
-        className="form"
-        type="address"
-        value={address}
-        onChange={(e) => { setAddress(e.target.value) }}
-        placeholder="Address"
-      />
-      <button onClick={handleCreate}>Create Account</button>
-      <a href="/forgot-password" className="links">Forgot password?</a>
-      <a href="/" className="links">Login to existing account</a>
+    <div style={{ height: '90vh', margin: 0, padding: 0 }}>
+      <Stack
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        spacing={6}
+        sx={{
+          height: 1
+        }}>
+        <Typography
+            component="h1"
+            variant="h1">
+            Equidistant
+        </Typography>
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            mx: 'auto'
+          }}>
+          <Box
+            component="form"
+            onSubmit={handleCreate}
+            noValidate
+            sx={{
+              mt: 1
+            }}>
+              <Typography
+                align='center'
+                component="h1"
+                variant="h5"
+                sx={{ mb: 2, color: 'text.primary' }}>
+                Account Creation
+              </Typography>
+              <ThemeProvider theme={theme}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  variant="standard"
+                  autoFocus
+                  onChange={(e) => { setEmail(e.target.value) }}
+                  color="info"
+                  sx={{
+                    input: { color: 'white' }
+                  }}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  variant="standard"
+                  onChange={(e) => { setPassword(e.target.value) }}
+                  color="info"
+                  sx={{ input: { color: 'white' } }}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="address"
+                  label="address"
+                  type="address"
+                  id="address"
+                  autoComplete="address"
+                  variant="standard"
+                  onChange={(e) => { setAddress(e.target.value) }}
+                  color="info"
+                  sx={{ input: { color: 'white' } }}
+                />
+              </ThemeProvider>
+            <Button
+              onClick={handleCreate}
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2, bgcolor: 'secondary.main' }}
+            >
+              Create Account
+            </Button>
+            <Grid container>
+              <Grid item>
+                <Link href="/" variant="body2">
+                  Already have an account? Login
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Stack>
     </div>
   )
 }
