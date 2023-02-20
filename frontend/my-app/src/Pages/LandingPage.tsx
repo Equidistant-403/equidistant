@@ -14,11 +14,17 @@ import {
   IconButton,
   Button,
   Stack,
-  Typography
+  Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField
 } from '@mui/material'
 import type { LocationResponse, User } from '../responseTypes'
 
 const LandingPage: React.FC = () => {
+  const [open, setOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -39,6 +45,7 @@ const LandingPage: React.FC = () => {
       })
     })
   }
+
   const getCheckedFriends = (): User[] => {
     const users: User[] = friends.filter((friend, index) => checkedFriends[index])
     return users
@@ -79,7 +86,42 @@ const LandingPage: React.FC = () => {
   }
 
   const handleFriendMenu = (): void => {
-    console.log('dummy friend pfp actuation')
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      sx={{
+        borderRadius: '20px'
+      }}>
+      <DialogTitle>Add Friend</DialogTitle>
+      <DialogContent>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Email Address"
+          type="email"
+          fullWidth
+          variant="standard"
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleSubmit}>Send Request</Button>
+      </DialogActions>
+    </Dialog>
+  }
+
+  const handleToggle = (): void => {
+    setOpen(true)
+  }
+
+  const handleSubmit = (): void => {
+    console.log('add friend')
+    handleClose()
+  }
+
+  const handleClose = (): void => {
+    setOpen(false)
   }
 
   return (
@@ -177,6 +219,32 @@ const LandingPage: React.FC = () => {
             component="span"
             sx={{ p: 5 }}
           />
+        <Button variant="outlined" color="primary" onClick={handleToggle} sx={{ mb: 5 }}>
+            Add Friends
+        </Button>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          sx={{
+            borderRadius: '20px'
+          }}>
+          <DialogTitle>Add Friend</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Email Address"
+              type="email"
+              fullWidth
+              variant="standard"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleSubmit}>Send Request</Button>
+          </DialogActions>
+        </Dialog>
         <Paper
           sx={{
             minWidth: 1 / 3,
