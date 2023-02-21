@@ -114,3 +114,4 @@ export {
   LocationRequest, FriendsRequest, UserRequest,
   SendFriendRequest, FriendRequestResponse
 }
+export { ENDPOINT }
