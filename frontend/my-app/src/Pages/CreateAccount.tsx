@@ -123,7 +123,7 @@ const CreateAccount: React.FC = () => {
                   required
                   fullWidth
                   name="address"
-                  label="address"
+                  label="Address"
                   type="address"
                   id="address"
                   autoComplete="address"
