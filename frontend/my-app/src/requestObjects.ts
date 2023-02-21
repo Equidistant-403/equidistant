@@ -3,18 +3,23 @@ enum HttpMethods {
   POST = 'POST',
 }
 
-const ENDPOINT = 'https://68df-205-175-97-210.ngrok.io'
+const ENDPOINT = 'https://b378-205-175-97-210.ngrok.io'
 class EquidistantRequest {
   path: string
   method: HttpMethods
+  headers: Headers
 
   constructor (method: HttpMethods, path: string) {
     this.path = ENDPOINT + path
     this.method = method
+    this.headers = new Headers({
+      'Content-Type': 'text/plain',
+      'ngrok-skip-browser-warning': 'true'
+    })
   }
 
   addParams (params: URLSearchParams): string {
-    const result = this.path += '?' + params.toString()
+    const result = this.path + '?' + params.toString()
     return result
   }
 }
@@ -47,11 +52,9 @@ class CreateAccountRequest extends EquidistantRequest {
 export { LoginRequest, CreateAccountRequest }
 
 class BearerRequest extends EquidistantRequest {
-  headers: Record<string, unknown>
-
   constructor (method: HttpMethods, path: string, bearer: string) {
     super(method, path)
-    this.headers = { Authorization: bearer }
+    this.headers.append('Authorization', bearer)
   }
 }
 
