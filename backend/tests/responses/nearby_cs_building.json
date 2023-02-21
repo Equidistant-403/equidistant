@@ -1,0 +1,57 @@
+{
+    "version": 0.6,
+    "generator": "Overpass API 0.7.59 e21c39fe",
+    "osm3s": {
+        "timestamp_osm_base": "2023-02-17T11:09:23Z",
+        "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+    },
+    "elements": [
+        {
+            "type": "node",
+            "id": 60665830,
+            "lat": 47.6554532,
+            "lon": -122.313141,
+            "tags": {
+                "addr:city": "Seattle",
+                "addr:housenumber": "4002",
+                "addr:postcode": "98105",
+                "addr:street": "University Way Northeast",
+                "amenity": "restaurant",
+                "contact:yelp": "https://www.yelp.com/biz/basil-viet-kitchen-seattle?osq=Basil+Viet+Kitchen",
+                "cuisine": "thai;vietnamese",
+                "name": "Basil Viet Kitchen",
+                "opening_hours": "Mo-Fr 11:00-21:00; Sa-Su 11:00-20:00",
+                "outdoor_seating": "no",
+                "source": "King County GIS;data.seattle.gov"
+            }
+        },
+        {
+            "type": "node",
+            "id": 2671015705,
+            "lat": 47.6517371,
+            "lon": -122.3132664,
+            "tags": {
+                "amenity": "restaurant",
+                "cuisine": "sandwich",
+                "name": "Vista Café",
+                "opening_hours": "Mo-Fr 07:30-15:00",
+                "website": "https://www.hfs.washington.edu/dining/Default.aspx?id=324"
+            }
+        },
+        {
+            "type": "node",
+            "id": 2995199840,
+            "lat": 47.649378,
+            "lon": -122.3077192,
+            "tags": {
+                "addr:city": "Seattle",
+                "addr:housenumber": "1959",
+                "addr:postcode": "98195",
+                "addr:street": "Northeast Pacific Street",
+                "amenity": "restaurant",
+                "name": "Plaza Cafe",
+                "source:addr:id": "14021"
+            }
+        }
+    ]
+}
