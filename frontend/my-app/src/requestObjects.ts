@@ -3,12 +3,13 @@ enum HttpMethods {
   POST = 'POST',
 }
 
+const ENDPOINT = 'https://68df-205-175-97-210.ngrok.io'
 class EquidistantRequest {
   path: string
   method: HttpMethods
 
   constructor (method: HttpMethods, path: string) {
-    this.path = path
+    this.path = ENDPOINT + path
     this.method = method
   }
 
