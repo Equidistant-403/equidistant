@@ -27,10 +27,26 @@ the `equidistant/frontend/my-app` directory.
 
 
 # How to test the software.
-Provide clear instructions for how to run the system’s test cases. In some cases, the instructions may need to include information such as how to access data sources or how to interact with external systems. You may reference the user documentation (e.g., prerequisites) to avoid duplication.
+## Frontend
+To test the front end, make sure you have installed the dependendencies and then run `npm run test` from
+the `equidistant/frontend/my-app` directory.
+
+## Backend
+
 
 # How to add new tests.
 Are there any naming conventions/patterns to follow when naming test files? Is there a particular test harness to use?
+## Frontend
+Test files are named after the file they are testing. For example, there are tests for `App.tsx` in the `App.test.tsx` file.
+Tests in the files can be written inside of a wrapper function that looks like this.
+```
+test('test name', () => {
+    // your test here
+})
+```
+
+## Backend
+
 
 # How to build a release of the software.
 Describe any tasks that are not automated. For example, should a developer update a version number (in code and documentation) prior to invoking the build system? Are there any sanity checks a developer should perform after building a release?
