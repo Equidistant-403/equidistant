@@ -49,3 +49,6 @@ test('test name', () => {
 
 # How to build a release of the software.
 Describe any tasks that are not automated. For example, should a developer update a version number (in code and documentation) prior to invoking the build system? Are there any sanity checks a developer should perform after building a release?
+Version number should be updated in the top level `README.md` file, and again in the `frontend/my-app/package.json` file.
+Then, once the changes are merged to main, [go here](https://github.com/pandabear15/equidistant/releases/new) and create a new release.
+Names should follow the standard versioning control, where `x.0.0` indicates the major version number (major changes, backwards compatibility breakage), `0.y.0` indicates that minor version (features, backwards compatible changes), and `0.0.z` indicates a patch version (patches and bug fixes). The description should have a list of all changes, specifically highlighting anything that is not backwards compatible in the case of a major version bump.
