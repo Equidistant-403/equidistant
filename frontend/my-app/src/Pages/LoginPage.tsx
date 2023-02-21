@@ -17,7 +17,7 @@ const LoginPage: React.FC = () => {
         if (isError(res)) {
           // TODO: Display the error message
           // TODO: Remove alert
-          alert(res.errorMessage)
+          alert(res.error)
           return
         }
 
@@ -27,8 +27,8 @@ const LoginPage: React.FC = () => {
         navigate('/landing', {
           state: {
             user: response.user,
-            friends: response.listOfFriends,
-            requests: response.listOfRequests,
+            friends: response.friends,
+            requests: response.friendRequests,
             bearer: response.bearer
           }
         })
