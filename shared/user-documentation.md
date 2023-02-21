@@ -20,4 +20,4 @@ Every bug report needs:
 A report can be filled out using this template [here](https://github.com/Equidistant-403/equidistant/issues/new?assignees=&labels=&template=bug-report.md&title=%5BBUG%5D+%3Cname%3E).
 
 # Known bugs.
-[A list of known bugs can be found here](https://github.com/pandabear15/equidistant/issues)
+[A list of known bugs can be found here](https://github.com/Equidistant-403/equidistant/issues)

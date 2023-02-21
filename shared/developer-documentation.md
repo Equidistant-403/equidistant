@@ -1,7 +1,7 @@
 ## Developer Documentation
 
 # How to obtain the source code.
-All source code is within the root `equidistant` directory, which can be cloned from the [Github Repo](https://github.com/pandabear15/equidistant)
+All source code is within the root `equidistant` directory, which can be cloned from the [Github Repo](https://github.com/Equidistant-403/equidistant)
 
 # The layout of your directory structure.
 ## General
@@ -49,5 +49,5 @@ test('test name', () => {
 
 # How to build a release of the software.
 Version number should be updated in the top level `README.md` file, and again in the `frontend/my-app/package.json` file.
-Then, once the changes are merged to main, [go here](https://github.com/pandabear15/equidistant/releases/new) and create a new release.
+Then, once the changes are merged to main, [go here](https://github.com/Equidistant-403/equidistant/releases/new) and create a new release.
 Names should follow the standard versioning control, where `x.0.0` indicates the major version number (major changes, backwards compatibility breakage), `0.y.0` indicates that minor version (features, backwards compatible changes), and `0.0.z` indicates a patch version (patches and bug fixes). The description should have a list of all changes, specifically highlighting anything that is not backwards compatible in the case of a major version bump.
