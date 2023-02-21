@@ -1,24 +1,11 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import App from './App'
-import { setupServer } from 'msw/node'
-import { handlers } from './mocks/handlers'
 import { BrowserRouter as Router } from 'react-router-dom'
+import setupMocks from './mocks/setupMocks'
+import { handlers } from './mocks/handlers'
 
-const server = setupServer(...handlers)
-
-beforeAll(() => {
-  // Establish requests interception layer before all tests.
-  server.listen()
-})
-afterEach(() => {
-  server.resetHandlers()
-})
-afterAll(() => {
-  // Clean up after all tests are done, preventing this
-  // interception layer from affecting irrelevant tests.
-  server.close()
-})
+setupMocks(...handlers)
 
 test('test test', () => {
   render(
@@ -26,6 +13,7 @@ test('test test', () => {
       <App />
     </Router>
   )
-  // TODO: remove console.log
-  console.log('this test ran')
+  const loginButton = screen.getByRole('button', { name: /sign in/i })
+  console.log(loginButton)
+  expect(loginButton).toBeInTheDocument()
 })
