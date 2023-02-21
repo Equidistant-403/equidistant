@@ -12,13 +12,13 @@ export const handlers: RequestHandler[] = [
             place: [1, 1],
             name: 'CSE1',
             rating: 4,
-            travelTimes: [12, 20, 8, 15, 16]
+            travel_times: [12, 20, 8, 15, 16]
           },
           {
             place: [2, 2],
             name: 'CSE2',
             rating: 5,
-            travelTimes: [12, 20, 8, 15, 16]
+            travel_times: [12, 20, 8, 15, 16]
           }
         ]
       })
@@ -37,7 +37,7 @@ export const handlers: RequestHandler[] = [
             email,
             address: '123 NE UW Street, Seattle, WA 98105'
           },
-          listOfFriends: [
+          friends: [
             {
               email: 'Joe@gmail.com',
               address: 'Paul Allen Center, 185 E Stevens Way NE AE100R, Seattle, WA 98195'
@@ -67,7 +67,7 @@ export const handlers: RequestHandler[] = [
               address: 'Odegaard Undergraduate Library, 4060 George Washington Lane Northeast, Seattle, WA 98195'
             }
           ],
-          listOfRequests: [
+          friend_requests: [
             {
 
             }
@@ -91,7 +91,7 @@ export const handlers: RequestHandler[] = [
       return res(
         ctx.status(200),
         ctx.json({
-          listOfFriends: [
+          friends: [
             {
               id: 1,
               email: 'Joe@gmail.com',
@@ -128,7 +128,7 @@ export const handlers: RequestHandler[] = [
               address: 'Odegaard Undergraduate Library, 4060 George Washington Lane Northeast, Seattle, WA 98195'
             }
           ],
-          listOfRequests: [
+          friend_requests: [
             {
 
             }
@@ -140,7 +140,7 @@ export const handlers: RequestHandler[] = [
     return res(
       ctx.status(401),
       ctx.json({
-        errorMessage: 'Error: Not Authenticated'
+        error: 'Error: Not Authenticated'
       })
     )
   }),
@@ -165,7 +165,7 @@ export const handlers: RequestHandler[] = [
     return res(
       ctx.status(401),
       ctx.json({
-        errorMessage: 'Error: Not Authenticated'
+        error: 'Error: Not Authenticated'
       })
     )
   }),
@@ -179,7 +179,7 @@ export const handlers: RequestHandler[] = [
       return res(
         ctx.status(400),
         ctx.json({
-          errorMessage: 'Error: Cannot make account with provided parameters'
+          error: 'Error: Cannot make account with provided parameters'
         })
       )
     }
@@ -210,7 +210,7 @@ export const handlers: RequestHandler[] = [
     return res(
       ctx.status(401),
       ctx.json({
-        errorMessage: 'Error: Not Authenticated'
+        error: 'Error: Not Authenticated'
       })
     )
   }),
@@ -241,7 +241,7 @@ export const handlers: RequestHandler[] = [
     return res(
       ctx.status(401),
       ctx.json({
-        errorMessage: 'Error: Not Authenticated'
+        error: 'Error: Not Authenticated'
       })
     )
   })
