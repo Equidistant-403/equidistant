@@ -35,7 +35,6 @@ the `equidistant/frontend/my-app` directory.
 
 
 # How to add new tests.
-Are there any naming conventions/patterns to follow when naming test files? Is there a particular test harness to use?
 ## Frontend
 Test files are named after the file they are testing. For example, there are tests for `App.tsx` in the `App.test.tsx` file.
 Tests in the files can be written inside of a wrapper function that looks like this.
