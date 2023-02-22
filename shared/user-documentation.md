@@ -10,7 +10,14 @@ Equidistant is a web application, so all one needs to do to access it is to visi
 To use the software, all a user needs to do is make an account. From there, once a user has at least one friend, they can generate suggestions for where to go to eat!
 
 # How to report a bug.
-This should include not just the mechanics (a pointer to your issue tracker), but also what information is needed. You can set up a bug-report template in your issue tracker, or you can reference a resource about how to write a good bug report. Here is an example for bug reporting guidelines.
+Every bug report needs:
+- Name
+- Description
+- Steps to recreate
+- What the expected behavior was
+- Applicable screenshots (error messages, etc)
+- OS, browser, and version number of the program
+A report can be filled out using this template [here](https://github.com/Equidistant-403/equidistant/issues/new?assignees=&labels=&template=bug-report.md&title=%5BBUG%5D+%3Cname%3E).
 
 # Known bugs.
-[A list of known bugs can be found here](https://github.com/pandabear15/equidistant/issues)
+[A list of known bugs can be found here](https://github.com/Equidistant-403/equidistant/issues)
