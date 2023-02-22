@@ -14,11 +14,17 @@ import {
   IconButton,
   Button,
   Stack,
-  Typography
+  Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField
 } from '@mui/material'
 import type { LocationResponse, User } from '../responseTypes'
 
 const LandingPage: React.FC = () => {
+  const [open, setOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -39,6 +45,7 @@ const LandingPage: React.FC = () => {
       })
     })
   }
+
   const getCheckedFriends = (): User[] => {
     const users: User[] = friends.filter((friend, index) => checkedFriends[index])
     return users
@@ -79,7 +86,42 @@ const LandingPage: React.FC = () => {
   }
 
   const handleFriendMenu = (): void => {
-    console.log('dummy friend pfp actuation')
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      sx={{
+        borderRadius: '20px'
+      }}>
+      <DialogTitle>Add Friend</DialogTitle>
+      <DialogContent>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Email Address"
+          type="email"
+          fullWidth
+          variant="standard"
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleSubmit}>Send Request</Button>
+      </DialogActions>
+    </Dialog>
+  }
+
+  const handleToggle = (): void => {
+    setOpen(true)
+  }
+
+  const handleSubmit = (): void => {
+    console.log('add friend')
+    handleClose()
+  }
+
+  const handleClose = (): void => {
+    setOpen(false)
   }
 
   return (
@@ -88,7 +130,8 @@ const LandingPage: React.FC = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          borderRadius: '16px'
         }}>
           <AppBar
             position='relative'
@@ -99,11 +142,12 @@ const LandingPage: React.FC = () => {
               minWidth: 4 / 5,
               mb: 'auto',
               mt: 5,
-              mx: 'auto'
+              mx: 'auto',
+              borderRadius: '40px'
             }}
           >
             <Toolbar>
-              <Button color='secondary' variant='contained' onClick={handleLogoutClick}>Logout</Button>
+              <Button color='secondary' variant='contained' sx={{ borderRadius: 28 }}onClick={handleLogoutClick}>Logout</Button>
                 <Stack
                   direction="row"
                   justifyContent="flex-start"
@@ -147,7 +191,8 @@ const LandingPage: React.FC = () => {
                 sx={{
                   display: 'flex',
                   flexWarp: 'wrap',
-                  mr: 3
+                  mr: 3,
+                  borderRadius: 28
                 }}
                 >
                   Generate
@@ -174,12 +219,39 @@ const LandingPage: React.FC = () => {
             component="span"
             sx={{ p: 5 }}
           />
+        <Button variant="outlined" color="primary" onClick={handleToggle} sx={{ mb: 5 }}>
+            Add Friends
+        </Button>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          sx={{
+            borderRadius: '20px'
+          }}>
+          <DialogTitle>Add Friend</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Email Address"
+              type="email"
+              fullWidth
+              variant="standard"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleSubmit}>Send Request</Button>
+          </DialogActions>
+        </Dialog>
         <Paper
           sx={{
             minWidth: 1 / 3,
             maxHeight: 1 / 2,
             overflow: 'auto',
-            mb: 'auto'
+            mb: 'auto',
+            borderRadius: '40px'
           }}
         >
           <FormGroup
@@ -195,6 +267,7 @@ const LandingPage: React.FC = () => {
                   ml: 2,
                   my: 0.3,
                   py: 1,
+                  borderRadius: '20px',
                   '&:hover': {
                     backgroundColor: 'secondary.main',
                     opacity: [0.8, 0.8, 0.8]
