@@ -16,7 +16,7 @@ and the test files alongside them. For example, the test file for `App.tsx` is t
 same directory.
 
 ## Backend
-Backend code is in the `equidistant/backend` directory.
+Backend code is in the `equidistant/backend` directory. Similar to frontend, you'll have to install the necessary python libraries in order to actually run anything. These include django, BitIO, and requests to name a few but we would recommend trying to run and then seeing what's missing to know what's a required install.
 
 # How to build the software.
 ## Frontend
@@ -24,7 +24,11 @@ To build the front end, make sure you have installed the dependendencies and the
 the `equidistant/frontend/my-app` directory.
 
 ## Backend
-
+To run the server, first navigate to the `equidistant/backend/src/httpserver` directory. From here you can execute the following command
+```bash
+python manage.py runserver 80
+```
+Where 80 is the port number, to start the server.
 
 # How to test the software.
 ## Frontend
@@ -32,20 +36,22 @@ To test the front end, make sure you have installed the dependendencies and then
 the `equidistant/frontend/my-app` directory.
 
 ## Backend
+All you have to do to run the backend tests is run `pytest` from the `equidistant/backend` directory
 
 
 # How to add new tests.
 ## Frontend
 Test files are named after the file they are testing. For example, there are tests for `App.tsx` in the `App.test.tsx` file.
 Tests in the files can be written inside of a wrapper function that looks like this.
-```
+```javascript
 test('test name', () => {
     // your test here
 })
 ```
 
 ## Backend
+New test files can be added either to specific files that already exist within the `equidistant/backend/tests` directory, or new files can be created there should the desired test not fit into one of the existing files.
 
 
 # How to build a release of the software.
-Describe any tasks that are not automated. For example, should a developer update a version number (in code and documentation) prior to invoking the build system? Are there any sanity checks a developer should perform after building a release?
+The only tests that currently are not automated is porting code over to our backend. We pln on making this an automated task in the future, but currently if you're planning on building you should make sure that the frontend is correctly calling whatever endpoint you've ported the backend to via the `process.env.REACT_APP_BACKEND` environment variable.
