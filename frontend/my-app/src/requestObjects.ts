@@ -3,7 +3,7 @@ enum HttpMethods {
   POST = 'POST',
 }
 
-const ENDPOINT = process.env.NODE_ENV === 'development' ? '' : 'https://b378-205-175-97-210.ngrok.io'
+const ENDPOINT = process.env.NODE_ENV === 'development' ? '' : process.env.BACKEND_ENDPOINT
 class EquidistantRequest {
   path: string
   method: HttpMethods
