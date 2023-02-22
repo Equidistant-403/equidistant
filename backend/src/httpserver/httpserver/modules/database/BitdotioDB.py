@@ -1,7 +1,7 @@
 import psycopg2
 
-from backend.src.database.Database import Database
-from backend.src import Constants
+from httpserver.modules.database.Database import Database
+from httpserver.modules import Constants
 import array
 import bitdotio
 

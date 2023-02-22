@@ -1,11 +1,11 @@
 from typing import Tuple
 
-from backend.src.MapAPI import MapAPI
+from httpserver.modules.api.MapAPI import MapAPI
 
-from backend.src.api.nominatim import get_lat_long
-from backend.src.api.overpass import nearby_point
-from backend.src.api.osrm import determine_travel_time
-from backend.src.api.osrm import TravelOptions
+from backend.src.httpserver.httpserver.modules.api.nominatim import get_lat_long
+from backend.src.httpserver.httpserver.modules.api.overpass import nearby_point
+from backend.src.httpserver.httpserver.modules.api.osrm import determine_travel_time
+from backend.src.httpserver.httpserver.modules.api.osrm import TravelOptions
 
 
 class ApiHandler(MapAPI):

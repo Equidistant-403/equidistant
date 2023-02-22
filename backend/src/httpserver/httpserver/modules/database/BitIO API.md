@@ -31,6 +31,7 @@ Stores friend relations between users.
 ```sql
 CREATE TABLE Friends(user1 text NOT NULL,
                      user2 text NOT NULL,
+                     status INTEGER,
                      CONSTRAINT u1 FOREIGN KEY (user1) REFERENCES users(email),
                      CONSTRAINT u2 FOREIGN KEY (user2) REFERENCES users(email))
 ```
