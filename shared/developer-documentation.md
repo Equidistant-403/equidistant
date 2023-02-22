@@ -24,7 +24,14 @@ To build the front end, make sure you have installed the dependendencies and the
 the `equidistant/frontend/my-app` directory.
 
 ## Backend
-To run the server, first navigate to the `equidistant/backend/src/httpserver` directory. From here you can execute the following command
+You will need an API Token that can access a database from bit.io. To do this, you must first create
+a Bit.io account and database (which can be done for free - the free tier is very generous). Navigate to the "Connect"
+tab and copy this key. Then, add an `.env` file to the root directory, with one line that reads
+```
+BITIO_API_TOKEN=[YOUR_API_TOKEN_HERE]
+```
+​
+Then, to run the server, navigate to the `equidistant/backend/src/httpserver` directory. From here you can execute the following command
 ```bash
 python manage.py runserver 80
 ```
@@ -44,14 +51,15 @@ All you have to do to run the backend tests is run `pytest` from the `equidistan
 Test files are named after the file they are testing. For example, there are tests for `App.tsx` in the `App.test.tsx` file.
 Tests in the files can be written inside of a wrapper function that looks like this.
 ```javascript
-test('test name', () => {
+it('test name', () => {
     // your test here
 })
 ```
 
 ## Backend
 New test files can be added either to specific files that already exist within the `equidistant/backend/tests` directory, or new files can be created there should the desired test not fit into one of the existing files.
-
+​
+Some tests that run directly on the server may require running within Django, in which case tests can be added to the `equidistant/backend/src/httpserver/myapp/test.py` file.
 
 # How to build a release of the software.
 Version number should be updated in the top level `README.md` file, and again in the `frontend/my-app/package.json` file.
@@ -59,3 +67,4 @@ Then, once the changes are merged to main, [go here](https://github.com/Equidist
 Names should follow the standard versioning control, where `x.0.0` indicates the major version number (major changes, backwards compatibility breakage), `0.y.0` indicates that minor version (features, backwards compatible changes), and `0.0.z` indicates a patch version (patches and bug fixes). The description should have a list of all changes, specifically highlighting anything that is not backwards compatible in the case of a major version bump.
 
 For backend, the only tasks that currently are not automated is porting code over to our running instance. We pln on making this an automated task in the future, but currently if you're planning on building you should make sure that the frontend is correctly calling whatever endpoint you've ported the backend to via the `process.env.REACT_APP_BACKEND` environment variable.
+Our instance is also using ngrok as a tunnel to provide a public URL to the front end, but this is not necessary to run the backend.
