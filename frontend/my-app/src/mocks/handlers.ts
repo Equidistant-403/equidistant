@@ -18,8 +18,7 @@ export const handlers: RequestHandler[] = [
             place: [2, 2],
             name: 'CSE2',
             rating: 5,
-            travel_times: [12, 20, 8, 15, 16]
-            travelTimes: [1, 2, 38, 4, 5]
+            travel_times: [1, 2, 38, 4, 5]
           }
         ]
       })
