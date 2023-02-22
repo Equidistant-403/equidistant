@@ -3,7 +3,7 @@ enum HttpMethods {
   POST = 'POST',
 }
 
-const ENDPOINT = process.env.NODE_ENV === 'development' ? '' : process.env.BACKEND_ENDPOINT
+const ENDPOINT = process.env.NODE_ENV === 'development' ? '' : process.env.BACKEND_ENDPOINT as string
 class EquidistantRequest {
   path: string
   method: HttpMethods
