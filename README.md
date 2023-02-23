@@ -30,6 +30,9 @@ Guide to some basic commands. all should be run from the `./frontend/my-app` dir
 #### to get your MSW worker going for local development (1 time execution)
 `npx msw init public/ --save`
 
+#### to turn MSW on & off for local development
+MSW is by default turned off. This is controlled via an environmental variable. If you wish to change this so the default is on, make a `equidistant/frontend/my-app/.env.development` file and change add a value for `REACT_APP_MOCKS_ENABLED` as true. If you just wish to run the development build once with mocking enabled, run `REACT_APP_MOCKS_ENABLED=true npm start`
+
 #### to run the formatter and receive information on errors in the terminal
 `npm run lint`
 
