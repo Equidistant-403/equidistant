@@ -85,4 +85,4 @@ def test_json_error_time():
     )
 
     result = nearby_point(lat_long, radius)
-    assert(result == [])
+    assert (result == [])

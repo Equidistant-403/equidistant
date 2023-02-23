@@ -8,7 +8,8 @@ from backend.src.api.nominatim import nominatim_endpoint, address_query
 from backend.src.api.nominatim import get_lat_long
 
 epsilon = 1e-5
-response_files = os.path.join(os.path.dirname(os.path.abspath(__file__)), "responses")
+response_files = os.path.join(os.path.dirname(
+    os.path.abspath(__file__)), "responses")
 
 
 @responses.activate
