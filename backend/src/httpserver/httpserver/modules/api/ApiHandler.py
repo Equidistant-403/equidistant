@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from httpserver.modules.api.MapAPI import MapAPI
+from backend.src.httpserver.httpserver.modules.api.MapAPI import MapAPI
 
 from backend.src.httpserver.httpserver.modules.api.nominatim import get_lat_long
 from backend.src.httpserver.httpserver.modules.api.overpass import nearby_point
