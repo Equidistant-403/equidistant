@@ -18,11 +18,20 @@ describe('LoginPage', () => {
     render(<LoginPage />, { wrapper: MemoryRouter })
     const signUpButton = screen.getByRole('link', { name: "Don't have an account? Sign Up" })
     expect(signUpButton).toBeInTheDocument()
+    expect(signUpButton).toBeEnabled()
+  })
+
+  it('Forgot password button rendered', () => {
+    render(<LoginPage />, { wrapper: MemoryRouter })
+    const forgotPasswordButton = screen.getByRole('link', { name: 'Forgot password?' })
+    expect(forgotPasswordButton).toBeInTheDocument()
+    expect(forgotPasswordButton).toBeEnabled()
   })
 
   it('Form rendered', () => {
     render(<LoginPage />, { wrapper: MemoryRouter })
-    const signUpButton = screen.getByRole('link', { name: "Don't have an account? Sign Up" })
-    expect(signUpButton).toBeInTheDocument()
+    const emailForm = screen.getByRole('textbox', { name: /email/i })
+    expect(emailForm).toBeInTheDocument()
+    expect(emailForm).toBeEnabled()
   })
 })
