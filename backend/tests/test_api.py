@@ -3,7 +3,7 @@ import responses
 import json
 import urllib.parse
 
-from backend.src.httpserver.httpserver.modules.api import ApiHandler
+from backend.src.httpserver.httpserver.modules.api.ApiHandler import ApiHandler
 
 from backend.src.httpserver.httpserver.modules.api.nominatim import nominatim_endpoint, address_query
 from backend.src.httpserver.httpserver.modules.api.overpass import overpass_endpoint, bounding_query
