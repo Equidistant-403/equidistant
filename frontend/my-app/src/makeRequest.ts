@@ -2,11 +2,10 @@ import type { EquidistantRequest } from './requestObjects'
 import type { EquidistantResponse, ErrorResponse } from './responseTypes'
 
 export default async function makeRequest (request: EquidistantRequest): Promise<EquidistantResponse> {
-  console.log(request)
   const response = await fetch(request.path, request)
   if (response.ok) {
-    const jsonCamel = keysToCamel(await response.json())
-    return (jsonCamel as EquidistantResponse)
+    const json = keysToCamel(await response.json())
+    return (json as EquidistantResponse)
   } else {
     const error: ErrorResponse = { error: 'Server connection issue' }
     return error
