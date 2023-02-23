@@ -50,5 +50,12 @@ jobs:
 
     if: github.ref == 'refs/pull/48/merge'
     steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
       - name: Deploy app
         run: npm run deploy
