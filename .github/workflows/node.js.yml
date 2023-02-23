@@ -38,6 +38,14 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: 'frontend/my-app'
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
     needs: build
 
     if: github.ref == 'refs/pull/48/merge'
