@@ -4,6 +4,7 @@ class ExternalAPIError(Exception):
     """
     pass
 
+
 class NoRouteFound(Exception):
     """
     Exception for when no route is found between two locations
