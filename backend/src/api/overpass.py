@@ -1,5 +1,6 @@
 import requests
 from typing import Tuple, List
+from backend.src.api.ApiExceptions import ExternalAPIError
 
 
 class Node:
@@ -71,13 +72,11 @@ def nearby_point(lat_long: Tuple[float, float], radius: int) -> List[Node]:
     })
 
     if not response.ok:
-        # TODO: What's a useful response here
-        return None
+        raise ExternalAPIError("Issue with external Overpass API")
 
     response_json = response.json()
     if "elements" not in response_json:
-        # TODO: What's a useful response here
-        return None
+        return []
 
     encoded = [Node(**node) for node in response_json['elements']]
     return encoded
