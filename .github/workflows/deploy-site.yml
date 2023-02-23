@@ -3,7 +3,7 @@ name: Deploy Equidistant
 on:
   workflow_run:
     workflows: [Node.js CI]
-    branches: [main, zshafe/githubPages]
+    branches: [zshafe/githubPages]
     types:
       - completed
 
