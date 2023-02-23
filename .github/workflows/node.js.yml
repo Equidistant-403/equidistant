@@ -33,7 +33,6 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
-    - run: echo ${{ github.ref }}
 
   deploy:
 
@@ -41,7 +40,7 @@ jobs:
 
     needs: build
 
-    if: github.ref == 'refs/heads/zshafe/githubPages'
+    if: github.ref == 'refs/pull/48/merge'
     steps:
       - name: Deploy app
         run: npm run deploy
