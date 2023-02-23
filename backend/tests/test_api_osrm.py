@@ -1,6 +1,9 @@
 import os
 import responses
 import json
+import pytest
+
+from backend.src.api.ApiExceptions import ExternalAPIError, NoRouteFound
 
 from backend.src.api.osrm import TravelOptions
 from backend.src.api.osrm import osrm_walk_endpoint, travel_time_query
@@ -35,7 +38,7 @@ def test_travel_time():
 @responses.activate
 def test_server_error_time():
     """
-    Verifies that None is returned on server issue
+    Verifies that error is raised on server issue
     """
     start = (47.6530733, -122.3050129)
     end = (47.649378, -122.3077192)
@@ -48,14 +51,14 @@ def test_server_error_time():
         status=400
     )
 
-    result = determine_travel_time(start, end, type)
-    assert (result is None)
+    with pytest.raises(ExternalAPIError):
+        determine_travel_time(start, end, type)
 
 
 @responses.activate
 def test_json_error_time():
     """
-    Verifies that None is returned when no path is found
+    Verifies that error is raised when no path is found
     """
     start = (47.6530733, -122.3050129)
     end = (47.649378, -122.3077192)
@@ -72,5 +75,5 @@ def test_json_error_time():
         status=200
     )
 
-    result = determine_travel_time(start, end, type)
-    assert (result is None)
+    with pytest.raises(NoRouteFound):
+        determine_travel_time(start, end, type)
