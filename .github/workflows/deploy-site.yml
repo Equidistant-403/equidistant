@@ -31,8 +31,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
-      - name: deploy the app to Github Pages
-        run: npm run build --if-present    
+      - run: npm run build --if-present    
       - name: deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
