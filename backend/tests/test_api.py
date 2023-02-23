@@ -5,10 +5,10 @@ import urllib.parse
 
 from backend.src.httpserver.httpserver.modules.api import ApiHandler
 
-from backend.src.httpserver.httpserver.modules.api import nominatim_endpoint, address_query
+from backend.src.httpserver.httpserver.modules.api.nominatim import nominatim_endpoint, address_query
 from backend.src.httpserver.httpserver.modules.api.overpass import overpass_endpoint, bounding_query
-from backend.src.httpserver.httpserver.modules.api import osrm_walk_endpoint, travel_time_query
-from backend.src.httpserver.httpserver.modules.api import TravelOptions
+from backend.src.httpserver.httpserver.modules.api.osrm import osrm_walk_endpoint, travel_time_query
+from backend.src.httpserver.httpserver.modules.api.osrm import TravelOptions
 
 epsilon = 1e-5
 response_files = os.path.join(os.path.dirname(

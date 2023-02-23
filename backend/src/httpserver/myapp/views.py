@@ -63,13 +63,14 @@ def get_login_credentials(request):
                                       f'JOIN {DB_USERS} '
                                       f'ON {DB_USERS}.email = {DB_FRIENDS}.user2 '
                                       f'WHERE {DB_USERS}.email = \'{email}\' '
-                                      f'AND ({DB_FRIENDS}.status = 0 OR {DB_FRIENDS}.status = 2)')
-            friend_list.append(db.db_query(f'SELECT {DB_USERS}.email, {DB_USERS}.address, '
-                                           f'{DB_FRIENDS}.status FROM {DB_FRIENDS} '
-                                           f'JOIN {DB_USERS} '
-                                           f'ON {DB_USERS}.email = {DB_FRIENDS}.user1 '
-                                           f'WHERE {DB_USERS}.email = \'{email}\' '
-                                           f'AND ({DB_FRIENDS}.status = 0 OR {DB_FRIENDS}.status = 1)'))
+                                      f'AND ({DB_FRIENDS}.status = 0 OR {DB_FRIENDS}.status = 2) '
+                                      f'UNION ALL '
+                                      f'SELECT {DB_USERS}.email, {DB_USERS}.address, '
+                                      f'{DB_FRIENDS}.status FROM {DB_FRIENDS} '
+                                      f'JOIN {DB_USERS} '
+                                      f'ON {DB_USERS}.email = {DB_FRIENDS}.user1 '
+                                      f'WHERE {DB_USERS}.email = \'{email}\' '
+                                      f'AND ({DB_FRIENDS}.status = 0 OR {DB_FRIENDS}.status = 1)')
             friends = []
             friend_reqs = []
             for friend_tuple in friend_list:
