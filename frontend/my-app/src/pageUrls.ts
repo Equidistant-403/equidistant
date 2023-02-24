@@ -1,4 +1,4 @@
-export const URL_BASE: string = '/equidistant/#'
+export const URL_BASE: string = '/equidistant'
 
 export const LOGIN_URL = '/'
 
