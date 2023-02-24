@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 
 if (process.env.NODE_ENV === 'development' && process.env.REACT_APP_MOCKS_ENABLED === 'true') {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -15,9 +15,9 @@ const root = ReactDOM.createRoot(
 )
 root.render(
   <React.StrictMode>
-    <Router basename='equidistant/'>
+    <HashRouter>
       <App />
-    </Router>
+    </HashRouter>
   </React.StrictMode>
 )
 
