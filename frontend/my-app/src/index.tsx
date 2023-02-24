@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { HashRouter } from 'react-router-dom'
+import { URL_BASE } from './pageUrls'
 
 if (process.env.NODE_ENV === 'development' && process.env.REACT_APP_MOCKS_ENABLED === 'true') {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -15,7 +16,7 @@ const root = ReactDOM.createRoot(
 )
 root.render(
   <React.StrictMode>
-    <HashRouter>
+    <HashRouter basename={URL_BASE}>
       <App />
     </HashRouter>
   </React.StrictMode>

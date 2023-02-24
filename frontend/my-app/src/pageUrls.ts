@@ -1,11 +1,11 @@
-export const URL_BASE: string = '/equidistant'
+export const URL_BASE: string = '/equidistant/#'
 
 export const LOGIN_URL = '/'
 
-export const CREATE_ACCOUNT_URL = URL_BASE + '/create-account'
+export const CREATE_ACCOUNT_URL = '/create-account'
 
-export const LANDING_PAGE_URL = URL_BASE + '/landing'
+export const LANDING_PAGE_URL = '/landing'
 
-export const RESULTS_URL = URL_BASE + '/results'
+export const RESULTS_URL = '/results'
 
-export const ACCOUNT_URL = URL_BASE + '/account'
+export const ACCOUNT_URL = '/account'
