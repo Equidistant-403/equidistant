@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/equidistant/static/js/main.f93c259d.js",
+    "main.js": "/equidistant/static/js/main.d2bc7368.js",
     "static/js/787.d56671a1.chunk.js": "/equidistant/static/js/787.d56671a1.chunk.js",
     "index.html": "/equidistant/index.html",
-    "main.f93c259d.js.map": "/equidistant/static/js/main.f93c259d.js.map",
+    "main.d2bc7368.js.map": "/equidistant/static/js/main.d2bc7368.js.map",
     "787.d56671a1.chunk.js.map": "/equidistant/static/js/787.d56671a1.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.f93c259d.js"
+    "static/js/main.d2bc7368.js"
   ]
 }
