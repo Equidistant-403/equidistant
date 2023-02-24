@@ -4,7 +4,7 @@ import makeRequest from '../makeRequest'
 import { LoginRequest } from '../requestObjects'
 import type { LoginResponse } from '../responseTypes'
 import { isError } from '../responseTypes'
-import { Button, Box, Typography, TextField, Grid, Link, Stack, createTheme, ThemeProvider } from '@mui/material'
+import { Button, Box, Typography, TextField, Grid, Stack, createTheme, ThemeProvider } from '@mui/material'
 import { CREATE_ACCOUNT_URL, LANDING_PAGE_URL } from '../pageUrls'
 
 const theme = createTheme({
@@ -47,6 +47,15 @@ const LoginPage: React.FC = () => {
       })
     // TODO: Remove console.log
     console.log('dummy login authentication')
+  }
+
+  const handleCreate = (): void => {
+    navigate(CREATE_ACCOUNT_URL)
+  }
+
+  const handleForgotPassword = (): void => {
+    // TODO: Remove console.log
+    console.log('dummy forgot password')
   }
 
   return (
@@ -126,14 +135,22 @@ const LoginPage: React.FC = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href={CREATE_ACCOUNT_URL} variant="body2">
+                <Button
+                  onClick={handleCreate}
+                  variant="contained"
+                  sx={{ m: 2, bgcolor: 'secondary.main' }}
+                >
                   {"Don't have an account? Sign Up"}
-                </Link>
+                </Button>
               </Grid>
               <Grid item>
-                <Link href="/forgot-password" variant="body2">
+              <Button
+                  onClick={handleForgotPassword}
+                  variant="contained"
+                  sx={{ m: 2, bgcolor: 'secondary.main' }}
+                >
                   Forgot password?
-                </Link>
+                </Button>
               </Grid>
             </Grid>
           </Box>
