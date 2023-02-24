@@ -1,6 +1,6 @@
 export const URL_BASE: string = '/equidistant/#'
 
-export const LOGIN_URL = URL_BASE + '/'
+export const LOGIN_URL = '/'
 
 export const CREATE_ACCOUNT_URL = URL_BASE + '/create-account'
 
