@@ -5,6 +5,7 @@ import { LoginRequest } from '../requestObjects'
 import type { LoginResponse } from '../responseTypes'
 import { isError } from '../responseTypes'
 import { Button, Box, Typography, TextField, Grid, Link, Stack, createTheme, ThemeProvider } from '@mui/material'
+import { CREATE_ACCOUNT_URL, LANDING_PAGE_URL } from '../pageUrls'
 
 const theme = createTheme({
   palette: {
@@ -32,7 +33,7 @@ const LoginPage: React.FC = () => {
         const response = (res as LoginResponse)
         // TODO: Remove console.log
         console.log(response)
-        navigate('LANDING_PAGE_URL', {
+        navigate(LANDING_PAGE_URL, {
           state: {
             user: response.user,
             friends: response.listOfFriends,
@@ -125,7 +126,7 @@ const LoginPage: React.FC = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="CREATE_ACCOUNT_URL" variant="body2">
+                <Link href={CREATE_ACCOUNT_URL} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
