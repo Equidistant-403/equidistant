@@ -26,8 +26,8 @@ Weekly progress reports can be found in `./reports`
 Any documents / files relevant to both frontend and backend teams can be found in `./shared`
 
 ### Operational Use Cases
--Create a new account
--Log in to an existing account
+- Create a new account
+- Log in to an existing account
 
 ### Non-Operational Use Cases
 - Start a search with a list of people
