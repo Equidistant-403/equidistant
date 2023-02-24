@@ -33,7 +33,7 @@ const LoginPage: React.FC = () => {
         const response = (res as LoginResponse)
         // TODO: Remove console.log
         console.log(response)
-        navigate('/landing', {
+        navigate('LANDING_PAGE_URL', {
           state: {
             user: response.user,
             friends: response.listOfFriends,
@@ -126,7 +126,7 @@ const LoginPage: React.FC = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/create-account" variant="body2">
+                <Link href="CREATE_ACCOUNT_URL" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

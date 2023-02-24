@@ -35,7 +35,7 @@ const CreateAccount: React.FC = () => {
         const response = (res as CreateAccountResponse)
         // TODO: Remove console.log
         console.log('response', response)
-        navigate('/landing', {
+        navigate('LANDING_PAGE_URL', {
           state: {
             user: response.user,
             friends: [],

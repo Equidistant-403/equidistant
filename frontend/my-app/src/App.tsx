@@ -6,6 +6,7 @@ import CreateAccount from './Pages/CreateAccount'
 import LandingPage from './Pages/LandingPage'
 import LoginPage from './Pages/LoginPage'
 import Results from './Pages/Results'
+import { LOGIN_URL, CREATE_ACCOUNT_URL, LANDING_PAGE_URL, RESULTS_URL, ACCOUNT_URL } from './pageUrls'
 
 const theme = createTheme({
   palette: {
@@ -30,18 +31,16 @@ const theme = createTheme({
   }
 })
 
-const URL_BASE: string = '/equidistant/#'
-
 function App (): React.ReactElement {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Routes>
-        <Route path={URL_BASE + '/'} element={<LoginPage/>} />
-        <Route path={URL_BASE + '/create-account'} element={<CreateAccount/>} />
-        <Route path={URL_BASE + '/landing'} element={<LandingPage/>} />
-        <Route path={URL_BASE + '/results'} element={<Results/>} />
-        <Route path={URL_BASE + '/account'} element={<Account/>} />
+        <Route path={LOGIN_URL} element={<LoginPage/>} />
+        <Route path={CREATE_ACCOUNT_URL} element={<CreateAccount/>} />
+        <Route path={LANDING_PAGE_URL} element={<LandingPage/>} />
+        <Route path={RESULTS_URL} element={<Results/>} />
+        <Route path={ACCOUNT_URL} element={<Account/>} />
       </Routes>
     </ThemeProvider>
   )

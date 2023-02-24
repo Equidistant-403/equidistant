@@ -62,7 +62,7 @@ const LandingPage: React.FC = () => {
         }
 
         const response = (res as LocationResponse)
-        navigate('/results', {
+        navigate('RESULTS_URL', {
           state: {
             locations: response.locations
           }
@@ -72,7 +72,7 @@ const LandingPage: React.FC = () => {
   }
 
   const handlAccountClick = (): void => {
-    navigate('/account', {
+    navigate('ACCOUNT_URL', {
       state: {
         email: user.email,
         location: user.address
@@ -82,7 +82,7 @@ const LandingPage: React.FC = () => {
 
   const handleLogoutClick = (): void => {
     console.log('dummy logout actuation')
-    navigate('/')
+    navigate('LOGIN_URL')
   }
 
   const handleFriendMenu = (): void => {
