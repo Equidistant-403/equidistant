@@ -123,6 +123,7 @@ const LoginPage: React.FC = () => {
                   variant="standard"
                   onChange={(e) => { setPassword(e.target.value) }}
                   color="info"
+                  sx={{ input: { color: 'white' } }}
                 />
               </ThemeProvider>
             <Button
