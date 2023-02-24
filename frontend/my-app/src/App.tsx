@@ -30,16 +30,18 @@ const theme = createTheme({
   }
 })
 
+const URL_BASE: string = '/equidistant/#'
+
 function App (): React.ReactElement {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Routes>
-        <Route path="/" element={<LoginPage/>} />
-        <Route path="/create-account" element={<CreateAccount/>} />
-        <Route path="/landing" element={<LandingPage/>} />
-        <Route path="/results" element={<Results/>} />
-        <Route path="/account" element={<Account/>} />
+        <Route path={URL_BASE + '/'} element={<LoginPage/>} />
+        <Route path={URL_BASE + '/create-account'} element={<CreateAccount/>} />
+        <Route path={URL_BASE + '/landing'} element={<LandingPage/>} />
+        <Route path={URL_BASE + '/results'} element={<Results/>} />
+        <Route path={URL_BASE + '/account'} element={<Account/>} />
       </Routes>
     </ThemeProvider>
   )
