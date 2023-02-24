@@ -15,7 +15,7 @@ const root = ReactDOM.createRoot(
 )
 root.render(
   <React.StrictMode>
-    <Router basename='my-app'>
+    <Router basename='equidistant/'>
       <App />
     </Router>
   </React.StrictMode>
