@@ -50,7 +50,7 @@ add `--fix` to the lint command in `package.json` so it looks like
 Backend code is in the `equidistant/backend` directory. Similar to frontend, you'll have to install the necessary python libraries in order to actually run anything. These include django, BitIO, and requests to name a few but we would recommend trying to run and then seeing what's missing to know what's a required install.
 
 ## Building
-## #Frontend
+### Frontend
 To build the front end, make sure you have installed the dependendencies and then run `npm run build` from
 the `equidistant/frontend/my-app` directory.
 

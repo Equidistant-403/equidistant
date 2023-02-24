@@ -29,7 +29,7 @@ Any documents / files relevant to both frontend and backend teams can be found i
 -Create a new account
 -Log in to an existing account
 
-## Non-Operational Use Cases
+### Non-Operational Use Cases
 - Start a search with a list of people
 - Password reset
 - Cycle through results until a satisfactory one is found
