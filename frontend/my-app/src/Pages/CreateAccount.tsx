@@ -28,7 +28,7 @@ const CreateAccount: React.FC = () => {
         if (isError(res)) {
           // TODO: Display the error message
           // TODO: Remove alert
-          alert(res.errorMessage)
+          alert(res.error)
           return
         }
 
