@@ -1,49 +1,29 @@
-import array
 from abc import ABC, abstractmethod
-from mapbox import DirectionsMatrix, Geocoder
 
-
-class MapboxAPI(MapAPI):
+class MapAPI(ABC):
     """
-    Using Mapbox API in this case, casue it is the best option we have when it comes to a free and python centric api
+    MapAPI interacts with an external map service API to handle various
+    distance and location-related queries.
     """
 
-    def __init__(self, access_token):
-        self.access_token = access_token
-        self.directions_matrix = DirectionsMatrix(access_token=self.access_token)
-        self.geocoder = Geocoder(access_token=self.access_token)
+    @abstractmethod
+    def get_travel_time(self, loc_1, loc_2) -> float:
+        """
+        Gets an approximate travel time from loc_1 to loc_2.
+        :param loc_1: the origin location
+        :param loc_2: the destination
+        :return: a float representing time in minutes to travel from
+        loc_1 to loc_2
+        """
 
-    def get_travel_time(self, loc_1, loc_2):
-        coords_1 = self._get_coordinates(loc_1)
-        coords_2 = self._get_coordinates(loc_2)
-        response = self.directions_matrix.matrix(
-            coords_1, coords_2, annotations=["duration"], profile="driving-traffic"
-        )
-        return response["durations"][0][0] / 60.0
-
-    def get_nearby_options(self, loc, radius, n):
-        coords = self._get_coordinates(loc)
-        response = self.geocoder.forward(
-            query="", proximity=coords, types=["poi"], limit=n
-        )
-        options = []
-        for feature in response.geojson()["features"]:
-            feature_coords = feature["geometry"]["coordinates"]
-            distance = self._get_distance(coords, feature_coords)
-            if distance <= radius:
-                options.append(feature_coords)
-        return array.array("f", [option for coords in options for option in coords])
-
-    def _get_coordinates(self, loc):
-        response = self.geocoder.forward(query=loc)
-        coords = response.geojson()["features"][0]["geometry"]["coordinates"]
-        return coords
-
-    def _get_distance(self, coords_1, coords_2):
-        response = self.directions_matrix.matrix(
-            coords_1,
-            coords_2,
-            annotations=["distance"],
-            profile="driving-traffic",
-        )
-        return response["distances"][0][0] / 1609.34
+    @abstractmethod
+    def get_nearby_options(self, loc, radius: float, n: int) -> list:
+        """
+        Gets a list of recommended locations within a certain distance from
+        a location.
+        :param loc: the center of the search
+        :param radius: the radius (in miles) of the search; all recommended
+        locations should be at most this far from loc
+        :param n: the number of options to return
+        :return: an array of locations that match the passed parameters.
+        """
