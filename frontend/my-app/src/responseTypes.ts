@@ -5,13 +5,13 @@ interface LocationResponse {
 interface LoginResponse {
   bearer: string
   user: User
-  listOfFriends: User[]
-  listOfRequests: User[]
+  friends: User[]
+  friendRequests: User[]
 }
 
 interface FriendsResponse {
-  listOfFriends: User[]
-  listOfRequests: User[]
+  friends: User[]
+  friendRequests: User[]
 }
 
 interface ProfileResponse {
@@ -20,6 +20,7 @@ interface ProfileResponse {
 
 interface CreateAccountResponse {
   bearer: string
+  password: string
   user: User
 }
 
@@ -32,7 +33,7 @@ interface RespondFriendResponse {
 }
 
 interface ErrorResponse {
-  errorMessage: string
+  error: string
 }
 
 class Location {
@@ -62,7 +63,7 @@ class User {
 }
 
 function isError (object: any): object is ErrorResponse {
-  return 'errorMessage' in object
+  return 'error' in object
 }
 
 type EquidistantResponse = LocationResponse | LoginResponse | FriendsResponse |

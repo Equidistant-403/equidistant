@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import './LoginPage.css'
 import { useNavigate } from 'react-router-dom'
 import makeRequest from '../makeRequest'
 import { LoginRequest } from '../requestObjects'
 import type { LoginResponse } from '../responseTypes'
 import { isError } from '../responseTypes'
-import { Button, Box, Typography, TextField, Grid, Link, Stack, createTheme, ThemeProvider } from '@mui/material'
+import { Button, Box, Typography, TextField, Grid, Stack, createTheme, ThemeProvider } from '@mui/material'
+import { CREATE_ACCOUNT_URL, LANDING_PAGE_URL } from '../pageUrls'
 
 const theme = createTheme({
   palette: {
@@ -27,17 +27,17 @@ const LoginPage: React.FC = () => {
         if (isError(res)) {
           // TODO: Display the error message
           // TODO: Remove alert
-          alert(res.errorMessage)
+          alert(res.error)
           return
         }
         const response = (res as LoginResponse)
         // TODO: Remove console.log
         console.log(response)
-        navigate('/landing', {
+        navigate(LANDING_PAGE_URL, {
           state: {
             user: response.user,
-            friends: response.listOfFriends,
-            requests: response.listOfRequests,
+            friends: response.friends,
+            requests: response.friendRequests,
             bearer: response.bearer
           }
         })
@@ -47,6 +47,15 @@ const LoginPage: React.FC = () => {
       })
     // TODO: Remove console.log
     console.log('dummy login authentication')
+  }
+
+  const handleCreate = (): void => {
+    navigate(CREATE_ACCOUNT_URL)
+  }
+
+  const handleForgotPassword = (): void => {
+    // TODO: Remove console.log
+    console.log('dummy forgot password')
   }
 
   return (
@@ -114,6 +123,7 @@ const LoginPage: React.FC = () => {
                   variant="standard"
                   onChange={(e) => { setPassword(e.target.value) }}
                   color="info"
+                  sx={{ input: { color: 'white' } }}
                 />
               </ThemeProvider>
             <Button
@@ -126,14 +136,22 @@ const LoginPage: React.FC = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/create-account" variant="body2">
+                <Button
+                  onClick={handleCreate}
+                  variant="contained"
+                  sx={{ m: 2, bgcolor: 'secondary.main' }}
+                >
                   {"Don't have an account? Sign Up"}
-                </Link>
+                </Button>
               </Grid>
               <Grid item>
-                <Link href="/forgot-password" variant="body2">
+              <Button
+                  onClick={handleForgotPassword}
+                  variant="contained"
+                  sx={{ m: 2, bgcolor: 'secondary.main' }}
+                >
                   Forgot password?
-                </Link>
+                </Button>
               </Grid>
             </Grid>
           </Box>

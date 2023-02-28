@@ -3,18 +3,27 @@ enum HttpMethods {
   POST = 'POST',
 }
 
+const ENDPOINT = process.env.NODE_ENV === 'development' ? '' : process.env.REACT_APP_BACKEND as string
 class EquidistantRequest {
   path: string
   method: HttpMethods
+  body: URLSearchParams
+  headers: Headers
 
-  constructor (method: HttpMethods, path: string) {
-    this.path = path
+  constructor (method: HttpMethods, path: string, body: URLSearchParams) {
+    this.path = ENDPOINT + path
     this.method = method
-  }
+    this.body = new URLSearchParams()
+    this.headers = new Headers({
+      'ngrok-skip-browser-warning': 'true'
+    })
 
-  addParams (params: URLSearchParams): string {
-    const result = this.path += '?' + params.toString()
-    return result
+    if (method === HttpMethods.GET) {
+      this.path += '?' + new URLSearchParams(body).toString()
+    } else if (method === HttpMethods.POST) {
+      this.body = new URLSearchParams(body)
+      this.headers.append('Content-type', 'application/x-www-form-urlencoded')
+    }
   }
 }
 
@@ -23,8 +32,7 @@ export { EquidistantRequest }
 // Login
 class LoginRequest extends EquidistantRequest {
   constructor (email: string, password: string) {
-    super(HttpMethods.GET, '/login')
-    this.path = super.addParams(new URLSearchParams({
+    super(HttpMethods.GET, '/login', new URLSearchParams({
       email,
       password
     }))
@@ -34,8 +42,7 @@ class LoginRequest extends EquidistantRequest {
 // Create
 class CreateAccountRequest extends EquidistantRequest {
   constructor (email: string, password: string, address: string) {
-    super(HttpMethods.POST, '/create')
-    this.path = super.addParams(new URLSearchParams({
+    super(HttpMethods.POST, '/create', new URLSearchParams({
       email,
       password,
       address
@@ -46,32 +53,28 @@ class CreateAccountRequest extends EquidistantRequest {
 export { LoginRequest, CreateAccountRequest }
 
 class BearerRequest extends EquidistantRequest {
-  headers: Record<string, unknown>
-
-  constructor (method: HttpMethods, path: string, bearer: string) {
-    super(method, path)
-    this.headers = { Authorization: bearer }
+  constructor (method: HttpMethods, path: string, bearer: string, body: URLSearchParams) {
+    super(method, path, body)
+    this.headers.append('Authorization', bearer)
   }
 }
 
 // Location
 class LocationRequest extends BearerRequest {
   constructor (users: string[], bearer: string) {
-    super(HttpMethods.GET, '/locations', bearer)
-
+    super(HttpMethods.GET, '/locations', bearer, new URLSearchParams())
     const params = new URLSearchParams()
     users.forEach((user) => {
       params.append('users', user)
     })
-    this.path = super.addParams(params)
+    this.path += '?' + params.toString()
   }
 }
 
 // Friends
 class FriendsRequest extends BearerRequest {
   constructor (email: string, bearer: string) {
-    super(HttpMethods.GET, '/friends', bearer)
-    this.path = super.addParams(new URLSearchParams({
+    super(HttpMethods.GET, '/friends', bearer, new URLSearchParams({
       email
     }))
   }
@@ -80,8 +83,7 @@ class FriendsRequest extends BearerRequest {
 // User
 class UserRequest extends BearerRequest {
   constructor (email: string, bearer: string) {
-    super(HttpMethods.GET, '/user', bearer)
-    this.path = super.addParams(new URLSearchParams({
+    super(HttpMethods.GET, '/user', bearer, new URLSearchParams({
       email
     }))
   }
@@ -90,8 +92,7 @@ class UserRequest extends BearerRequest {
 // Friend request
 class SendFriendRequest extends BearerRequest {
   constructor (requesterEmail: string, receiverEmail: string, bearer: string) {
-    super(HttpMethods.POST, '/sendFriendReq', bearer)
-    this.path = super.addParams(new URLSearchParams({
+    super(HttpMethods.POST, '/sendFriendReq', bearer, new URLSearchParams({
       requesterEmail,
       receiverEmail
     }))
@@ -101,8 +102,7 @@ class SendFriendRequest extends BearerRequest {
 // Friend request response
 class FriendRequestResponse extends BearerRequest {
   constructor (receiverEmail: string, requesterEmail: string, bearer: string) {
-    super(HttpMethods.POST, '/respondFriendReq', bearer)
-    this.path = super.addParams(new URLSearchParams({
+    super(HttpMethods.POST, '/respondFriendReq', bearer, new URLSearchParams({
       receiverEmail,
       requesterEmail
     }))
@@ -113,3 +113,4 @@ export {
   LocationRequest, FriendsRequest, UserRequest,
   SendFriendRequest, FriendRequestResponse
 }
+export { ENDPOINT }
