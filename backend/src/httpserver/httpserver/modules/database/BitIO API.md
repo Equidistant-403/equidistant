@@ -27,7 +27,7 @@ CREATE TABLE Users(email text NOT NULL PRIMARY KEY,
 
 ### TABLE Friends
 Stores friend relations between users. status = 0 if the friend relation is active, and is a request otherwise.
-status = 1 if the request is sent but user1, and status = 2 if the request is sent by user2.
+By convention, user1 is the user that created the friend request, and user2 is the user receiving the request.
 
 ```sql
 CREATE TABLE Friends(user1 text NOT NULL,
