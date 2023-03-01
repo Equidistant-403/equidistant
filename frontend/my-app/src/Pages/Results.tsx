@@ -7,6 +7,7 @@ import { Stack } from '@mui/system'
 const Results: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
+  const apiKey: string = process.env.REACT_APP_SECRET_KEY as string
 
   const results = location.state.locations
   const [index, setIndex] = useState<number>(0)
@@ -43,6 +44,21 @@ const Results: React.FC = () => {
           }}>
             Results
         </Typography>
+        <Paper
+          sx={{
+            mt: 2,
+            mx: 2,
+            p: 2,
+            borderRadius: '10px',
+            border: 2
+          }}>
+          <Typography
+            variant="h5"
+            component="h2"
+            textAlign="center">
+            {result.name}
+          </Typography>
+        </Paper>
           <Stack // result card
             justifyContent="flex-start"
             alignItems="center"
@@ -63,8 +79,6 @@ const Results: React.FC = () => {
                   mt: 3,
                   width: '550px',
                   height: '344px',
-                  // TODO: get image of restaurant instad of placeholder. Image could be photo or google maps static map
-                  backgroundImage: 'url("https://www.richaven.com/wp-content/uploads/2012/10/uw-ee-cse-11.jpg")',
                   borderRadius: '10px',
                   backgroundSize: 'cover',
                   border: 2
@@ -77,21 +91,17 @@ const Results: React.FC = () => {
                     display: 'flex',
                     flexWarp: 'wrap'
                   }}>
-                  <Paper
-                    sx={{
-                      mt: 2,
-                      mx: 2,
-                      p: 2,
-                      borderRadius: '10px',
-                      border: 2
-                    }}>
-                    <Typography
-                      variant="h5"
-                      component="h2"
-                      textAlign="center">
-                      {result.name}
-                    </Typography>
-                  </Paper>
+                    <iframe
+                    width="550px"
+                    height="270px"
+                    loading="lazy"
+                    src={
+                      `https://www.google.com/maps/embed/v1/place?q=${result.place[0]},+${result.place[1]}
+                      &key=${apiKey}
+                      &maptype=satellite
+                      `
+                    }>
+                  </iframe>
                 </Stack>
               </Paper>
               <Typography // TODO: get description of restaurant, can omit

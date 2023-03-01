@@ -9,13 +9,13 @@ export const handlers: RequestHandler[] = [
       ctx.json({
         locations: [
           {
-            place: [1, 1],
+            place: [47.65330539770633, -122.3058139748984],
             name: 'CSE1',
             rating: 4,
             travelTimes: [12, 20, 8, 15, 16]
           },
           {
-            place: [2, 2],
+            place: [47.653025641208494, -122.30501278858901],
             name: 'CSE2',
             rating: 5,
             travelTimes: [1, 2, 38, 4, 5]
