@@ -58,7 +58,7 @@ const LandingPage: React.FC = () => {
         if (isError(res)) {
           // TODO: Display this error message
           // TODO: remove console.log
-          console.log(res.errorMessage)
+          console.log(res.error)
           return
         }
 

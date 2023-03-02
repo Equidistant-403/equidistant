@@ -1,4 +1,3 @@
-'''
 from backend.src import Constants
 from backend.src.database.BitdotioDB import BitdotioDB
 import os
@@ -47,4 +46,3 @@ def test_read_no_entries_selected():
     assert len(tuples) == 0
     tuples = db.db_query(f'SELECT * FROM {Constants.DB_TEST}')
     assert len(tuples) == 0
-'''
