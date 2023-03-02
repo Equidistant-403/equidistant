@@ -37,7 +37,8 @@ jobs:
     - name: Run tests
       run: npm test
     - name: Echoing
-      run: echo github.ref
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       
 
   deploy:
