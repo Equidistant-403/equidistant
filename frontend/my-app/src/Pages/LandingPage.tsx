@@ -22,6 +22,7 @@ import {
   TextField
 } from '@mui/material'
 import type { LocationResponse, User } from '../responseTypes'
+import { RESULTS_URL, ACCOUNT_URL, LOGIN_URL } from '../pageUrls'
 
 const LandingPage: React.FC = () => {
   const [open, setOpen] = useState(false)
@@ -57,12 +58,12 @@ const LandingPage: React.FC = () => {
         if (isError(res)) {
           // TODO: Display this error message
           // TODO: remove console.log
-          console.log(res.errorMessage)
+          console.log(res.error)
           return
         }
 
         const response = (res as LocationResponse)
-        navigate('/results', {
+        navigate(RESULTS_URL, {
           state: {
             locations: response.locations
           }
@@ -72,7 +73,7 @@ const LandingPage: React.FC = () => {
   }
 
   const handlAccountClick = (): void => {
-    navigate('/account', {
+    navigate(ACCOUNT_URL, {
       state: {
         email: user.email,
         location: user.address
@@ -82,7 +83,7 @@ const LandingPage: React.FC = () => {
 
   const handleLogoutClick = (): void => {
     console.log('dummy logout actuation')
-    navigate('/')
+    navigate(LOGIN_URL)
   }
 
   const handleFriendMenu = (): void => {
