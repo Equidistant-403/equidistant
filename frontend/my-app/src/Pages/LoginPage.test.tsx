@@ -4,7 +4,6 @@ import { MemoryRouter } from 'react-router-dom'
 import { handlers } from '../mocks/handlers'
 import setupMocks from '../mocks/setupMocks'
 import LoginPage from './LoginPage'
-// import userEvent from '@testing-library/user-event'
 
 setupMocks(...handlers)
 
@@ -35,13 +34,4 @@ describe('LoginPage', () => {
     expect(emailForm).toBeInTheDocument()
     expect(emailForm).toBeEnabled()
   })
-
-  // it('Navigation to CreateAccount page works', () => {
-  //   render(<LoginPage />, { wrapper: MemoryRouter })
-  //   const signUpButton = screen.getByRole('button', { name: "Don't have an account? Sign Up" })
-  //   userEvent.click(signUpButton)
-  //   expect(signUpButton).not.toBeInTheDocument()
-  //   const createAccountButton = screen.getByRole('button', { name: /create account/i })
-  //   expect(createAccountButton).toBeInTheDocument()
-  // })
 })
