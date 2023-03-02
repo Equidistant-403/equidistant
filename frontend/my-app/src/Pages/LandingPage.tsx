@@ -19,26 +19,27 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField
+  TextField,
+  Avatar
 } from '@mui/material'
 import type { LocationResponse, User } from '../responseTypes'
 import { RESULTS_URL, ACCOUNT_URL, LOGIN_URL } from '../pageUrls'
 
 const LandingPage: React.FC = () => {
-  const [open, setOpen] = useState(false)
+  const [openAdd, setOpenAdd] = useState(false)
+  const [openAccept, setOpenAccept] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
 
   const [friends] = useState<User[]>(location.state.friends)
-  // TODO: Allow user to accept friend requests
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [requests, setRequests] = useState<User[]>(location.state.requests)
+  const [requests] = useState<User[]>(location.state.requests)
   const user = location.state.user
   const bearer = location.state.bearer
 
   const [checkedFriends, setCheckedFriends] = useState(() => friends.map((i) => false))
+  const [checkedRequests, setCheckedRequests] = useState(() => requests.map((i) => false))
 
-  const toggleCheckbox = (index: number, checked: any): void => {
+  const toggleFriendsCheckbox = (index: number, checked: any): void => {
     setCheckedFriends((isChecked) => {
       return isChecked.map((c, i) => {
         if (i === index) return checked
@@ -47,8 +48,22 @@ const LandingPage: React.FC = () => {
     })
   }
 
+  const toggleRequestCheckbox = (index: number, checked: any): void => {
+    setCheckedRequests((isChecked) => {
+      return isChecked.map((c, i) => {
+        if (i === index) return checked
+        return c
+      })
+    })
+  }
+
   const getCheckedFriends = (): User[] => {
-    const users: User[] = friends.filter((friend, index) => checkedFriends[index])
+    const users: User[] = requests.filter((friend, index) => checkedFriends[index])
+    return users
+  }
+
+  const getCheckedRequests = (): User[] => {
+    const users: User[] = friends.filter((friend, index) => checkedRequests[index])
     return users
   }
 
@@ -72,6 +87,27 @@ const LandingPage: React.FC = () => {
       .catch((e) => { console.error(e) })
   }
 
+  const handleAcceptFriendsClick = (): void => {
+    makeRequest(new FriendsRequest([user.email, ...getCheckedRequests()], bearer))
+      .then((res) => {
+        if (isError(res)) {
+          // TODO: Display this error message
+          // TODO: remove console.log
+          console.log(res.errorMessage)
+          return
+        }
+
+        const response = (res as LocationResponse)
+        navigate(RESULTS_URL, {
+          state: {
+            locations: response.locations
+          }
+        })
+      })
+      .catch((e) => { console.error(e) })
+  }
+
+
   const handlAccountClick = (): void => {
     navigate(ACCOUNT_URL, {
       state: {
@@ -86,43 +122,36 @@ const LandingPage: React.FC = () => {
     navigate(LOGIN_URL)
   }
 
-  const handleFriendMenu = (): void => {
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      sx={{
-        borderRadius: '20px'
-      }}>
-      <DialogTitle>Add Friend</DialogTitle>
-      <DialogContent>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="name"
-          label="Email Address"
-          type="email"
-          fullWidth
-          variant="standard"
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Send Request</Button>
-      </DialogActions>
-    </Dialog>
+  const handleAddToggle = (): void => {
+    setOpenAdd(true)
   }
 
-  const handleToggle = (): void => {
-    setOpen(true)
-  }
-
-  const handleSubmit = (): void => {
+  const handleAddSubmit = (): void => {
+    // TODO: add friend functionality
     console.log('add friend')
-    handleClose()
+    handleAddClose()
   }
 
-  const handleClose = (): void => {
-    setOpen(false)
+  const handleAddRemoveSubmit = (): void => {
+    console.log('remove friend')
+    handleAddClose()
+  }
+
+  const handleAddClose = (): void => {
+    setOpenAdd(false)
+  }
+
+  const handleAcceptToggle = (): void => {
+    setOpenAccept(true)
+  }
+
+  const handleAcceptSubmit = (): void => {
+    console.log('add friend')
+    handleAcceptClose()
+  }
+
+  const handleAcceptClose = (): void => {
+    setOpenAccept(false)
   }
 
   return (
@@ -161,28 +190,23 @@ const LandingPage: React.FC = () => {
                   }}
                 >
                   {getCheckedFriends().map((user, index) => (
-                    <IconButton
+                    <Avatar
                       color="primary"
                       aria-label="upload picture"
                       component="label"
                       sx={{
                         width: 50,
                         height: 50,
-                        backgroundColor: 'primary.dark',
-                        '&:hover': {
-                          backgroundColor: 'success.main',
-                          opacity: [0.8, 0.8, 0.8]
-                        }
+                        backgroundColor: 'primary.dark'
                       }}
                       key={index}
-                      onClick={handleFriendMenu}
                     >
                       <Typography
                         variant="h5"
                         component="h2">
                         {user.email[0]}
                       </Typography>
-                    </IconButton>
+                    </Avatar>
                   ))}
                 </Stack>
               <Button
@@ -220,32 +244,72 @@ const LandingPage: React.FC = () => {
             component="span"
             sx={{ p: 5 }}
           />
-        <Button variant="outlined" color="primary" onClick={handleToggle} sx={{ mb: 5 }}>
-            Add Friends
-        </Button>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          sx={{
-            borderRadius: '20px'
-          }}>
-          <DialogTitle>Add Friend</DialogTitle>
-          <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Email Address"
-              type="email"
-              fullWidth
-              variant="standard"
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleSubmit}>Send Request</Button>
-          </DialogActions>
-        </Dialog>
+        <Stack
+          direction="row">
+          <Button variant="outlined" color="primary" onClick={handleAddToggle} sx={{ mb: 5 }}>
+            Add/remove Friends
+          </Button>
+          <Dialog
+            open={openAdd}
+            onClose={handleAddClose}
+            sx={{
+              borderRadius: '20px'
+            }}>
+            <DialogTitle>Add Friend</DialogTitle>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="Email Address"
+                type="email"
+                fullWidth
+                variant="standard"
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleAddClose}>Cancel</Button>
+              <Button onClick={handleAddSubmit}>Send Request</Button>
+              <Button onClick={handleAddRemoveSubmit}>Delete Friend</Button>
+            </DialogActions>
+          </Dialog>
+          <Button variant="outlined" color="primary" onClick={handleAcceptToggle} sx={{ mb: 5 }}>
+              Accept Friends
+          </Button>
+          <Dialog
+            open={openAccept}
+            onClose={handleAcceptClose}
+            sx={{
+              borderRadius: '20px'
+            }}>
+            <DialogTitle>Accept Friends</DialogTitle>
+            {friends.map((friend, index) => (
+              <FormControlLabel
+                sx={{
+                  backgroundColor: 'secondary.main',
+                  ml: 2,
+                  my: 0.3,
+                  py: 1,
+                  borderRadius: '20px',
+                  '&:hover': {
+                    backgroundColor: 'secondary.main',
+                    opacity: [0.8, 0.8, 0.8]
+                  }
+                }}
+                key={friend.email}
+                control={
+                  <Checkbox
+                    checked={checkedFriends[index]}
+                    onChange={(e) => { toggleRequestCheckbox(index, e.target.checked) } }
+                  />}
+                label={
+                    <Typography variant="h5" component="h2">
+                      {friend.email}
+                    </Typography>
+                }/>
+            ))}
+          </Dialog>
+        </Stack>
         <Paper
           sx={{
             minWidth: 1 / 3,
@@ -278,14 +342,13 @@ const LandingPage: React.FC = () => {
                 control={
                   <Checkbox
                     checked={checkedFriends[index]}
-                    onChange={(e) => { toggleCheckbox(index, e.target.checked) } }
+                    onChange={(e) => { toggleFriendsCheckbox(index, e.target.checked) } }
                   />}
-                  label={
+                label={
                   <Stack
                     direction="row"
                     alignItems="center"
-                    spacing={2}
-                  >
+                    spacing={2}>
                     <IconButton
                       color="primary"
                       aria-label="upload picture"
@@ -300,8 +363,7 @@ const LandingPage: React.FC = () => {
                         }
                       }}
                       key={index}
-                      onClick={handleFriendMenu}
-                    >
+                      onClick={handleMenuClick}>
                       <Typography variant="h5" component="h2">
                         {friend.email[0]}
                       </Typography>
