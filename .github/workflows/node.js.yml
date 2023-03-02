@@ -36,6 +36,7 @@ jobs:
       run: npm run build --if-present
     - name: Run tests
       run: npm test
+    - name: Echoing
       run: echo github.ref
       
 
