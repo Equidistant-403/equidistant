@@ -7,7 +7,6 @@ enum HttpMethods {
 }
 
 const ENDPOINT = process.env.NODE_ENV === 'development' ? '' : process.env.REACT_APP_BACKEND as string
-console.log(ENDPOINT)
 
 /**
  * Represents a single request made between the frontend and the backend API
