@@ -7,21 +7,21 @@ const ENDPOINT = process.env.NODE_ENV === 'development' ? '' : process.env.REACT
 class EquidistantRequest {
   path: string
   method: HttpMethods
-  body: URLSearchParams
+  body: URLSearchParams | null
   headers: Headers
 
   constructor (method: HttpMethods, path: string, body: URLSearchParams) {
     this.path = ENDPOINT + path
     this.method = method
-    this.body = new URLSearchParams()
+    this.body = null
     this.headers = new Headers({
       'ngrok-skip-browser-warning': 'true'
     })
 
     if (method === HttpMethods.GET) {
-      this.path += '?' + new URLSearchParams(body).toString()
+      this.path += '?' + body.toString()
     } else if (method === HttpMethods.POST) {
-      this.body = new URLSearchParams(body)
+      this.body = body
       this.headers.append('Content-type', 'application/x-www-form-urlencoded')
     }
   }
