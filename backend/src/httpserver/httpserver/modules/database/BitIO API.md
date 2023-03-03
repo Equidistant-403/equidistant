@@ -26,11 +26,13 @@ CREATE TABLE Users(email text NOT NULL PRIMARY KEY,
 ```
 
 ### TABLE Friends
-Stores friend relations between users.
+Stores friend relations between users. status = 0 if the friend relation is active, and is a request otherwise.
+By convention, user1 is the user that created the friend request, and user2 is the user receiving the request.
 
 ```sql
 CREATE TABLE Friends(user1 text NOT NULL,
                      user2 text NOT NULL,
+                     status INTEGER,
                      CONSTRAINT u1 FOREIGN KEY (user1) REFERENCES users(email),
                      CONSTRAINT u2 FOREIGN KEY (user2) REFERENCES users(email))
 ```

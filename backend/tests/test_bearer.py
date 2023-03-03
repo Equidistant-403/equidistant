@@ -1,4 +1,4 @@
-from backend.src.bearer.Bearer import Bearer
+from backend.src.httpserver.httpserver.modules.bearer.Bearer import Bearer
 
 
 def test_add_one_token():
