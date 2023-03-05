@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import './LoginPage.css'
 import { useNavigate } from 'react-router-dom'
 import makeRequest from '../makeRequest'
 import { CreateAccountRequest } from '../requestObjects'
 import type { CreateAccountResponse } from '../responseTypes'
 import { isError } from '../responseTypes'
-import { Button, Box, Typography, TextField, Grid, Link, Stack, createTheme, ThemeProvider } from '@mui/material'
+import { Button, Box, Typography, TextField, Grid, Stack, createTheme, ThemeProvider } from '@mui/material'
+import { LANDING_PAGE_URL } from '../pageUrls'
 
 const theme = createTheme({
   palette: {
@@ -28,14 +28,14 @@ const CreateAccount: React.FC = () => {
         if (isError(res)) {
           // TODO: Display the error message
           // TODO: Remove alert
-          alert(res.errorMessage)
+          alert(res.error)
           return
         }
 
         const response = (res as CreateAccountResponse)
         // TODO: Remove console.log
         console.log('response', response)
-        navigate('/landing', {
+        navigate(LANDING_PAGE_URL, {
           state: {
             user: response.user,
             friends: [],
@@ -49,6 +49,10 @@ const CreateAccount: React.FC = () => {
       })
     // TODO: Remove console.log
     console.log('dummy create account authentication')
+  }
+
+  const handleLogin = (): void => {
+    navigate(-1)
   }
 
   return (
@@ -143,9 +147,13 @@ const CreateAccount: React.FC = () => {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="/" variant="body2">
+                <Button
+                  onClick={handleLogin}
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2, bgcolor: 'secondary.main' }}
+                >
                   Already have an account? Login
-                </Link>
+                </Button>
               </Grid>
             </Grid>
           </Box>

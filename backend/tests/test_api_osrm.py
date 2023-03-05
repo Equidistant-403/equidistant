@@ -5,9 +5,9 @@ import pytest
 
 from backend.src.api.ApiExceptions import ExternalAPIError, NoRouteFound
 
-from backend.src.api.osrm import TravelOptions
-from backend.src.api.osrm import osrm_walk_endpoint, travel_time_query
-from backend.src.api.osrm import determine_travel_time
+from backend.src.httpserver.httpserver.modules.api.osrm import TravelOptions
+from backend.src.httpserver.httpserver.modules.api.osrm import osrm_walk_endpoint, travel_time_query
+from backend.src.httpserver.httpserver.modules.api.osrm import determine_travel_time
 
 epsilon = 1e-5
 response_files = os.path.join(os.path.dirname(

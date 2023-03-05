@@ -6,8 +6,8 @@ import pytest
 
 from backend.src.api.ApiExceptions import ExternalAPIError
 
-from backend.src.api.overpass import overpass_endpoint, bounding_query
-from backend.src.api.overpass import nearby_point
+from backend.src.httpserver.httpserver.modules.api.overpass import overpass_endpoint, bounding_query
+from backend.src.httpserver.httpserver.modules.api.overpass import nearby_point
 
 epsilon = 1e-5
 response_files = os.path.join(os.path.dirname(

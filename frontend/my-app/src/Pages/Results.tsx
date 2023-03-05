@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './Results.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import type { Location } from '../responseTypes'
 import { Button, Typography, Paper, Rating } from '@mui/material'
