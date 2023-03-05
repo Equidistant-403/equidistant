@@ -18,9 +18,9 @@ import {
   DialogTitle,
   TextField
 } from '@mui/material'
-import { FriendsRequest, LocationRequest } from '../requestObjects'
+import { FriendsRequest, LocationRequest, SendFriendRequest } from '../requestObjects'
 import makeRequest from '../makeRequest'
-import { isError } from '../responseTypes'
+import { FriendsResponse, isError } from '../responseTypes'
 import type { LocationResponse, User, SendRequestResponse } from '../responseTypes'
 import { RESULTS_URL, ACCOUNT_URL, LOGIN_URL } from '../pageUrls'
 
@@ -29,10 +29,13 @@ const LandingPage: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const [friends] = useState<User[]>(location.state.friends)
+  const [friends, setFriends] = useState<User[]>(location.state.friends)
   // TODO: Allow user to accept friend requests
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [requests, setRequests] = useState<User[]>(location.state.requests)
+  // Just in case we're navigating back to this page
+  refreshFriends()
+
   const user = location.state.user
   const bearer = location.state.bearer
 
@@ -122,7 +125,7 @@ const LandingPage: React.FC = () => {
   }
 
   const handleSubmit = (): void => {
-    makeRequest(new FriendsRequest(friendEmail, bearer))
+    makeRequest(new SendFriendRequest(user.email, friendEmail, bearer))
       .then((res) => {
         if (isError(res)) {
           // TODO: Display this error message
@@ -138,6 +141,23 @@ const LandingPage: React.FC = () => {
       })
       .catch((e) => { console.error(e) })
     handleClose()
+  }
+
+  const refreshFriends = (): void => {
+    makeRequest(new FriendsRequest(user.email, bearer))
+      .then((res) => {
+        if (isError(res)) {
+          // TODO: Display this error message
+          // TODO: remove console.log
+          console.log(res.error)
+          return
+        }
+
+        const response = (res as FriendsResponse)
+        setRequests(response.friendRequests)
+        setFriends(response.friends)
+      })
+      .catch((e) => { console.error(e) })
   }
 
   const handleClose = (): void => {
