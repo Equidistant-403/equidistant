@@ -1,6 +1,6 @@
 import requests
 from typing import Tuple
-from backend.src.api.ApiExceptions import ExternalAPIError
+from backend.src.httpserver.httpserver.modules.api.ApiExceptions import ExternalAPIError
 
 # Documentation: https://nominatim.org/release-docs/develop/api/Overview/
 nominatim_endpoint = "https://nominatim.openstreetmap.org"

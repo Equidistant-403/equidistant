@@ -1,7 +1,7 @@
 import requests
 from typing import Tuple
 from enum import Enum
-from backend.src.api.ApiExceptions import ExternalAPIError, NoRouteFound
+from backend.src.httpserver.httpserver.modules.api.ApiExceptions import ExternalAPIError, NoRouteFound
 
 
 class TravelOptions(Enum):
