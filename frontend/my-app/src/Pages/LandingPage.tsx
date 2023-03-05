@@ -33,14 +33,30 @@ const LandingPage: React.FC = () => {
   // TODO: Allow user to accept friend requests
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [requests, setRequests] = useState<User[]>(location.state.requests)
-  // Just in case we're navigating back to this page
+  const refreshFriends = (): void => {
+    makeRequest(new FriendsRequest(user.email, bearer))
+      .then((res) => {
+        if (isError(res)) {
+          // TODO: Display this error message
+          // TODO: remove console.log
+          console.log(res.error)
+          return
+        }
+
+        const response = (res as FriendsResponse)
+        setRequests(response.friendRequests)
+        setFriends(response.friends)
+      })
+      .catch((e) => { console.error(e) })
+  }
+  // Just in case we're navigating back to this page lets refresh once
+  // TODO: Probably want a button of some sort to allow the user to refresh as well
   refreshFriends()
 
   const user = location.state.user
   const bearer = location.state.bearer
 
   const [checkedFriends, setCheckedFriends] = useState(() => friends.map((i) => false))
-
   const [friendEmail, setFriendEmail] = useState('')
 
   const toggleCheckbox = (index: number, checked: any): void => {
@@ -141,23 +157,6 @@ const LandingPage: React.FC = () => {
       })
       .catch((e) => { console.error(e) })
     handleClose()
-  }
-
-  const refreshFriends = (): void => {
-    makeRequest(new FriendsRequest(user.email, bearer))
-      .then((res) => {
-        if (isError(res)) {
-          // TODO: Display this error message
-          // TODO: remove console.log
-          console.log(res.error)
-          return
-        }
-
-        const response = (res as FriendsResponse)
-        setRequests(response.friendRequests)
-        setFriends(response.friends)
-      })
-      .catch((e) => { console.error(e) })
   }
 
   const handleClose = (): void => {
