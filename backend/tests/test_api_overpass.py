@@ -2,6 +2,9 @@ import os
 import responses
 import json
 import urllib.parse
+import pytest
+
+from backend.src.httpserver.httpserver.modules.api.ApiExceptions import ExternalAPIError
 
 from backend.src.httpserver.httpserver.modules.api.overpass import overpass_endpoint, bounding_query
 from backend.src.httpserver.httpserver.modules.api.overpass import nearby_point
@@ -44,7 +47,7 @@ def test_nearby_cs_building():
 @responses.activate
 def test_server_error_time():
     """
-    Verifies that None is returned on server issue
+    Verifies that error is raised on server issue
     """
     radius = 700
     lat_long = (47.6530733, -122.3050129)
@@ -57,14 +60,14 @@ def test_server_error_time():
         status=400
     )
 
-    result = nearby_point(lat_long, radius)
-    assert (result is None)
+    with pytest.raises(ExternalAPIError):
+        nearby_point(lat_long, radius)
 
 
 @responses.activate
 def test_json_error_time():
     """
-    Verifies that None is returned on json issue
+    Verifies that empty list is returned on json issue
     """
     radius = 700
     lat_long = (47.6530733, -122.3050129)
@@ -82,4 +85,4 @@ def test_json_error_time():
     )
 
     result = nearby_point(lat_long, radius)
-    assert (result is None)
+    assert (result == [])

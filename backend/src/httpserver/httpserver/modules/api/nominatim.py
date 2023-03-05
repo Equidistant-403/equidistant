@@ -1,5 +1,6 @@
 import requests
 from typing import Tuple
+from backend.src.httpserver.httpserver.modules.api.ApiExceptions import ExternalAPIError
 
 # Documentation: https://nominatim.org/release-docs/develop/api/Overview/
 nominatim_endpoint = "https://nominatim.openstreetmap.org"
@@ -15,13 +16,11 @@ def get_lat_long(address: str) -> Tuple[float, float]:
     response = requests.get(nominatim_endpoint + address_query.format(address))
 
     if not response.ok:
-        # TODO: What's an appropriate return type if the request errors?
-        return None
+        raise ExternalAPIError("Issue with external nominatim API")
 
     response_json = response.json()
     if (len(response_json) == 0 or
             "lat" not in response_json[0] or "lon" not in response_json[0]):
-        # TODO: What's an appropriate return type if the request errors?
         return None
 
     return (float(response_json[0]["lat"]), float(response_json[0]["lon"]))
