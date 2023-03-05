@@ -8,28 +8,28 @@ import type { EquidistantResponse } from './responseTypes'
  */
 export default async function makeRequest (request: EquidistantRequest): Promise<EquidistantResponse> {
   const response = await fetch(request.path, request)
-  const json = keysToCamel(await response.json())
+  const json = convertKeys(await response.json(), toCamel)
   return (json as EquidistantResponse)
 }
 
 /**
- * Turns the given object (parsed from json) from snake_cased fields to camelCased ones
+ * Turns the given object (parsed from json) from one naming convention to another
  * @param obj the object to convert fields
  * @returns and object with converted fields
  */
-function keysToCamel (obj: any): any {
+function convertKeys (obj: any, convert: Function): any {
   if (isObject(obj)) {
     const n: object = {}
 
     Object.keys(obj)
       .forEach(k => {
-        (n as any)[toCamel(k)] = keysToCamel(obj[k])
+        (n as any)[convert(k)] = convertKeys(obj[k], convert)
       })
 
     return n
   } else if (Array.isArray(obj)) {
     return obj.map((i) => {
-      return keysToCamel(i)
+      return convert(i)
     })
   }
 
@@ -56,4 +56,13 @@ function toCamel (str: string): string {
       .replace('-', '')
       .replace('_', '')
   })
+}
+
+/**
+ * Converts the given string from camelCase to snake_case
+ * @param str the string to convert
+ * @returns the converted, snake_cased string
+ */
+function toSnake (str: string): string {
+ return str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
 }
