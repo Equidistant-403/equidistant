@@ -4,12 +4,8 @@ import json
 import urllib.parse
 import pytest
 
-<<<<<<< HEAD
-from backend.src.api.ApiHandler import ApiHandler
-from backend.src.api.ApiExceptions import ExternalAPIError
-=======
 from backend.src.httpserver.httpserver.modules.api.ApiHandler import ApiHandler
->>>>>>> main
+from backend.src.httpserver.httpserver.modules.api.ApiExceptions import ExternalAPIError
 
 from backend.src.httpserver.httpserver.modules.api.nominatim import nominatim_endpoint, address_query
 from backend.src.httpserver.httpserver.modules.api.overpass import overpass_endpoint, bounding_query

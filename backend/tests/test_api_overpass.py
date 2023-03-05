@@ -4,7 +4,7 @@ import json
 import urllib.parse
 import pytest
 
-from backend.src.api.ApiExceptions import ExternalAPIError
+from backend.src.httpserver.httpserver.modules.api.ApiExceptions import ExternalAPIError
 
 from backend.src.httpserver.httpserver.modules.api.overpass import overpass_endpoint, bounding_query
 from backend.src.httpserver.httpserver.modules.api.overpass import nearby_point

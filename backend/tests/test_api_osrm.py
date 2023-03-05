@@ -3,7 +3,7 @@ import responses
 import json
 import pytest
 
-from backend.src.api.ApiExceptions import ExternalAPIError, NoRouteFound
+from backend.src.httpserver.httpserver.modules.api.ApiExceptions import ExternalAPIError, NoRouteFound
 
 from backend.src.httpserver.httpserver.modules.api.osrm import TravelOptions
 from backend.src.httpserver.httpserver.modules.api.osrm import osrm_walk_endpoint, travel_time_query
