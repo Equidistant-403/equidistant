@@ -29,11 +29,16 @@ const LandingPage: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
+  const user = location.state.user
+  const bearer = location.state.bearer
   const [friends, setFriends] = useState<User[]>(location.state.friends)
   // TODO: Allow user to accept friend requests
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [requests, setRequests] = useState<User[]>(location.state.requests)
-  const refreshFriends = (): void => {
+
+  // TODO: Probably want a button of some sort - currently infinitely refreshes
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleRefresh = (): void => {
     makeRequest(new FriendsRequest(user.email, bearer))
       .then((res) => {
         if (isError(res)) {
@@ -49,12 +54,6 @@ const LandingPage: React.FC = () => {
       })
       .catch((e) => { console.error(e) })
   }
-  // Just in case we're navigating back to this page lets refresh once
-  // TODO: Probably want a button of some sort to allow the user to refresh as well
-  refreshFriends()
-
-  const user = location.state.user
-  const bearer = location.state.bearer
 
   const [checkedFriends, setCheckedFriends] = useState(() => friends.map((i) => false))
   const [friendEmail, setFriendEmail] = useState('')
@@ -152,8 +151,8 @@ const LandingPage: React.FC = () => {
 
         const response = (res as SendRequestResponse)
         // TODO: Display this message
-        // TODO: Remove console.log
-        console.log(response.message)
+        // TODO: maybe change this from an alert
+        alert(response.message)
       })
       .catch((e) => { console.error(e) })
     handleClose()
