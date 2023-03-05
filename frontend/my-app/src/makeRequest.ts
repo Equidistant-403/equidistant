@@ -57,12 +57,3 @@ function toCamel (str: string): string {
       .replace('_', '')
   })
 }
-
-/**
- * Converts the given string from camelCase to snake_case
- * @param str the string to convert
- * @returns the converted, snake_cased string
- */
-function toSnake (str: string): string {
- return str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
-}
