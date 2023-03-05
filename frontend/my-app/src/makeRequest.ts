@@ -17,7 +17,7 @@ export default async function makeRequest (request: EquidistantRequest): Promise
  * @param obj the object to convert fields
  * @returns and object with converted fields
  */
-function convertKeys (obj: any, convert: Function): any {
+function convertKeys (obj: any, convert: (str: string) => string): any {
   if (isObject(obj)) {
     const n: object = {}
 
