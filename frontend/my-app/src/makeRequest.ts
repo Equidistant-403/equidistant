@@ -8,28 +8,28 @@ import type { EquidistantResponse } from './responseTypes'
  */
 export default async function makeRequest (request: EquidistantRequest): Promise<EquidistantResponse> {
   const response = await fetch(request.path, request)
-  const json = convertKeys(await response.json(), toCamel)
+  const json = keysToCamel(await response.json())
   return (json as EquidistantResponse)
 }
 
 /**
- * Turns the given object (parsed from json) from one naming convention to another
+ * Turns the given object (parsed from json) from snake_cased fields to camelCased ones
  * @param obj the object to convert fields
  * @returns and object with converted fields
  */
-function convertKeys (obj: any, convert: (str: string) => string): any {
+function keysToCamel (obj: any): any {
   if (isObject(obj)) {
     const n: object = {}
 
     Object.keys(obj)
       .forEach(k => {
-        (n as any)[convert(k)] = convertKeys(obj[k], convert)
+        (n as any)[toCamel(k)] = keysToCamel(obj[k])
       })
 
     return n
   } else if (Array.isArray(obj)) {
     return obj.map((i) => {
-      return convert(i)
+      return keysToCamel(i)
     })
   }
 
