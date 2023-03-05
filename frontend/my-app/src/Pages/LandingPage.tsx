@@ -20,8 +20,8 @@ import {
 } from '@mui/material'
 import { FriendsRequest, LocationRequest, SendFriendRequest } from '../requestObjects'
 import makeRequest from '../makeRequest'
-import { FriendsResponse, isError } from '../responseTypes'
-import type { LocationResponse, User, SendRequestResponse } from '../responseTypes'
+import { isError } from '../responseTypes'
+import type { LocationResponse, FriendsResponse, User, SendRequestResponse } from '../responseTypes'
 import { RESULTS_URL, ACCOUNT_URL, LOGIN_URL } from '../pageUrls'
 
 const LandingPage: React.FC = () => {
