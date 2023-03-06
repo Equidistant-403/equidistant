@@ -179,6 +179,8 @@ const CreateAccount: React.FC = () => {
             <Button
               onClick={handleCreate}
               fullWidth
+              disabled={(emailError || passwordError || addressError ||
+                        email.length === 0 || password.length === 0 || address.length === 0)}
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: 'secondary.main' }}
             >
