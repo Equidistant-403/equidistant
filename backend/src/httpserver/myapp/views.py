@@ -171,6 +171,9 @@ def get_locations(request):
         return HttpResponse(status=500)
 
 def calculate_midpoint(lat_longs):
+    """
+    Given a list of lat long coords, finds the midpoint and returns it
+    """
     x, y, z = 0.0, 0.0, 0.0
     for lat, long in lat_longs:
         x += math.cos(lat) * math.cos(long)
