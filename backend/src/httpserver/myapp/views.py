@@ -108,24 +108,30 @@ def get_locations(request):
             users = data['users']
             db = BitdotioDB(os.getenv(token))
 
+            # Step 1 - Get lat_long coords for each user by converting addresses
             handler = ApiHandler()
             lat_longs = []
             for email in users:
-                if len(db.db_query(f'SELECT address FROM {DB_USERS} WHERE email = \'{email}\'')) <= 0:
-                    address = db.db_query(f'SELECT address FROM {DB_USERS} WHERE email = \'{email}\'')
-                    try:
-                        lat_long = handler.convert(address)
-                        if lat_long is not None:
-                            lat_longs.append(lat_long)
-                        else:
-                            return JsonResponse({'error': 'One or more users have invalid addresses'}, status=400)
-                    except:
-                        # TODO: Is this the correct thing to do in this situation?
-                        return JsonResponse({'error': 'Issue with external API'}, status=502)
-                else:
+                address = db.db_query(f'SELECT address FROM {DB_USERS} WHERE email = \'{email}\'')
+                if len(address) <= 0:
                     return JsonResponse({'error': 'One or more users does not exist'}, status=400)
+
+                # We have the address, turn it into a lat long
+                try:
+                    lat_long = handler.convert(address)
+                    if lat_long is not None:
+                        lat_longs.append(lat_long)
+                    else:
+                        return JsonResponse({'error': 'One or more users have invalid addresses'}, status=400)
+                except:
+                    # TODO: Is this the correct thing to do in this situation?
+                    return JsonResponse({'error': 'Issue with external API'}, status=502)
+                    
             
+            # Step 2 - Calculate the midpoint of the given coords
             midpoint = calculate_midpoint(lat_longs)
+
+            # Step 3 - Find possible options surrounding the midpoint
             options = []
             try:
                 options = handler.get_nearby_options(midpoint, STANDARD_RADIUS, STANDARD_N)
@@ -134,8 +140,8 @@ def get_locations(request):
             except ExternalAPIError:
                 return JsonResponse({'error': 'Issue with external API'}, status=502)
 
+            # Step 4 - Find user travel times to each location found
             times = []
-            # Go through and calculate a list of times for each user involved in the search
             for i in range(len(options)):
                 try:
                     # Store a backpointer to the specific location in case we have invalid routes
@@ -147,8 +153,10 @@ def get_locations(request):
                     # Pass for now - if at the end of this, we have any empty list we found no routes
                     pass
             if len(times) == 0:
+                # We found no valid routes
                 return JsonResponse({'error': 'No route found betwen given users'}, status=500)
-                
+            
+            # Step 5 - Returns results
             return JsonResponse({
                 'locations': [{
                     'place': options[time[0]].get_lat_long(),
