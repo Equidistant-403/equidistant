@@ -18,10 +18,11 @@ Test files for unit tests are located directory alongside the files they are tes
 ### Backend
 Backend code is in the `equidistant/backend` directory. Similar to frontend, you'll have to install the necessary python libraries in order to actually run anything. These include django, BitIO, and requests to name a few but we would recommend trying to run and then seeing what's missing to know what's a required install.
 
-## Commands
-Guide to some basic commands. all should be run from the `./frontend/my-app` directory
+## Command
+Guide to some basic commands.
 
 ### Frontend
+All frontend commands should be run from the `./frontend/my-app` directory.
 
 #### Installing dependencies (MUST USE BEFORE ANY OTHER COMMAND)
 `npm install`
