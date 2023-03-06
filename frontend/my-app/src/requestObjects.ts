@@ -192,7 +192,7 @@ class FriendRequestResponse extends BearerRequest {
     super(HttpMethods.POST, '/respondFriendReq', bearer, new URLSearchParams({
       requesterEmail,
       receiverEmail,
-      response: response ? "true" : "false"
+      response: response ? 'true' : 'false'
     }))
   }
 }
