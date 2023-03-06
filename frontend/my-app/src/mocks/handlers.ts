@@ -69,7 +69,8 @@ export const handlers: RequestHandler[] = [
           ],
           friend_requests: [
             {
-
+              email: 'requester@gmail.com',
+              address: 'Pierce Ln, Seattle, WA 98195'
             }
           ]
         })

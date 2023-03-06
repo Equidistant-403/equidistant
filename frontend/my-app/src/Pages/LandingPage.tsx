@@ -16,16 +16,20 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField
+  TextField,
+  Avatar
 } from '@mui/material'
 import { FriendsRequest, LocationRequest, SendFriendRequest } from '../requestObjects'
 import makeRequest from '../makeRequest'
 import { isError } from '../responseTypes'
 import type { LocationResponse, FriendsResponse, User, SendRequestResponse } from '../responseTypes'
 import { RESULTS_URL, ACCOUNT_URL, LOGIN_URL } from '../pageUrls'
+import CheckIcon from '@mui/icons-material/Check'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 const LandingPage: React.FC = () => {
-  const [open, setOpen] = useState(false)
+  const [openAdd, setOpenAdd] = useState(false)
+  const [openReq, setOpenReq] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -56,6 +60,7 @@ const LandingPage: React.FC = () => {
   }
 
   const [checkedFriends, setCheckedFriends] = useState(() => friends.map((i) => false))
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [friendEmail, setFriendEmail] = useState('')
 
   const toggleCheckbox = (index: number, checked: any): void => {
@@ -65,6 +70,11 @@ const LandingPage: React.FC = () => {
         return c
       })
     })
+  }
+
+  const handleReqResponse = (index: number, response: number): void => {
+    // TODO: write makeRequest
+    handleRefresh()
   }
 
   const getCheckedFriends = (): User[] => {
@@ -106,40 +116,15 @@ const LandingPage: React.FC = () => {
     navigate(LOGIN_URL)
   }
 
-  const handleFriendMenu = (): void => {
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      sx={{
-        borderRadius: '20px'
-      }}>
-      <DialogTitle>Add Friend</DialogTitle>
-      <DialogContent>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="name"
-          label="Email Address"
-          type="email"
-          fullWidth
-          variant="standard"
-          onChange={(e: any) => {
-            setFriendEmail(e.target.value)
-          }}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Send Request</Button>
-      </DialogActions>
-    </Dialog>
+  const handleToggleAdd = (): void => {
+    setOpenAdd(true)
   }
 
-  const handleToggle = (): void => {
-    setOpen(true)
+  const handleCloseAdd = (): void => {
+    setOpenAdd(false)
   }
 
-  const handleSubmit = (): void => {
+  const handleSubmitAdd = (): void => {
     makeRequest(new SendFriendRequest(user.email, friendEmail, bearer))
       .then((res) => {
         if (isError(res)) {
@@ -155,11 +140,15 @@ const LandingPage: React.FC = () => {
         alert(response.message)
       })
       .catch((e) => { console.error(e) })
-    handleClose()
+    handleCloseAdd()
   }
 
-  const handleClose = (): void => {
-    setOpen(false)
+  const handleToggleReq = (): void => {
+    setOpenReq(true)
+  }
+
+  const handleCloseReq = (): void => {
+    setOpenReq(false)
   }
 
   return (
@@ -205,20 +194,14 @@ const LandingPage: React.FC = () => {
                       sx={{
                         width: 50,
                         height: 50,
-                        backgroundColor: 'primary.dark',
-                        '&:hover': {
-                          backgroundColor: 'success.main',
-                          opacity: [0.8, 0.8, 0.8]
-                        }
+                        backgroundColor: 'primary.dark'
                       }}
                       key={index}
-                      onClick={handleFriendMenu}
                     >
-                      <Typography
-                        variant="h5"
+                      <Avatar
                         component="h2">
                         {user.email[0]}
-                      </Typography>
+                      </Avatar>
                     </IconButton>
                   ))}
                 </Stack>
@@ -253,36 +236,140 @@ const LandingPage: React.FC = () => {
               </IconButton>
             </Toolbar>
           </AppBar>
-          <Box
-            component="span"
-            sx={{ p: 5 }}
-          />
-        <Button variant="outlined" color="primary" onClick={handleToggle} sx={{ mb: 5 }}>
-            Add Friends
-        </Button>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          sx={{
-            borderRadius: '20px'
-          }}>
-          <DialogTitle>Add Friend</DialogTitle>
-          <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Email Address"
-              type="email"
-              fullWidth
-              variant="standard"
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleSubmit}>Send Request</Button>
-          </DialogActions>
-        </Dialog>
+          <Stack
+            spacing={2}
+            sx={{ my: 2 }}
+          >
+            <Button variant="outlined" color="primary" onClick={handleToggleAdd}>
+                Add Friends
+            </Button>
+            <Dialog
+              open={openAdd}
+              onClose={handleCloseAdd}>
+              <DialogTitle>Add Friend</DialogTitle>
+              <DialogContent>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label="Email Address"
+                  type="email"
+                  fullWidth
+                  variant="standard"
+                  onChange={(e: any) => {
+                    setFriendEmail(e.target.value)
+                  }}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseAdd}>Cancel</Button>
+                <Button onClick={handleSubmitAdd}>Send Request</Button>
+              </DialogActions>
+            </Dialog>
+            <Button variant="outlined" color="primary" onClick={handleToggleReq}>
+                Friend Requests
+            </Button>
+            <Dialog
+              open={openReq}
+              onClose={handleCloseReq}>
+              <DialogTitle>Accept/Deny Friend Requests</DialogTitle>
+              <DialogContent>
+                <Stack
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    spacing={2}
+                    sx={{
+                      display: 'flex',
+                      flexWarp: 'wrap',
+                      m: 'auto'
+                    }}
+                  >
+                  <Button onClick={handleRefresh} sx={{ border: 1 }}>refresh</Button>
+                  {requests.map((request, index) => (
+                    <Paper
+                    key={request.email}
+                    sx={{
+                      backgroundColor: 'secondary.main',
+                      ml: 2,
+                      my: 0.3,
+                      py: 1,
+                      border: 1,
+                      borderColor: 'primary.main',
+                      borderRadius: '20px',
+                      '&:hover': {
+                        backgroundColor: 'secondary.main',
+                        opacity: [0.8, 0.8, 0.8]
+                      }
+                    }}
+                    >
+                      <Stack
+                        direction="row"
+                        alignItems="center"
+                        spacing={2}
+                        padding={1}
+                      >
+                        <IconButton
+                          color="primary"
+                          aria-label="upload picture"
+                          component="label"
+                          sx={{
+                            width: 50,
+                            height: 50,
+                            backgroundColor: 'primary.dark'
+                          }}
+                          key={index}
+                        >
+                          <Avatar component="h6">
+                            {request.email[0]}
+                          </Avatar>
+                        </IconButton>
+                        <Typography variant="h6" component="h3">
+                          {request.email}
+                        </Typography>
+                        <IconButton
+                          color="primary"
+                          aria-label="upload picture"
+                          component="label"
+                          sx={{
+                            width: 50,
+                            height: 50,
+                            backgroundColor: 'primary.dark',
+                            '&:hover': {
+                              backgroundColor: 'success.main'
+                            }
+                          }}
+                          key={index}
+                          onClick={(e) => { handleReqResponse(index, 0) } }
+                        >
+                          <CheckIcon />
+                        </IconButton>
+                        <IconButton
+                          color="primary"
+                          aria-label="upload picture"
+                          component="label"
+                          sx={{
+                            width: 50,
+                            height: 50,
+                            backgroundColor: 'primary.dark',
+                            '&:hover': {
+                              backgroundColor: 'error.main'
+                            }
+                          }}
+                          key={index}
+                          onClick={(e) => { handleReqResponse(index, 1) } }
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Stack>
+                    </Paper>
+                  ))}
+                </Stack>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseReq}>Done</Button>
+              </DialogActions>
+            </Dialog>
+          </Stack>
         <Paper
           sx={{
             minWidth: 1 / 3,
@@ -330,18 +417,13 @@ const LandingPage: React.FC = () => {
                       sx={{
                         width: 50,
                         height: 50,
-                        backgroundColor: 'primary.dark',
-                        '&:hover': {
-                          backgroundColor: 'success.main',
-                          opacity: [0.6, 0.6, 0.6]
-                        }
+                        backgroundColor: 'primary.dark'
                       }}
                       key={index}
-                      onClick={handleFriendMenu}
                     >
-                      <Typography variant="h5" component="h2">
+                      <Avatar component="h2">
                         {friend.email[0]}
-                      </Typography>
+                      </Avatar>
                     </IconButton>
                     <Typography variant="h5" component="h2">
                       {friend.email}
