@@ -46,6 +46,9 @@ add `--fix` to the lint command in `package.json` so it looks like
 ##### to run a specific test suite
 `npm test <filename>`
 
+##### Adding friends
+To test the adding friend / location finding functionality, at this point in time it's best to open the application on two web browsers and have two accounts open that are friends with one another.
+
 ### Backend
 Backend code is in the `equidistant/backend` directory. Similar to frontend, you'll have to install the necessary python libraries in order to actually run anything. These include django, BitIO, and requests to name a few but we would recommend trying to run and then seeing what's missing to know what's a required install.
 
