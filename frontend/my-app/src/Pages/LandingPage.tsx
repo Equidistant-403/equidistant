@@ -18,10 +18,10 @@ import {
   DialogTitle,
   TextField
 } from '@mui/material'
-import { FriendsRequest, LocationRequest, SendFriendRequest } from '../requestObjects'
+import { FriendsRequest, LocationRequest, SendFriendRequest, FriendRequestResponse } from '../requestObjects'
 import makeRequest from '../makeRequest'
 import { isError } from '../responseTypes'
-import type { LocationResponse, FriendsResponse, User, SendRequestResponse } from '../responseTypes'
+import type { LocationResponse, FriendsResponse, User, RespondFriendResponse, SendRequestResponse } from '../responseTypes'
 import { RESULTS_URL, ACCOUNT_URL, LOGIN_URL } from '../pageUrls'
 
 const LandingPage: React.FC = () => {
@@ -49,6 +49,26 @@ const LandingPage: React.FC = () => {
         const response = (res as FriendsResponse)
         setRequests(response.friendRequests)
         setFriends(response.friends)
+      })
+      .catch((e) => { console.error(e) })
+  }
+
+  // TODO: add accepting friend request UI
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleRespondToFriendRequest = (requester: string, accept: boolean): void => {
+    makeRequest(new FriendRequestResponse(user.email, requester, accept, bearer))
+      .then((res) => {
+        if (isError(res)) {
+          // TODO: Display this error message
+          // TODO: remove console.log
+          console.log(res.error)
+          return
+        }
+
+        const response = (res as RespondFriendResponse)
+        // TODO: Maybe this shouldn't be an alert
+        alert(response.response)
+        handleRefresh()
       })
       .catch((e) => { console.error(e) })
   }
