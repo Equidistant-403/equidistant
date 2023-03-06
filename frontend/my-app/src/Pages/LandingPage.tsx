@@ -1,8 +1,5 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { isError } from '../responseTypes'
-import { LocationRequest } from '../requestObjects'
-import makeRequest from '../makeRequest'
 import {
   AppBar,
   Box,
@@ -21,7 +18,10 @@ import {
   DialogTitle,
   TextField
 } from '@mui/material'
-import type { LocationResponse, User } from '../responseTypes'
+import { FriendsRequest, LocationRequest, SendFriendRequest, FriendRequestResponse } from '../requestObjects'
+import makeRequest from '../makeRequest'
+import { isError } from '../responseTypes'
+import type { LocationResponse, FriendsResponse, User, RespondFriendResponse, SendRequestResponse } from '../responseTypes'
 import { RESULTS_URL, ACCOUNT_URL, LOGIN_URL } from '../pageUrls'
 
 const LandingPage: React.FC = () => {
@@ -29,14 +29,52 @@ const LandingPage: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const [friends] = useState<User[]>(location.state.friends)
+  const user = location.state.user
+  const bearer = location.state.bearer
+  const [friends, setFriends] = useState<User[]>(location.state.friends)
   // TODO: Allow user to accept friend requests
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [requests, setRequests] = useState<User[]>(location.state.requests)
-  const user = location.state.user
-  const bearer = location.state.bearer
+
+  const handleRefresh = (): void => {
+    makeRequest(new FriendsRequest(user.email, bearer))
+      .then((res) => {
+        if (isError(res)) {
+          // TODO: Display this error message
+          // TODO: remove console.log
+          console.log(res.error)
+          return
+        }
+
+        const response = (res as FriendsResponse)
+        setRequests(response.friendRequests)
+        setFriends(response.friends)
+      })
+      .catch((e) => { console.error(e) })
+  }
+
+  // TODO: add accepting friend request UI
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleRespondToFriendRequest = (requester: string, accept: boolean): void => {
+    makeRequest(new FriendRequestResponse(user.email, requester, accept, bearer))
+      .then((res) => {
+        if (isError(res)) {
+          // TODO: Display this error message
+          // TODO: remove console.log
+          console.log(res.error)
+          return
+        }
+
+        const response = (res as RespondFriendResponse)
+        // TODO: Maybe this shouldn't be an alert
+        alert(response.response)
+        handleRefresh()
+      })
+      .catch((e) => { console.error(e) })
+  }
 
   const [checkedFriends, setCheckedFriends] = useState(() => friends.map((i) => false))
+  const [friendEmail, setFriendEmail] = useState('')
 
   const toggleCheckbox = (index: number, checked: any): void => {
     setCheckedFriends((isChecked) => {
@@ -103,6 +141,9 @@ const LandingPage: React.FC = () => {
           type="email"
           fullWidth
           variant="standard"
+          onChange={(e: any) => {
+            setFriendEmail(e.target.value)
+          }}
         />
       </DialogContent>
       <DialogActions>
@@ -117,7 +158,21 @@ const LandingPage: React.FC = () => {
   }
 
   const handleSubmit = (): void => {
-    console.log('add friend')
+    makeRequest(new SendFriendRequest(user.email, friendEmail, bearer))
+      .then((res) => {
+        if (isError(res)) {
+          // TODO: Display this error message
+          // TODO: remove console.log
+          console.log(res.error)
+          return
+        }
+
+        const response = (res as SendRequestResponse)
+        // TODO: Display this message
+        // TODO: maybe change this from an alert
+        alert(response.message)
+      })
+      .catch((e) => { console.error(e) })
     handleClose()
   }
 
@@ -220,7 +275,18 @@ const LandingPage: React.FC = () => {
             component="span"
             sx={{ p: 5 }}
           />
-        <Button variant="outlined" color="primary" onClick={handleToggle} sx={{ mb: 5 }}>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleRefresh}
+          sx={{ mb: 5 }}>
+            Refresh Friends List
+        </Button>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleToggle}
+          sx={{ mb: 5 }}>
             Add Friends
         </Button>
         <Dialog

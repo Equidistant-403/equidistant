@@ -185,12 +185,14 @@ class FriendRequestResponse extends BearerRequest {
    * Constructs a new friend request response
    * @param receiverEmail the reciever of the initial friend request (now the responder)
    * @param requesterEmail the requester of the intial friend request (now the reciever)
+   * @param response the response to the friend request - true accept, false deny
    * @param bearer the bearer of the current responder
    */
-  constructor (receiverEmail: string, requesterEmail: string, bearer: string) {
+  constructor (receiverEmail: string, requesterEmail: string, response: boolean, bearer: string) {
     super(HttpMethods.POST, '/respondFriendReq', bearer, new URLSearchParams({
+      requesterEmail,
       receiverEmail,
-      requesterEmail
+      response: response ? 'true' : 'false'
     }))
   }
 }
