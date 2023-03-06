@@ -55,6 +55,7 @@ const LandingPage: React.FC = () => {
       .catch((e) => { console.error(e) })
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleRequest = (requester: string, accept: boolean): void => {
     makeRequest(new FriendRequestResponse(user.email, requester, accept, bearer))
       .then((res) => {
