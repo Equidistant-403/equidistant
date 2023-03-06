@@ -18,7 +18,7 @@ same directory.
 #### Commands
 Guide to some basic commands. all should be run from the `./frontend/my-app` directory
 
-##### Installing dependencies
+##### Installing dependencies (MUST USE BEFORE ANY OTHER COMMAND)
 `npm install`
 
 ##### Starting the app locally

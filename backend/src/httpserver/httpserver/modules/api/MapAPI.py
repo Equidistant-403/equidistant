@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class MapAPI(ABC):
     """
     MapAPI interacts with an external map service API to handle various

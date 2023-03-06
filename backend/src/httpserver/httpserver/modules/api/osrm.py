@@ -1,6 +1,7 @@
 import requests
 from typing import Tuple
 from enum import Enum
+from backend.src.httpserver.httpserver.modules.api.ApiExceptions import ExternalAPIError, NoRouteFound
 
 
 class TravelOptions(Enum):
@@ -25,12 +26,10 @@ def determine_travel_time(start: Tuple[float, float], end: Tuple[float, float], 
     ))
 
     if not response.ok:
-        # TODO: What's a useful response here
-        return None
+        raise ExternalAPIError("Issue with external OSRM API")
 
     response_json = response.json()
     if "routes" not in response_json or len(response_json["routes"]) == 0:
-        # TODO: What's a useful response here
-        return None
+        raise NoRouteFound(f"No route found between {start} and {end}")
 
     return response_json["routes"][0]['duration']

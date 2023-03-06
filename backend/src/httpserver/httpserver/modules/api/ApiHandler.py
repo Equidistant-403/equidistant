@@ -1,11 +1,11 @@
 from typing import Tuple
 
-from backend.src.MapAPI import MapAPI
+from backend.src.httpserver.httpserver.modules.api.MapAPI import MapAPI
 
-from backend.src.api.nominatim import get_lat_long
-from backend.src.api.overpass import nearby_point
-from backend.src.api.osrm import determine_travel_time
-from backend.src.api.osrm import TravelOptions
+from backend.src.httpserver.httpserver.modules.api.nominatim import get_lat_long
+from backend.src.httpserver.httpserver.modules.api.overpass import nearby_point
+from backend.src.httpserver.httpserver.modules.api.osrm import determine_travel_time
+from backend.src.httpserver.httpserver.modules.api.osrm import TravelOptions
 
 
 class ApiHandler(MapAPI):
@@ -33,34 +33,24 @@ class ApiHandler(MapAPI):
         """
         Note that the input locations can be either in lat, long or address form
         """
-        loc_1 = self.convert(loc_1)
-        if loc_1 is None:
-            return None
+        converted_loc_1 = self.convert(loc_1)
+        if converted_loc_1 is None:
+            raise ValueError(f"loc_1 value: {loc_1} is not an addres or lat, long tuple")
+        converted_loc_2 = self.convert(loc_2)
+        if converted_loc_2 is None:
+            raise ValueError(f"loc_2 value: {loc_2} is not an addres or lat, long tuple")
 
-        loc_2 = self.convert(loc_2)
-        if loc_2 is None:
-            return None
-
-        travel_time = determine_travel_time(loc_1, loc_2, TravelOptions.WALK)
-        if travel_time is None:
-            # TODO: What's an appropriate error here?
-            return None
-
-        return travel_time
+        return determine_travel_time(converted_loc_1, converted_loc_2, TravelOptions.WALK)
 
     def get_nearby_options(self, loc, radius: float, n: int) -> list:
         """
         Note that the input location can be either in lat, long or address form
         """
-        loc = self.convert(loc)
-        if loc is None:
-            # TODO: What's an appropriate error here?
-            return None
+        converted_loc = self.convert(loc)
+        if converted_loc is None:
+            raise ValueError(f"loc value: {loc} is not an addres or lat, long tuple")
 
-        points = nearby_point(loc, radius)
-        if points is None:
-            # TODO: error check
-            return []
+        points = nearby_point(converted_loc, radius)
 
         # TODO: Look at rating information and reorder list
         return points[:n]

@@ -2,13 +2,15 @@ import os
 import responses
 import json
 import urllib.parse
+import pytest
 
-from backend.src.api.ApiHandler import ApiHandler
+from backend.src.httpserver.httpserver.modules.api.ApiHandler import ApiHandler
+from backend.src.httpserver.httpserver.modules.api.ApiExceptions import ExternalAPIError
 
-from backend.src.api.nominatim import nominatim_endpoint, address_query
-from backend.src.api.overpass import overpass_endpoint, bounding_query
-from backend.src.api.osrm import osrm_walk_endpoint, travel_time_query
-from backend.src.api.osrm import TravelOptions
+from backend.src.httpserver.httpserver.modules.api.nominatim import nominatim_endpoint, address_query
+from backend.src.httpserver.httpserver.modules.api.overpass import overpass_endpoint, bounding_query
+from backend.src.httpserver.httpserver.modules.api.osrm import osrm_walk_endpoint, travel_time_query
+from backend.src.httpserver.httpserver.modules.api.osrm import TravelOptions
 
 epsilon = 1e-5
 response_files = os.path.join(os.path.dirname(
@@ -118,9 +120,8 @@ def test_travel_time_error_one():
     )
     end = "1959 Northeast Pacific Street Seattle 98195"
     handler = ApiHandler()
-    result = handler.get_travel_time(start, end)
-
-    assert (result is None)
+    with pytest.raises(ExternalAPIError):
+        handler.get_travel_time(start, end)
 
 
 @responses.activate
@@ -139,9 +140,8 @@ def test_travel_time_error_two():
         status=400
     )
     handler = ApiHandler()
-    result = handler.get_travel_time(start_lat_long, end_lat_long)
-
-    assert (result is None)
+    with pytest.raises(ExternalAPIError):
+        handler.get_travel_time(start_lat_long, end_lat_long)
 
 
 @responses.activate

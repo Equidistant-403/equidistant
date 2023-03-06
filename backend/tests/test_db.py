@@ -1,5 +1,6 @@
-from backend.src import Constants
-from backend.src.database.BitdotioDB import BitdotioDB
+from backend.src.httpserver.httpserver.modules import Constants
+from backend.src.httpserver.httpserver.modules.database.BitdotioDB import BitdotioDB
+
 import os
 
 

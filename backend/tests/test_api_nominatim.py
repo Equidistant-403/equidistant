@@ -1,12 +1,16 @@
 import os
 import responses
 import json
+import pytest
 
-from backend.src.api.nominatim import nominatim_endpoint, address_query
-from backend.src.api.nominatim import get_lat_long
+from backend.src.httpserver.httpserver.modules.api.ApiExceptions import ExternalAPIError
+
+from backend.src.httpserver.httpserver.modules.api.nominatim import nominatim_endpoint, address_query
+from backend.src.httpserver.httpserver.modules.api.nominatim import get_lat_long
 
 epsilon = 1e-5
-response_files = os.path.join(os.path.dirname(os.path.abspath(__file__)), "responses")
+response_files = os.path.join(os.path.dirname(
+    os.path.abspath(__file__)), "responses")
 
 
 @responses.activate
@@ -31,7 +35,7 @@ def test_simple_convert():
 @responses.activate
 def test_error_convert():
     """
-    Verifies that None is returned on server issue
+    Verifies that error is raised on server error
     """
     address = "3800 E Stevens Way NE, Seattle, WA 98195"
     responses.add(
@@ -40,8 +44,8 @@ def test_error_convert():
         status=400
     )
 
-    result = get_lat_long(address)
-    assert (result is None)
+    with pytest.raises(ExternalAPIError):
+        get_lat_long(address)
 
 
 @responses.activate

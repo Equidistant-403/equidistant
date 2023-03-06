@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -125,8 +127,12 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_HEADERS = ['*']
 # For now, letting all CORS requests go through, in the future we can set this to False
 # and uncomment below to get a specific whitelist
+
 '''
 CORS_ORIGIN_WHITELIST = (
   'http://localhost:*',
 )
 '''
+
+CSRF_ALLOWED_ORIGINS = ["*"]
+# approve all csrf for now
