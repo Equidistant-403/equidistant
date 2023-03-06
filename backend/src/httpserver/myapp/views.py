@@ -1,4 +1,5 @@
 import os
+import math
 
 import secrets
 import hashlib
@@ -8,6 +9,9 @@ from django.http import HttpResponse
 from httpserver.modules.database.BitdotioDB import BitdotioDB
 from httpserver.modules.Constants import DB_USERS, DB_FRIENDS
 from django.views.decorators.csrf import csrf_exempt
+
+from httpserver.modules.api.ApiHandler import ApiHandler
+from httpserver.modules.api.ApiExceptions import ExternalAPIError, NoRouteFound
 
 token = 'BITIO_API_TOKEN'
 
@@ -92,14 +96,88 @@ def get_login_credentials(request):
         return HttpResponse(status=500)
 
 
+STANDARD_N = 10
+STANDARD_RADIUS = 200
 def get_locations(request):
     """
     Handles the /locations endpoint.
     """
-    if request.method == 'GET':
-        data = request.GET
-    return HttpResponse('Thanks for submitting your data')
+    try:
+        if request.method == 'GET':
+            data = request.GET
+            users = data['users']
+            db = BitdotioDB(os.getenv(token))
 
+            handler = ApiHandler()
+            lat_longs = []
+            for email in users:
+                if len(db.db_query(f'SELECT address FROM {DB_USERS} WHERE email = \'{email}\'')) <= 0:
+                    address = db.db_query(f'SELECT address FROM {DB_USERS} WHERE email = \'{email}\'')
+                    try:
+                        lat_long = handler.convert(address)
+                        if lat_long is not None:
+                            lat_longs.append(lat_long)
+                        else:
+                            return JsonResponse({'error': 'One or more users have invalid addresses'}, status=400)
+                    except:
+                        # TODO: Is this the correct thing to do in this situation?
+                        return JsonResponse({'error': 'Issue with external API'}, status=502)
+                else:
+                    return JsonResponse({'error': 'One or more users does not exist'}, status=400)
+            
+            midpoint = calculate_midpoint(lat_longs)
+            options = []
+            try:
+                options = handler.get_nearby_options(midpoint, STANDARD_RADIUS, STANDARD_N)
+            except ValueError:
+                return JsonResponse({'error': 'One or more users have invalid addresses'}, status=400)
+            except ExternalAPIError:
+                return JsonResponse({'error': 'Issue with external API'}, status=502)
+
+            times = []
+            # Go through and calculate a list of times for each user involved in the search
+            for i in range(len(options)):
+                try:
+                    # Store a backpointer to the specific location in case we have invalid routes
+                    times.append((
+                        i,
+                        [handler.get_travel_time(options[i].get_lat_long(), lat_long) for lat_long in lat_longs]
+                    ))
+                except NoRouteFound:
+                    # Pass for now - if at the end of this, we have any empty list we found no routes
+                    pass
+            if len(times) == 0:
+                return JsonResponse({'error': 'No route found betwen given users'}, status=500)
+                
+            return JsonResponse({
+                'locations': [{
+                    'place': options[time[0]].get_lat_long(),
+                    'name': options[time[0]].get_name(),
+                    'rating': -1,
+                    'travel_times': time[1],
+                } for time in times]
+            })
+        else:
+            return HttpResponse(status=404)
+    except:
+        return HttpResponse(status=500)
+
+def calculate_midpoint(lat_longs):
+    x, y, z = 0.0, 0.0, 0.0
+    for lat, long in lat_longs:
+        x += math.cos(lat) * math.cos(long)
+        y += math.cos(lat) * math.sin(long)
+        z += math.sin(lat)
+    
+    x /= len(lat_longs)
+    y /= len(lat_longs)
+    z /= len(lat_longs)
+
+    central_longitude = math.atan2(y, x)
+    central_square_root = math.sqrt(x * x + y * y)
+    central_latitude = math.atan2(z, central_square_root)
+
+    return (math.degrees(central_latitude), math.degrees(central_longitude))
 
 def get_friends(request):
     """
