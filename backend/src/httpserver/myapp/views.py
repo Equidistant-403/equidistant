@@ -8,6 +8,9 @@ from django.http import HttpResponse
 from httpserver.modules.database.BitdotioDB import BitdotioDB
 from httpserver.modules.Constants import DB_USERS, DB_FRIENDS
 from django.views.decorators.csrf import csrf_exempt
+from typing import Tuple
+from httpserver.modules.api.ApiHandler import convert
+from httpserver.modules.api.ApiHandler import get_nearby_options
 
 token = 'BITIO_API_TOKEN'
 
@@ -96,9 +99,33 @@ def get_locations(request):
     """
     Handles the /locations endpoint.
     """
-    if request.method == 'GET':
-        data = request.GET
-    return HttpResponse('Thanks for submitting your data')
+    try:
+        if request.method == 'GET':
+            data = request.GET
+            users = data['users']
+            addresses = []
+            db = BitdotioDB(os.getenv(token))
+            for user in users:
+                if len(db.db_query(f'SELECT address FROM {DB_USERS} WHERE email = \'{user}\'')) <= 0:
+                    return JsonResponse({'error': 'Invalid user credentials'}, status=401)
+                address = db.db_query(f'SELECT address FROM {DB_USERS} '
+                                  f'WHERE email = \'{user}\' ')
+                if len(address) <= 0:
+                    return JsonResponse({'error': 'Invalid user credentials'}, status=401)
+                addresses.append(convert(address[0][0]))
+            mid_lat = 0.0
+            mid_lon = 0.0
+            for lat, lon in addresses:
+                mid_lat = mid_lat + lat
+                mid_lon = mid_lon + lon
+            mid_lat = mid_lat/len(addresses)
+            mid_lon = mid_lon/len(addresses)
+            mid_loc = (mid_lat, mid_lon)
+            locations = get_nearby_options(mid_loc, 1, 10)
+            return JsonResponse({"locations": locations})
+                
+    except:
+        return HttpResponse(status=500)
 
 
 def get_friends(request):
