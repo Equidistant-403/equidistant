@@ -114,12 +114,11 @@ class LocationRequest extends BearerRequest {
    * @param bearer the bearer of the requester to make sure the request is legitimate
    */
   constructor (users: string[], bearer: string) {
-    super(HttpMethods.GET, '/locations', bearer, new URLSearchParams())
     const params = new URLSearchParams()
     users.forEach((user) => {
       params.append('users', user)
     })
-    this.path += '?' + params.toString()
+    super(HttpMethods.GET, '/locations', bearer, params)
   }
 }
 
