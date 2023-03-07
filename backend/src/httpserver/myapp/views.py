@@ -80,7 +80,7 @@ def get_login_credentials(request):
                     friend_reqs.append({'email': friend_tuple[0], 'address': friend_tuple[1]})
 
             # TODO: implement bearer
-            return JsonResponse({'bearer:': 'some_bearer',
+            return JsonResponse({'bearer': 'some_bearer',
                                  'user': {
                                      'email': email,
                                      'address': address
