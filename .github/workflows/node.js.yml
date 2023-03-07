@@ -53,7 +53,7 @@ jobs:
 
     needs: build
 
-    if: github.ref == 'refs/pull/74/merge'
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
