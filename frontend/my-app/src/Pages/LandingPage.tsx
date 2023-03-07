@@ -295,7 +295,7 @@ const LandingPage: React.FC = () => {
                     }}
                   >
                   <Button onClick={handleRefresh} sx={{ border: 1 }}>refresh</Button>
-                  {requests.map((request, index) => (
+                  {requests?.map((request, index) => (
                     <Paper
                     key={request.email}
                     sx={{
@@ -393,7 +393,7 @@ const LandingPage: React.FC = () => {
               py: 1
             }}
           >
-            {friends.map((friend, index) => (
+            {friends?.map((friend, index) => (
               <FormControlLabel
                 sx={{
                   backgroundColor: 'secondary.main',
