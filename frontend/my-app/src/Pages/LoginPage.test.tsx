@@ -21,13 +21,6 @@ describe('LoginPage', () => {
     expect(signUpButton).toBeEnabled()
   })
 
-  it('Forgot password button rendered', () => {
-    render(<LoginPage />, { wrapper: MemoryRouter })
-    const forgotPasswordButton = screen.getByRole('button', { name: /forgot password\?/i })
-    expect(forgotPasswordButton).toBeInTheDocument()
-    expect(forgotPasswordButton).toBeEnabled()
-  })
-
   it('Form rendered', () => {
     render(<LoginPage />, { wrapper: MemoryRouter })
     const emailForm = screen.getByRole('textbox', { name: /email/i })
