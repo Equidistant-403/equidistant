@@ -59,14 +59,14 @@ def get_login_credentials(request):
                 return JsonResponse({'error': 'Invalid login credentials'}, status=401)
             # otherwise login is successful, assemble information
             address = address[0][0]
-            friend_list = db.db_query(f'SELECT {DB_USERS}.email, {DB_USERS}.address, '
+            friend_list = db.db_query(f'SELECT {DB_FRIENDS}.user1, {DB_USERS}.address, '
                                       f'{DB_FRIENDS}.status FROM {DB_FRIENDS} '
                                       f'JOIN {DB_USERS} '
                                       f'ON {DB_USERS}.email = {DB_FRIENDS}.user2 '
                                       f'WHERE {DB_USERS}.email = \'{email}\' '
                                       f'AND ({DB_FRIENDS}.status = 0 OR {DB_FRIENDS}.status = 1) '
                                       f'UNION ALL '
-                                      f'SELECT {DB_USERS}.email, {DB_USERS}.address, '
+                                      f'SELECT {DB_FRIENDS}.user2, {DB_USERS}.address, '
                                       f'{DB_FRIENDS}.status FROM {DB_FRIENDS} '
                                       f'JOIN {DB_USERS} '
                                       f'ON {DB_USERS}.email = {DB_FRIENDS}.user1 '
@@ -113,20 +113,22 @@ def get_friends(request):
     try:
         if request.method == 'GET':
             data = request.GET
+            if 'HTTP_AUTHORIZATION' not in  request.META:
+                return JsonResponse({'error': 'access forbidden'}, status=401)
             authentication = request.META['HTTP_AUTHORIZATION'][7:]  # starts with "Bearer "
             email = data['email']
             bearer_manager = Bearer.objects
             if bearer_manager.verify_token(authentication, email):
                 db = BitdotioDB(os.getenv(token))
                 # Authentication bearer should guarantee that user exists
-                friend_list = db.db_query(f'SELECT {DB_USERS}.email, {DB_USERS}.address, '
+                friend_list = db.db_query(f'SELECT {DB_FRIENDS}.user1, {DB_USERS}.address, '
                                           f'{DB_FRIENDS}.status FROM {DB_FRIENDS} '
                                           f'JOIN {DB_USERS} '
                                           f'ON {DB_USERS}.email = {DB_FRIENDS}.user2 '
                                           f'WHERE {DB_USERS}.email = \'{email}\' '
                                           f'AND ({DB_FRIENDS}.status = 0 OR {DB_FRIENDS}.status = 1) '
                                           f'UNION ALL '
-                                          f'SELECT {DB_USERS}.email, {DB_USERS}.address, '
+                                          f'SELECT {DB_FRIENDS}.user2, {DB_USERS}.address, '
                                           f'{DB_FRIENDS}.status FROM {DB_FRIENDS} '
                                           f'JOIN {DB_USERS} '
                                           f'ON {DB_USERS}.email = {DB_FRIENDS}.user1 '
@@ -140,7 +142,7 @@ def get_friends(request):
                     else:
                         friend_reqs.append({'email': friend_tuple[0], 'address': friend_tuple[1]})
                 return JsonResponse({'friends': friends,
-                                     'friend_reqs': friend_reqs
+                                     'friend_requests': friend_reqs
                                      })
             else:
                 return JsonResponse({'error': 'access forbidden'}, status=401)
@@ -157,6 +159,8 @@ def get_user(request):
     try:
         if request.method == 'GET':
             data = request.GET
+            if 'HTTP_AUTHORIZATION' not in  request.META:
+                return JsonResponse({'error': 'access forbidden'}, status=401)
             authentication = request.META['HTTP_AUTHORIZATION'][7:]  # starts with "Bearer "
             email = data['email']
             bearer_manager = Bearer.objects
@@ -183,6 +187,8 @@ def post_friend_request(request):
     try:
         if request.method == 'POST':
             data = request.POST
+            if 'HTTP_AUTHORIZATION' not in  request.META:
+                return JsonResponse({'error': 'access forbidden'}, status=401)
             authentication = request.META['HTTP_AUTHORIZATION'][7:]  # starts with "Bearer "
             requester = data['requesterEmail']
             receiver = data['receiverEmail']
@@ -223,6 +229,8 @@ def post_friend_request_response(request):
     try:
         if request.method == 'POST':
             data = request.POST
+            if 'HTTP_AUTHORIZATION' not in  request.META:
+                return JsonResponse({'error': 'access forbidden'}, status=401)
             authentication = request.META['HTTP_AUTHORIZATION'][7:]  # starts with "Bearer "
             requester = data['requesterEmail']
             receiver = data['receiverEmail']
