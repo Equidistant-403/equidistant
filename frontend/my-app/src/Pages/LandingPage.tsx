@@ -305,9 +305,6 @@ const LandingPage: React.FC = () => {
               type="email"
               fullWidth
               variant="standard"
-              onChange={(e: any) => {
-                setFriendEmail(e.target.value)
-              }}
             />
           </DialogContent>
           <DialogActions>
