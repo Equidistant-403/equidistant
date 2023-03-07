@@ -4,7 +4,7 @@ import makeRequest from '../makeRequest'
 import { LoginRequest } from '../requestObjects'
 import type { LoginResponse } from '../responseTypes'
 import { isError } from '../responseTypes'
-import { Button, Box, Typography, TextField, Grid, Stack, createTheme, ThemeProvider } from '@mui/material'
+import { Button, Box, Typography, TextField, Stack, createTheme, ThemeProvider } from '@mui/material'
 import { CREATE_ACCOUNT_URL, LANDING_PAGE_URL } from '../pageUrls'
 
 const theme = createTheme({
@@ -129,17 +129,13 @@ const LoginPage: React.FC = () => {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Button
-                  onClick={handleCreate}
-                  variant="contained"
-                  sx={{ m: 2, bgcolor: 'secondary.main' }}
-                >
-                  {"Don't have an account? Sign Up"}
-                </Button>
-              </Grid>
-            </Grid>
+            <Button
+              onClick={handleCreate}
+              variant="contained"
+              sx={{ m: 2, bgcolor: 'secondary.main' }}
+            >
+              {"Don't have an account? Sign Up"}
+            </Button>
           </Box>
         </Box>
       </Stack>
