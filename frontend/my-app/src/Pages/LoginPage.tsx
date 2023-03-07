@@ -53,11 +53,6 @@ const LoginPage: React.FC = () => {
     navigate(CREATE_ACCOUNT_URL)
   }
 
-  const handleForgotPassword = (): void => {
-    // TODO: Remove console.log
-    console.log('dummy forgot password')
-  }
-
   return (
     <div style={{ height: '90vh', margin: 0, padding: 0 }}>
       <Stack
@@ -142,15 +137,6 @@ const LoginPage: React.FC = () => {
                   sx={{ m: 2, bgcolor: 'secondary.main' }}
                 >
                   {"Don't have an account? Sign Up"}
-                </Button>
-              </Grid>
-              <Grid item>
-              <Button
-                  onClick={handleForgotPassword}
-                  variant="contained"
-                  sx={{ m: 2, bgcolor: 'secondary.main' }}
-                >
-                  Forgot password?
                 </Button>
               </Grid>
             </Grid>
