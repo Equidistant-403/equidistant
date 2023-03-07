@@ -5,7 +5,7 @@ import { CreateAccountRequest } from '../requestObjects'
 import type { CreateAccountResponse } from '../responseTypes'
 import { isError } from '../responseTypes'
 import { Button, Box, Typography, TextField, Grid, Stack, createTheme, ThemeProvider } from '@mui/material'
-import { LANDING_PAGE_URL } from '../pageUrls'
+import { LOGIN_URL } from '../pageUrls'
 
 const theme = createTheme({
   palette: {
@@ -65,14 +65,7 @@ const CreateAccount: React.FC = () => {
         const response = (res as CreateAccountResponse)
         // TODO: Remove console.log
         console.log('response', response)
-        navigate(LANDING_PAGE_URL, {
-          state: {
-            user: response.user,
-            friends: [],
-            requests: [],
-            bearer: response.bearer
-          }
-        })
+        navigate(LOGIN_URL)
       })
       .catch((e) => {
         console.error(e)
