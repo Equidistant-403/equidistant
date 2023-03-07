@@ -3,7 +3,6 @@ from django.db import models
 
 # Create your models here.
 
-
 class BearerManager(models.Manager):
 
     def verify_token(self, token: str, value: str) -> bool:

@@ -14,7 +14,7 @@ const ENDPOINT = process.env.NODE_ENV === 'development' ? '' : process.env.REACT
 class EquidistantRequest {
   path: string
   method: HttpMethods
-  body: URLSearchParams
+  body: URLSearchParams | null
   headers: Headers
 
   /**
@@ -27,7 +27,7 @@ class EquidistantRequest {
   constructor (method: HttpMethods, path: string, body: URLSearchParams) {
     this.path = ENDPOINT + path
     this.method = method
-    this.body = new URLSearchParams()
+    this.body = null
 
     // Needed because of the specific backend tunnel we're using
     this.headers = new Headers({
@@ -35,9 +35,9 @@ class EquidistantRequest {
     })
 
     if (method === HttpMethods.GET) {
-      this.path += '?' + new URLSearchParams(body).toString()
+      this.path += '?' + body.toString()
     } else if (method === HttpMethods.POST) {
-      this.body = new URLSearchParams(body)
+      this.body = body
       // Needed for the information to be stored within the POST itself
       this.headers.append('Content-type', 'application/x-www-form-urlencoded')
     }
@@ -185,12 +185,14 @@ class FriendRequestResponse extends BearerRequest {
    * Constructs a new friend request response
    * @param receiverEmail the reciever of the initial friend request (now the responder)
    * @param requesterEmail the requester of the intial friend request (now the reciever)
+   * @param response the response to the friend request - true accept, false deny
    * @param bearer the bearer of the current responder
    */
-  constructor (receiverEmail: string, requesterEmail: string, bearer: string) {
+  constructor (receiverEmail: string, requesterEmail: string, response: boolean, bearer: string) {
     super(HttpMethods.POST, '/respondFriendReq', bearer, new URLSearchParams({
+      requesterEmail,
       receiverEmail,
-      requesterEmail
+      response: response ? 'true' : 'false'
     }))
   }
 }

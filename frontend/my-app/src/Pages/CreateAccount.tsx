@@ -18,9 +18,39 @@ const theme = createTheme({
 
 const CreateAccount: React.FC = () => {
   const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState(false)
   const [password, setPassword] = useState('')
+  const [passwordError, setPasswordError] = useState(false)
   const [address, setAddress] = useState('')
+  const [addressError, setAddressError] = useState(false)
   const navigate = useNavigate()
+
+  const isValidEmail = (email: string): boolean => {
+    return !(/\S+@\S+\.\S+/.test(email))
+  }
+
+  const handleEmailTyping = (e: any): void => {
+    setEmailError(isValidEmail(e.target.value))
+    setEmail(e.target.value)
+  }
+
+  const isValidPassword = (password: string): boolean => {
+    return password.length < 8
+  }
+
+  const handlePasswordTyping = (e: any): void => {
+    setPasswordError(isValidPassword(e.target.value))
+    setPassword(e.target.value)
+  }
+
+  const isValidAddress = (address: string): boolean => {
+    return !(/^(\d{1,}) [a-zA-Z0-9\s]+(,)? [a-zA-Z]+(,)? [A-Z]{2} [0-9]{5,6}$/.test(address))
+  }
+
+  const handleAddressTyping = (e: any): void => {
+    setAddressError(isValidAddress(e.target.value))
+    setAddress(e.target.value)
+  }
 
   const handleCreate = (): void => {
     makeRequest(new CreateAccountRequest(email, password, address))
@@ -94,6 +124,8 @@ const CreateAccount: React.FC = () => {
               </Typography>
               <ThemeProvider theme={theme}>
                 <TextField
+                  error={emailError}
+                  helperText={emailError ? 'Email is not formatted correctly' : ''}
                   required
                   fullWidth
                   id="email"
@@ -102,13 +134,15 @@ const CreateAccount: React.FC = () => {
                   autoComplete="email"
                   variant="standard"
                   autoFocus
-                  onChange={(e) => { setEmail(e.target.value) }}
+                  onChange={handleEmailTyping}
                   color="info"
                   sx={{
                     input: { color: 'white' }
                   }}
                 />
                 <TextField
+                  error={passwordError}
+                  helperText={passwordError ? 'Password must be at least 8 characters' : ''}
                   margin="normal"
                   required
                   fullWidth
@@ -118,11 +152,13 @@ const CreateAccount: React.FC = () => {
                   id="password"
                   autoComplete="current-password"
                   variant="standard"
-                  onChange={(e) => { setPassword(e.target.value) }}
+                  onChange={handlePasswordTyping}
                   color="info"
                   sx={{ input: { color: 'white' } }}
                 />
                 <TextField
+                  error={addressError}
+                  helperText={addressError ? 'Address must match specified format' : ''}
                   margin="normal"
                   required
                   fullWidth
@@ -132,14 +168,19 @@ const CreateAccount: React.FC = () => {
                   id="address"
                   autoComplete="address"
                   variant="standard"
-                  onChange={(e) => { setAddress(e.target.value) }}
+                  onChange={handleAddressTyping}
                   color="info"
                   sx={{ input: { color: 'white' } }}
                 />
+                <Box component='p'>
+                  Addresses must match this format: 3344 W Alameda Avenue, Lakewood, CO 80222
+                </Box>
               </ThemeProvider>
             <Button
               onClick={handleCreate}
               fullWidth
+              disabled={(emailError || passwordError || addressError ||
+                        email.length === 0 || password.length === 0 || address.length === 0)}
               variant="contained"
               sx={{ mt: 3, mb: 2, bgcolor: 'secondary.main' }}
             >
