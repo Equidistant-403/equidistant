@@ -71,7 +71,8 @@ export const handlers: RequestHandler[] = [
             {
 
             }
-          ]
+          ],
+          bearer: 'token'
         })
       )
     }
