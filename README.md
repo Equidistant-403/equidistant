@@ -13,6 +13,7 @@ Equidistant is an app to help you and your group get over the decision fatigue o
 - [ ] Allow for users to cycle through search results
 
 ### Stretch Goals
+- [ ] Allow users to reset their passwords via email
 - [ ] Mutable user profiles
 - [ ] Email Confirmation on login
 - [ ] Allow users to make more specific searches (food restrictions, price range, etc.)
