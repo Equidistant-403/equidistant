@@ -72,7 +72,8 @@ export const handlers: RequestHandler[] = [
               email: 'requester@gmail.com',
               address: 'Pierce Ln, Seattle, WA 98195'
             }
-          ]
+          ],
+          bearer: 'token'
         })
       )
     }
@@ -80,7 +81,7 @@ export const handlers: RequestHandler[] = [
     return res(
       ctx.status(401),
       ctx.json({
-        errorMessage: 'Invalid login credentials'
+        error: 'Invalid login credentials'
       })
     )
   }),
