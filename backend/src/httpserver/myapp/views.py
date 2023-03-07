@@ -84,7 +84,7 @@ def get_login_credentials(request):
                     friend_reqs.append({'email': friend_tuple[0], 'address': friend_tuple[1]})
 
             # TODO: implement bearer
-            return JsonResponse({'bearer:': 'some_bearer',
+            return JsonResponse({'bearer': 'some_bearer',
                                  'user': {
                                      'email': email,
                                      'address': address
@@ -108,8 +108,15 @@ def get_locations(request):
             users = data['users']
             db = BitdotioDB(os.getenv(token))
 
-            # Step 1 - Get lat_long coords for each user by converting addresses
+            # Step 0 - Make sure we're authenticated
+            authentication = request.META['HTTP_AUTHORIZATION'][7:]  # starts with "Bearer "
+            bearer_manager = Bearer.objects
+            if not bearer_manager.verify_token(authentication, email):
+                return JsonResponse({'error': 'access forbidden'}, status=401)
+            
             handler = ApiHandler()
+
+            # Step 1 - Get lat_long coords for each user by converting addresses
             lat_longs = []
             for email in users:
                 address = db.db_query(f'SELECT address FROM {DB_USERS} WHERE email = \'{email}\'')
