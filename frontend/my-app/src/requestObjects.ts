@@ -99,7 +99,7 @@ class BearerRequest extends EquidistantRequest {
    */
   constructor (method: HttpMethods, path: string, bearer: string, body: URLSearchParams) {
     super(method, path, body)
-    this.headers.append('Authorization', bearer)
+    this.headers.append('Authorization', 'Bearer ' + bearer)
   }
 }
 
