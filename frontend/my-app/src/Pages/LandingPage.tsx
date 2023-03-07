@@ -36,8 +36,6 @@ const LandingPage: React.FC = () => {
   const user = location.state.user
   const bearer = location.state.bearer
   const [friends, setFriends] = useState<User[]>(location.state.friends)
-  // TODO: Allow user to accept friend requests
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [requests, setRequests] = useState<User[]>(location.state.requests)
 
   // TODO: Probably want a button of some sort - currently infinitely refreshes
@@ -60,7 +58,6 @@ const LandingPage: React.FC = () => {
   }
 
   const [checkedFriends, setCheckedFriends] = useState(() => friends.map((i) => false))
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [friendEmail, setFriendEmail] = useState('')
 
   const toggleCheckbox = (index: number, checked: any): void => {

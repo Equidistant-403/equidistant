@@ -53,6 +53,7 @@ const LoginPage: React.FC = () => {
     navigate(CREATE_ACCOUNT_URL)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleForgotPassword = (): void => {
     // TODO: Remove console.log
     console.log('dummy forgot password')
@@ -144,15 +145,16 @@ const LoginPage: React.FC = () => {
                   {"Don't have an account? Sign Up"}
                 </Button>
               </Grid>
+              {/* for forgot password stretch goal
               <Grid item>
-              <Button
+                <Button
                   onClick={handleForgotPassword}
                   variant="contained"
-                  sx={{ m: 2, bgcolor: 'secondary.main' }}
-                >
+                  sx={{ m: 2, bgcolor: 'secondary.main' }}>
                   Forgot password?
                 </Button>
               </Grid>
+                */}
             </Grid>
           </Box>
         </Box>
