@@ -79,7 +79,7 @@ export const handlers: RequestHandler[] = [
     return res(
       ctx.status(401),
       ctx.json({
-        errorMessage: 'Invalid login credentials'
+        error: 'Invalid login credentials'
       })
     )
   }),
