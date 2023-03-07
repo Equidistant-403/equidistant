@@ -17,7 +17,8 @@ class ApiHandler(MapAPI):
     All are free and open source
     """
 
-    def convert(self, loc):
+    @staticmethod
+    def convert(loc):
         """
         Helper method that converts a given address to a latitude, longitude representation.
         If the given location is already lat, long nothing happens
@@ -29,24 +30,26 @@ class ApiHandler(MapAPI):
             loc = get_lat_long(loc)
         return loc
 
-    def get_travel_time(self, loc_1, loc_2) -> float:
+    @staticmethod
+    def get_travel_time(loc_1, loc_2) -> float:
         """
         Note that the input locations can be either in lat, long or address form
         """
-        converted_loc_1 = self.convert(loc_1)
+        converted_loc_1 = ApiHandler.convert(loc_1)
         if converted_loc_1 is None:
             raise ValueError(f"loc_1 value: {loc_1} is not an addres or lat, long tuple")
-        converted_loc_2 = self.convert(loc_2)
+        converted_loc_2 = ApiHandler.convert(loc_2)
         if converted_loc_2 is None:
             raise ValueError(f"loc_2 value: {loc_2} is not an addres or lat, long tuple")
 
         return determine_travel_time(converted_loc_1, converted_loc_2, TravelOptions.WALK)
 
-    def get_nearby_options(self, loc, radius: float, n: int) -> list:
+    @staticmethod
+    def get_nearby_options(loc, radius: float, n: int) -> list:
         """
         Note that the input location can be either in lat, long or address form
         """
-        converted_loc = self.convert(loc)
+        converted_loc = ApiHandler.convert(loc)
         if converted_loc is None:
             raise ValueError(f"loc value: {loc} is not an addres or lat, long tuple")
 
