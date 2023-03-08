@@ -93,7 +93,6 @@ const LandingPage: React.FC = () => {
   }
 
   const handleGenerateClick = (): void => {
-    console.log(getCheckedFriends().map(u => u.email))
     makeRequest(new LocationRequest([user.email, ...getCheckedFriends().map(u => u.email)], bearer))
       .then((res) => {
         if (isError(res)) {
