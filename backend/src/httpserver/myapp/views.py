@@ -6,6 +6,7 @@ import hashlib
 
 from django.http import JsonResponse
 from django.http import HttpResponse
+from myapp.models import Bearer
 from httpserver.modules.database.BitdotioDB import BitdotioDB
 from httpserver.modules.Constants import DB_USERS, DB_FRIENDS
 from django.views.decorators.csrf import csrf_exempt
