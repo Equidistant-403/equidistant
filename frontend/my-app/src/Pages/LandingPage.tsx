@@ -54,7 +54,6 @@ const LandingPage: React.FC = () => {
       })
       .catch((e) => { console.error(e) })
   }
-  
 
   // TODO: add accepting friend request UI
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
