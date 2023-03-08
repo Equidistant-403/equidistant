@@ -93,7 +93,7 @@ const LandingPage: React.FC = () => {
   }
 
   const handleGenerateClick = (): void => {
-    makeRequest(new LocationRequest([user.email, ...getCheckedFriends()], bearer))
+    makeRequest(new LocationRequest([user.email, ...getCheckedFriends().map(u => u.email)], bearer))
       .then((res) => {
         if (isError(res)) {
           // TODO: Display this error message
@@ -347,7 +347,7 @@ const LandingPage: React.FC = () => {
                             }
                           }}
                           key={index}
-                          onClick={(e) => { handleRespondToFriendRequest(request.email, true) } }
+                          onClick={(e: any) => { handleRespondToFriendRequest(request.email, true) } }
                         >
                           <CheckIcon />
                         </IconButton>
@@ -364,7 +364,7 @@ const LandingPage: React.FC = () => {
                             }
                           }}
                           key={index}
-                          onClick={(e) => { handleRespondToFriendRequest(request.email, false) } }
+                          onClick={(e: any) => { handleRespondToFriendRequest(request.email, false) } }
                         >
                           <DeleteIcon />
                         </IconButton>

@@ -104,7 +104,6 @@ def get_login_credentials(request):
 STANDARD_N = 10
 STANDARD_RADIUS = 500
 
-
 def get_locations(request):
     """
     Handles the /locations endpoint.
@@ -168,7 +167,7 @@ def get_locations(request):
                     pass
             if len(times) == 0:
                 # We found no valid routes
-                return JsonResponse({'error': 'No route found between given users', 'options': options, 'midpoint': midpoint}, status=500)
+                return JsonResponse({'error': 'No route found betwen given users'}, status=500)
 
             # Step 5 - Returns results
             return JsonResponse({
@@ -184,7 +183,6 @@ def get_locations(request):
     except:
         return HttpResponse(status=500)
 
-
 def calculate_midpoint(lat_longs):
     """
     Given a list of lat long coords, finds the midpoint and returns it
@@ -195,6 +193,7 @@ def calculate_midpoint(lat_longs):
         x += math.cos(lat_rads) * math.cos(long_rads)
         y += math.cos(lat_rads) * math.sin(long_rads)
         z += math.sin(lat_rads)
+
     x /= len(lat_longs)
     y /= len(lat_longs)
     z /= len(lat_longs)
