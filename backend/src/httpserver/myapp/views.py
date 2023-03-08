@@ -123,8 +123,6 @@ def get_locations(request):
             if not bearer_manager.verify_token(authentication, users[0]):
                 return JsonResponse({'error': 'access forbidden'}, status=401)
 
-            handler = ApiHandler()
-
             # Step 1 - Get lat_long coords for each user by converting addresses
             lat_longs = []
             for email in users:
@@ -135,7 +133,7 @@ def get_locations(request):
 
                 # We have the address, turn it into a lat long
                 try:
-                    lat_long = handler.convert(address)
+                    lat_long = ApiHandler.convert(address)
                     if lat_long is not None:
                         lat_longs.append(lat_long)
                     else:
@@ -150,7 +148,7 @@ def get_locations(request):
             # Step 3 - Find possible options surrounding the midpoint
             options = []
             try:
-                options = handler.get_nearby_options(midpoint, STANDARD_RADIUS, STANDARD_N)
+                options = ApiHandler.get_nearby_options(midpoint, STANDARD_RADIUS, STANDARD_N)
             except ValueError:
                 return JsonResponse({'error': 'One or more users have invalid addresses'}, status=400)
             except ExternalAPIError:
@@ -163,7 +161,7 @@ def get_locations(request):
                     # Store a backpointer to the specific location in case we have invalid routes
                     times.append((
                         i,
-                        [handler.get_travel_time(options[i].get_lat_long(), lat_long) for lat_long in lat_longs]
+                        [ApiHandler.get_travel_time(options[i].get_lat_long(), lat_long) for lat_long in lat_longs]
                     ))
                 except NoRouteFound:
                     # Pass for now - if at the end of this, we have any empty list we found no routes
