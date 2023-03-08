@@ -30,8 +30,8 @@ Any documents / files relevant to both frontend and backend teams can be found i
 - Create a new account
 - Log in to an existing account
 - Search and friend another user
+- Start a search with a list of people
+- Cycle through results until a satisfactory one is found
 
 ### Non-Operational Use Cases
-- Start a search with a list of people
 - Password reset
-- Cycle through results until a satisfactory one is found
