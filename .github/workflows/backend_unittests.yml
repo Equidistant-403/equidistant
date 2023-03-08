@@ -25,7 +25,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8 pytest bitdotio psycopg2 requests-toolbelt responses
+          pip install flake8 pytest bitdotio psycopg2 requests-toolbelt responses django django-cors-headers python-dotenv
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Lint with flake8
         run: |
@@ -38,3 +38,8 @@ jobs:
           BITIO_API_TOKEN: ${{ secrets.BITIO_API_TOKEN }}
         run: |
           pytest
+      - name: Test Django tests
+        run: |
+          cd backend/src/httpserver
+          # need to determine why tests run locally and not on CI
+          # python manage.py test myapp

@@ -1,6 +1,6 @@
 import requests
 from typing import Tuple, List
-from backend.src.httpserver.httpserver.modules.api.ApiExceptions import ExternalAPIError
+from httpserver.modules.api.ApiExceptions import ExternalAPIError
 
 
 class Node:

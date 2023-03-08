@@ -33,7 +33,7 @@ def post_create_user(request):
                 salt = secrets.token_hex(4)
                 hash_pw = hashlib.sha256((password + salt).encode('UTF-8')).hexdigest()
                 db.db_query(f'INSERT INTO {DB_USERS} VALUES (\'{email}\', \'{hash_pw}\', \'{salt}\', \'{address}\')')
-                return JsonResponse({'email': email, 'address': address})
+                return JsonResponse({'email': email, 'address': address}, status=201)
             else:
                 return JsonResponse({'error': 'Cannot make account with provided parameters'}, status=400)
         else:
@@ -63,19 +63,19 @@ def get_login_credentials(request):
                 return JsonResponse({'error': 'Invalid login credentials'}, status=401)
             # otherwise login is successful, assemble information
             address = address[0][0]
-            friend_list = db.db_query(f'SELECT {DB_USERS}.email, {DB_USERS}.address, '
+            friend_list = db.db_query(f'SELECT {DB_FRIENDS}.user1, {DB_USERS}.address, '
                                       f'{DB_FRIENDS}.status FROM {DB_FRIENDS} '
                                       f'JOIN {DB_USERS} '
                                       f'ON {DB_USERS}.email = {DB_FRIENDS}.user2 '
                                       f'WHERE {DB_USERS}.email = \'{email}\' '
-                                      f'AND ({DB_FRIENDS}.status = 0 OR {DB_FRIENDS}.status = 2) '
+                                      f'AND ({DB_FRIENDS}.status = 0 OR {DB_FRIENDS}.status = 1) '
                                       f'UNION ALL '
-                                      f'SELECT {DB_USERS}.email, {DB_USERS}.address, '
+                                      f'SELECT {DB_FRIENDS}.user2, {DB_USERS}.address, '
                                       f'{DB_FRIENDS}.status FROM {DB_FRIENDS} '
                                       f'JOIN {DB_USERS} '
                                       f'ON {DB_USERS}.email = {DB_FRIENDS}.user1 '
                                       f'WHERE {DB_USERS}.email = \'{email}\' '
-                                      f'AND ({DB_FRIENDS}.status = 0 OR {DB_FRIENDS}.status = 1)')
+                                      f'AND ({DB_FRIENDS}.status = 0)')
             friends = []
             friend_reqs = []
             for friend_tuple in friend_list:
@@ -84,21 +84,26 @@ def get_login_credentials(request):
                 else:
                     friend_reqs.append({'email': friend_tuple[0], 'address': friend_tuple[1]})
 
-            # TODO: implement bearer
-            return JsonResponse({'bearer': 'some_bearer',
+            user_token = secrets.token_hex(16)
+            bearer = Bearer(token=user_token, value=email)
+            bearer.save()
+            return JsonResponse({'bearer': user_token,
                                  'user': {
                                      'email': email,
                                      'address': address
                                  },
                                  'friends': friends,
-                                 'friend_reqs': friend_reqs
+                                 'friend_requests': friend_reqs
                                  })
+        else:
+            return HttpResponse(status=404)
     except:
         return HttpResponse(status=500)
 
 
 STANDARD_N = 10
-STANDARD_RADIUS = 200
+STANDARD_RADIUS = 500
+
 def get_locations(request):
     """
     Handles the /locations endpoint.
@@ -106,19 +111,21 @@ def get_locations(request):
     try:
         if request.method == 'GET':
             data = request.GET
-            users = data['users']
+            users = data.getlist('users')
             db = BitdotioDB(os.getenv(token))
 
             # Step 0 - Make sure we're authenticated
+            if 'HTTP_AUTHORIZATION' not in request.META:
+                return JsonResponse({'error': 'access forbidden'}, status=401)
             authentication = request.META['HTTP_AUTHORIZATION'][7:]  # starts with "Bearer "
             bearer_manager = Bearer.objects
-            email = users[0]
-            if not bearer_manager.verify_token(authentication, email):
+            if not bearer_manager.verify_token(authentication, users[0]):
                 return JsonResponse({'error': 'access forbidden'}, status=401)
 
             # Step 1 - Get lat_long coords for each user by converting addresses
             lat_longs = []
             for email in users:
+                # inefficient to make several calls to db, best if we can combine this all into a single query
                 address = db.db_query(f'SELECT address FROM {DB_USERS} WHERE email = \'{email}\'')
                 if len(address) <= 0:
                     return JsonResponse({'error': 'One or more users does not exist'}, status=400)
@@ -133,7 +140,6 @@ def get_locations(request):
                 except:
                     # TODO: Is this the correct thing to do in this situation?
                     return JsonResponse({'error': 'Issue with external API'}, status=502)
-
 
             # Step 2 - Calculate the midpoint of the given coords
             midpoint = calculate_midpoint(lat_longs)
@@ -183,9 +189,10 @@ def calculate_midpoint(lat_longs):
     """
     x, y, z = 0.0, 0.0, 0.0
     for lat, long in lat_longs:
-        x += math.cos(lat) * math.cos(long)
-        y += math.cos(lat) * math.sin(long)
-        z += math.sin(lat)
+        lat_rads, long_rads = math.radians(lat), math.radians(long)
+        x += math.cos(lat_rads) * math.cos(long_rads)
+        y += math.cos(lat_rads) * math.sin(long_rads)
+        z += math.sin(lat_rads)
 
     x /= len(lat_longs)
     y /= len(lat_longs)
@@ -195,40 +202,161 @@ def calculate_midpoint(lat_longs):
     central_square_root = math.sqrt(x * x + y * y)
     central_latitude = math.atan2(z, central_square_root)
 
-    return (math.degrees(central_latitude), math.degrees(central_longitude))
+    return math.degrees(central_latitude), math.degrees(central_longitude)
 
 
 def get_friends(request):
     """
     Handles the /friends endpoint.
     """
-    if request.method == 'GET':
-        data = request.GET
-    return HttpResponse('Thanks for submitting your data')
+    try:
+        if request.method == 'GET':
+            data = request.GET
+            if 'HTTP_AUTHORIZATION' not in request.META:
+                return JsonResponse({'error': 'access forbidden'}, status=401)
+            authentication = request.META['HTTP_AUTHORIZATION'][7:]  # starts with "Bearer "
+            email = data['email']
+            bearer_manager = Bearer.objects
+            if bearer_manager.verify_token(authentication, email):
+                db = BitdotioDB(os.getenv(token))
+                # Authentication bearer should guarantee that user exists
+                friend_list = db.db_query(f'SELECT {DB_FRIENDS}.user1, {DB_USERS}.address, '
+                                          f'{DB_FRIENDS}.status FROM {DB_FRIENDS} '
+                                          f'JOIN {DB_USERS} '
+                                          f'ON {DB_USERS}.email = {DB_FRIENDS}.user2 '
+                                          f'WHERE {DB_USERS}.email = \'{email}\' '
+                                          f'AND ({DB_FRIENDS}.status = 0 OR {DB_FRIENDS}.status = 1) '
+                                          f'UNION ALL '
+                                          f'SELECT {DB_FRIENDS}.user2, {DB_USERS}.address, '
+                                          f'{DB_FRIENDS}.status FROM {DB_FRIENDS} '
+                                          f'JOIN {DB_USERS} '
+                                          f'ON {DB_USERS}.email = {DB_FRIENDS}.user1 '
+                                          f'WHERE {DB_USERS}.email = \'{email}\' '
+                                          f'AND ({DB_FRIENDS}.status = 0)')
+                friends = []
+                friend_reqs = []
+                for friend_tuple in friend_list:
+                    if int(friend_tuple[2]) == 0:
+                        friends.append({'email': friend_tuple[0], 'address': friend_tuple[1]})
+                    else:
+                        friend_reqs.append({'email': friend_tuple[0], 'address': friend_tuple[1]})
+                return JsonResponse({'friends': friends,
+                                     'friend_requests': friend_reqs
+                                     })
+            else:
+                return JsonResponse({'error': 'access forbidden'}, status=401)
+        else:
+            return HttpResponse(status=404)
+    except:
+        return HttpResponse(status=500)
 
 
 def get_user(request):
     """
     Handles the /user endpoint.
     """
-    if request.method == 'GET':
-        data = request.GET
-    return HttpResponse('Thanks for submitting your data')
+    try:
+        if request.method == 'GET':
+            data = request.GET
+            if 'HTTP_AUTHORIZATION' not in  request.META:
+                return JsonResponse({'error': 'access forbidden'}, status=401)
+            authentication = request.META['HTTP_AUTHORIZATION'][7:]  # starts with "Bearer "
+            email = data['email']
+            bearer_manager = Bearer.objects
+            if bearer_manager.verify_token(authentication, email):
+                db = BitdotioDB(os.getenv(token))
+                user_info = db.db_query(f'SELECT email, address FROM {DB_USERS} '
+                                        f'WHERE email = \'{email}\'')
+                return JsonResponse({'email': email,
+                                     'address': user_info[0][1]
+                                     })
+            else:
+                return JsonResponse({'error': 'access forbidden'}, status=401)
+        else:
+            return HttpResponse(status=404)
+    except:
+        return HttpResponse(status=500)
 
 
+@csrf_exempt
 def post_friend_request(request):
     """
     Handles the /sendFriendReq endpoint.
     """
-    if request.method == 'POST':
-        data = request.POST
-    return HttpResponse('Thanks for submitting your data')
+    try:
+        if request.method == 'POST':
+            data = request.POST
+            if 'HTTP_AUTHORIZATION' not in  request.META:
+                return JsonResponse({'error': 'access forbidden'}, status=401)
+            authentication = request.META['HTTP_AUTHORIZATION'][7:]  # starts with "Bearer "
+            requester = data['requesterEmail']
+            receiver = data['receiverEmail']
+            bearer_manager = Bearer.objects
+            if bearer_manager.verify_token(authentication, requester):
+                db = BitdotioDB(os.getenv(token))
+                if requester == receiver:
+                    return JsonResponse({'error': 'cannot friend yourself'}, status=400)
+                receiver_data = db.db_query(f'SELECT email FROM {DB_USERS} '
+                                            f'WHERE email = \'{receiver}\'')
+                if len(receiver_data) <= 0:
+                    return JsonResponse({'error': 'user not found'}, status=404)
+                fr_req_data = db.db_query(f'SELECT status FROM {DB_FRIENDS} '
+                                          f'WHERE (user1 = \'{requester}\' '
+                                          f'AND user2 = \'{receiver}\') '
+                                          f'OR (user1 = \'{receiver}\' '
+                                          f'AND user2 = \'{requester}\')')
+                if len(fr_req_data) > 0:
+                    if int(fr_req_data[0][0]) == 0:
+                        return JsonResponse({'error': 'already friends with user'}, status=400)
+                    else:
+                        return JsonResponse({'error': 'pending friend request already exists'}, status=400)
+                db.db_query(f'INSERT INTO {DB_FRIENDS} VALUES (\'{requester}\', \'{receiver}\', 1)')
+                return HttpResponse(status=201)
+            else:
+                return JsonResponse({'error': 'access forbidden'}, status=401)
+        else:
+            return HttpResponse(status=404)
+    except:
+        return HttpResponse(status=500)
 
 
+@csrf_exempt
 def post_friend_request_response(request):
     """
     Handles the /respondFriendReq endpoint.
     """
-    if request.method == 'POST':
-        data = request.POST
-    return HttpResponse('Thanks for submitting your data')
+    try:
+        if request.method == 'POST':
+            data = request.POST
+            if 'HTTP_AUTHORIZATION' not in  request.META:
+                return JsonResponse({'error': 'access forbidden'}, status=401)
+            authentication = request.META['HTTP_AUTHORIZATION'][7:]  # starts with "Bearer "
+            requester = data['requesterEmail']
+            receiver = data['receiverEmail']
+            response = data['response']
+            bearer_manager = Bearer.objects
+            if bearer_manager.verify_token(authentication, receiver):
+                db = BitdotioDB(os.getenv(token))
+                requester_data = db.db_query(f'SELECT email FROM {DB_USERS} '
+                                             f'WHERE email = \'{requester}\'')
+                if len(requester_data) <= 0:
+                    return JsonResponse({'error': 'friend request not found'}, status=404)
+                fr_req_data = db.db_query(f'SELECT COUNT(*) FROM {DB_FRIENDS} '
+                                          f'WHERE user1 = \'{requester}\' '
+                                          f'AND user2 = \'{receiver}\'')
+                if fr_req_data[0][0] <= 0:
+                    return JsonResponse({'error': 'no friend request to reply to'})
+                if bool(response) is True:
+                    db.db_query(f'UPDATE {DB_FRIENDS} SET status = 0 WHERE user1 = \'{requester}\' '
+                                f'AND user2 = \'{receiver}\'')
+
+                else:
+                    db.db_query(f'DELETE FROM {DB_FRIENDS} WHERE user1 = \'{requester}\' '
+                                f'AND user2 = \'{receiver}\'')
+                return JsonResponse({'response': response})
+            else:
+                return JsonResponse({'error': 'access forbidden'}, status=401)
+        else:
+            return HttpResponse(status=404)
+    except:
+        return HttpResponse(status=500)

@@ -1,5 +1,5 @@
-from backend.src.httpserver.httpserver.modules import Constants
-from backend.src.httpserver.httpserver.modules.database.BitdotioDB import BitdotioDB
+from httpserver.modules import Constants
+from httpserver.modules.database.BitdotioDB import BitdotioDB
 
 import os
 
