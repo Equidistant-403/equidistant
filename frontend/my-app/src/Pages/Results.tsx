@@ -21,6 +21,7 @@ const Results: React.FC = () => {
     }
   }
 
+
   console.log(process.env.REACT_APP_MAP_API_KEY as string)
 
   const handleDoneClick = (): void => {
