@@ -4,9 +4,9 @@ import json
 import urllib.parse
 import pytest
 
-from backend.src.httpserver.httpserver.modules.api.ApiExceptions import ExternalAPIError
-from backend.src.httpserver.httpserver.modules.api.overpass import overpass_endpoint, bounding_query
-from backend.src.httpserver.httpserver.modules.api.overpass import nearby_point
+from httpserver.modules.api.ApiExceptions import ExternalAPIError
+from httpserver.modules.api.overpass import overpass_endpoint, bounding_query
+from httpserver.modules.api.overpass import nearby_point
 
 epsilon = 1e-5
 response_files = os.path.join(os.path.dirname(

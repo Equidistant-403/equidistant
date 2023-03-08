@@ -4,13 +4,13 @@ import json
 import urllib.parse
 import pytest
 
-from backend.src.httpserver.httpserver.modules.api.ApiHandler import ApiHandler
-from backend.src.httpserver.httpserver.modules.api.ApiExceptions import ExternalAPIError
+from httpserver.modules.api.ApiHandler import ApiHandler
+from httpserver.modules.api.ApiExceptions import ExternalAPIError
 
-from backend.src.httpserver.httpserver.modules.api.nominatim import nominatim_endpoint, address_query
-from backend.src.httpserver.httpserver.modules.api.overpass import overpass_endpoint, bounding_query
-from backend.src.httpserver.httpserver.modules.api.osrm import osrm_walk_endpoint, travel_time_query
-from backend.src.httpserver.httpserver.modules.api.osrm import TravelOptions
+from httpserver.modules.api.nominatim import nominatim_endpoint, address_query
+from httpserver.modules.api.overpass import overpass_endpoint, bounding_query
+from httpserver.modules.api.osrm import osrm_walk_endpoint, travel_time_query
+from httpserver.modules.api.osrm import TravelOptions
 
 epsilon = 1e-5
 response_files = os.path.join(os.path.dirname(

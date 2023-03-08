@@ -4,9 +4,9 @@ import json
 import pytest
 
 
-from backend.src.httpserver.httpserver.modules.api.ApiExceptions import ExternalAPIError
-from backend.src.httpserver.httpserver.modules.api.nominatim import nominatim_endpoint, address_query
-from backend.src.httpserver.httpserver.modules.api.nominatim import get_lat_long
+from httpserver.modules.api.ApiExceptions import ExternalAPIError
+from httpserver.modules.api.nominatim import nominatim_endpoint, address_query
+from httpserver.modules.api.nominatim import get_lat_long
 
 epsilon = 1e-5
 response_files = os.path.join(os.path.dirname(

@@ -3,10 +3,10 @@ import responses
 import json
 import pytest
 
-from backend.src.httpserver.httpserver.modules.api.ApiExceptions import ExternalAPIError, NoRouteFound
-from backend.src.httpserver.httpserver.modules.api.osrm import TravelOptions
-from backend.src.httpserver.httpserver.modules.api.osrm import osrm_walk_endpoint, travel_time_query
-from backend.src.httpserver.httpserver.modules.api.osrm import determine_travel_time
+from httpserver.modules.api.ApiExceptions import ExternalAPIError, NoRouteFound
+from httpserver.modules.api.osrm import TravelOptions
+from httpserver.modules.api.osrm import osrm_walk_endpoint, travel_time_query
+from httpserver.modules.api.osrm import determine_travel_time
 
 epsilon = 1e-5
 response_files = os.path.join(os.path.dirname(
