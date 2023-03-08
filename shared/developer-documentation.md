@@ -9,49 +9,55 @@ The `equidistant/shared` directory holds all documentation (user, developer, and
 directory contains our weekly status reports.
 
 ### Frontend
-Frontend code is in the `equidistant/frontend/my-app` directory. Upon first time cloning the repo,
-it will be necessary to run the `npm install` command from the `my-app` directory in order to install
-the dependencies. Within the `src` directory you will find both the application's Typescript source files
-and the test files alongside them. For example, the test file for `App.tsx` is the `App.test.tsx` file in the
-same directory.
+Frontend code is in the `equidistant/frontend/my-app` directory. Upon first time cloning the repo, it will be necessary to run the `npm install` command from the `my-app` directory in order to install the dependencies.
 
-#### Commands
-Guide to some basic commands. all should be run from the `./frontend/my-app` directory
+Within the `src` directory you will find some more general Typescript utility files, alongside the application's main `App.tsx` and `index.tsx` files. Files relevant to mocking are contained in the `mocks` subdirectory, and files relevant to specific webpages are in the `Pages` subdirectory.
 
-##### Installing dependencies (MUST USE BEFORE ANY OTHER COMMAND)
-`npm install`
-
-##### Starting the app locally
-`npm start`
-
-##### Rebuilding Dependencies
-`npm rebuild`
-
-##### Generating a Mock Service Worker (1 time execution)
-`npx msw init public/ --save`
-
-##### to turn MSW on & off for local development
-MSW is by default turned off. This is controlled via an environmental variable. If you wish to change this so the default is on, make a `equidistant/frontend/my-app/.env.development` file and change add a value for `REACT_APP_MOCKS_ENABLED` as true. If you just wish to run the development build once with mocking enabled, run `REACT_APP_MOCKS_ENABLED=true npm start`
-
-##### Linter (Errors)
-`npm run lint`
-
-##### Linter (Fix errors)
-add `--fix` to the lint command in `package.json` so it looks like
-`eslint --fix --ext .ts,.tsx ./src`
-
-##### to run the suite of all unit and integration tests
-`npm test`
-
-##### to run a specific test suite
-`npm test <filename>`
+Test files for unit tests are located directory alongside the files they are testing. For example tests for `LoginPage.tsx` are in the `LoginPage.test.tsx` file in the same directory.
 
 ### Backend
 Backend code is in the `equidistant/backend` directory. Similar to frontend, you'll have to install the necessary python libraries in order to actually run anything. These include django, BitIO, and requests to name a few but we would recommend trying to run and then seeing what's missing to know what's a required install.
 
+## Command
+Guide to some basic commands.
+
+### Frontend
+All frontend commands should be run from the `./frontend/my-app` directory.
+
+#### Installing dependencies (MUST USE BEFORE ANY OTHER COMMAND)
+`npm install`
+
+#### Starting the app locally
+`npm start`
+
+#### Rebuilding Dependencies
+`npm rebuild`
+
+#### Generating a Mock Service Worker (1 time execution)
+`npx msw init public/ --save`
+
+#### to turn MSW on & off for local development
+MSW is by default turned off. This is controlled via an environmental variable. If you wish to change this so the default is on, make a `equidistant/frontend/my-app/.env.development` file and change add a value for `REACT_APP_MOCKS_ENABLED` as true. If you just wish to run the development build once with mocking enabled, run `REACT_APP_MOCKS_ENABLED=true npm start`
+
+#### Linter (Show errors)
+`npm run lint`
+
+#### Linter (Fix errors)
+add `--fix` to the lint command in `package.json` so it looks like
+`eslint --fix --ext .ts,.tsx ./src`
+
+#### to run the suite of all unit and integration tests
+`npm test`
+
+#### to run a specific test suite
+`npm test <filename>`
+
+#### Adding friends
+To test the adding friend / location finding functionality, at this point in time it's best to open the application on two web browsers and have two accounts open that are friends with one another.
+
 ## Building
 ### Frontend
-To build the front end, make sure you have installed the dependendencies and then run `npm run build` from
+To build the front end, make sure you have installed the dependendencies (`npm install`) and then run `npm run build` from
 the `equidistant/frontend/my-app` directory.
 
 ### Backend
@@ -91,6 +97,9 @@ it('test name', () => {
 New test files can be added either to specific files that already exist within the `equidistant/backend/tests` directory, or new files can be created there should the desired test not fit into one of the existing files.
 ​
 Some tests that run directly on the server may require running within Django, in which case tests can be added to the `equidistant/backend/src/httpserver/myapp/test.py` file.
+
+### Live Testing
+If you want to test on the live deployment located [here](https://equidistant-403.github.io/equidistant/) you'll have to make two accounts with different addresses such that a location query is possible.
 
 ## Building a release
 Version number should be updated in the top level `README.md` file, and again in the `frontend/my-app/package.json` file.

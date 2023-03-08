@@ -7,15 +7,15 @@ Equidistant is an app to help you and your group get over the decision fatigue o
 
 ## Goals
 ### Major features
-- [ ] Users are able to search / friend other users
-- [ ] Users can search for restaurants that have “equidistant” travel times (based on a user defined threshold) between all users involved in the search
+- [x] Users are able to search / friend other users
+- [x] Users can search for restaurants that have “equidistant” travel times (based on a user defined threshold) between all users involved in the search
 - [ ] Display ratings such that users are able factor that into their considerations
-- [ ] Allow for users to cycle through search results
+- [x] Allow for users to cycle through search results
 
 ### Stretch Goals
 - [ ] Allow users to reset their passwords via email
 - [ ] Mutable user profiles
-- [ ] Email Confirmation on login
+- [ ] Email Confirmation as part of creating an account
 - [ ] Allow users to make more specific searches (food restrictions, price range, etc.)
 - [ ] Expanding to more locations than just restaurants / food (parks, activities, etc.)
 - [ ] Allowing users involved in the search to pick their transportation method
@@ -29,9 +29,9 @@ Any documents / files relevant to both frontend and backend teams can be found i
 ### Operational Use Cases
 - Create a new account
 - Log in to an existing account
+- Search and friend another user
+- Start a search with a list of people
+- Cycle through results until a satisfactory one is found
 
 ### Non-Operational Use Cases
-- Start a search with a list of people
 - Password reset
-- Cycle through results until a satisfactory one is found
-- Search and friend another user
