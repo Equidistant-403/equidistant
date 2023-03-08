@@ -68,7 +68,7 @@ jobs:
         run: npm run build --if-present
         env:
           REACT_APP_BACKEND: ${{ secrets.BACKEND_URL }}
-          MAP_API_KEY: ${{ secrets.MAP_API_KEY }}
+          REACT_APP_MAP_API_KEY: ${{ secrets.MAP_API_KEY }}
       - name: Deploy app
         uses: peaceiris/actions-gh-pages@v3
         with:
