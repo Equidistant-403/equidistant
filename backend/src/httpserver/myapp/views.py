@@ -102,7 +102,7 @@ def get_login_credentials(request):
 
 
 STANDARD_N = 10
-STANDARD_RADIUS = 200
+STANDARD_RADIUS = 500
 
 
 def get_locations(request):
@@ -112,13 +112,15 @@ def get_locations(request):
     try:
         if request.method == 'GET':
             data = request.GET
-            users = data['users']
+            users = data.getlist('users')
             db = BitdotioDB(os.getenv(token))
 
             # Step 0 - Make sure we're authenticated
+            if 'HTTP_AUTHORIZATION' not in request.META:
+                return JsonResponse({'error': 'access forbidden'}, status=401)
             authentication = request.META['HTTP_AUTHORIZATION'][7:]  # starts with "Bearer "
             bearer_manager = Bearer.objects
-            if not bearer_manager.verify_token(authentication, email):
+            if not bearer_manager.verify_token(authentication, users[0]):
                 return JsonResponse({'error': 'access forbidden'}, status=401)
 
             handler = ApiHandler()
@@ -126,6 +128,7 @@ def get_locations(request):
             # Step 1 - Get lat_long coords for each user by converting addresses
             lat_longs = []
             for email in users:
+                # inefficient to make several calls to db, best if we can combine this all into a single query
                 address = db.db_query(f'SELECT address FROM {DB_USERS} WHERE email = \'{email}\'')
                 if len(address) <= 0:
                     return JsonResponse({'error': 'One or more users does not exist'}, status=400)
@@ -167,7 +170,7 @@ def get_locations(request):
                     pass
             if len(times) == 0:
                 # We found no valid routes
-                return JsonResponse({'error': 'No route found betwen given users'}, status=500)
+                return JsonResponse({'error': 'No route found between given users', 'options': options, 'midpoint': midpoint}, status=500)
 
             # Step 5 - Returns results
             return JsonResponse({
@@ -190,10 +193,10 @@ def calculate_midpoint(lat_longs):
     """
     x, y, z = 0.0, 0.0, 0.0
     for lat, long in lat_longs:
-        x += math.cos(lat) * math.cos(long)
-        y += math.cos(lat) * math.sin(long)
-        z += math.sin(lat)
-
+        lat_rads, long_rads = math.radians(lat), math.radians(long)
+        x += math.cos(lat_rads) * math.cos(long_rads)
+        y += math.cos(lat_rads) * math.sin(long_rads)
+        z += math.sin(lat_rads)
     x /= len(lat_longs)
     y /= len(lat_longs)
     z /= len(lat_longs)
@@ -202,7 +205,7 @@ def calculate_midpoint(lat_longs):
     central_square_root = math.sqrt(x * x + y * y)
     central_latitude = math.atan2(z, central_square_root)
 
-    return (math.degrees(central_latitude), math.degrees(central_longitude))
+    return math.degrees(central_latitude), math.degrees(central_longitude)
 
 
 def get_friends(request):
@@ -212,7 +215,7 @@ def get_friends(request):
     try:
         if request.method == 'GET':
             data = request.GET
-            if 'HTTP_AUTHORIZATION' not in  request.META:
+            if 'HTTP_AUTHORIZATION' not in request.META:
                 return JsonResponse({'error': 'access forbidden'}, status=401)
             authentication = request.META['HTTP_AUTHORIZATION'][7:]  # starts with "Bearer "
             email = data['email']
