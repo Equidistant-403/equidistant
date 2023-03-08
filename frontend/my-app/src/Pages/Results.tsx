@@ -89,7 +89,7 @@ const Results: React.FC = () => {
                         height="350"
                         src={`https://www.google.com/maps/embed/v1/view
                         ?key=${process.env.REACT_APP_MAP_API_KEY}
-                        &center=-33.8569,151.2152
+                        &center=${result.place[0]},${result.place[1]}
                         &zoom=18
                         &maptype=satellite`}
                         >
