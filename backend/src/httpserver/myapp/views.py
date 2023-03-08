@@ -104,7 +104,6 @@ def get_login_credentials(request):
 STANDARD_N = 10
 STANDARD_RADIUS = 500
 
-
 def get_locations(request):
     """
     Handles the /locations endpoint.
@@ -123,8 +122,6 @@ def get_locations(request):
             if not bearer_manager.verify_token(authentication, users[0]):
                 return JsonResponse({'error': 'access forbidden'}, status=401)
 
-            handler = ApiHandler()
-
             # Step 1 - Get lat_long coords for each user by converting addresses
             lat_longs = []
             for email in users:
@@ -135,7 +132,7 @@ def get_locations(request):
 
                 # We have the address, turn it into a lat long
                 try:
-                    lat_long = handler.convert(address)
+                    lat_long = ApiHandler.convert(address)
                     if lat_long is not None:
                         lat_longs.append(lat_long)
                     else:
@@ -150,7 +147,7 @@ def get_locations(request):
             # Step 3 - Find possible options surrounding the midpoint
             options = []
             try:
-                options = handler.get_nearby_options(midpoint, STANDARD_RADIUS, STANDARD_N)
+                options = ApiHandler.get_nearby_options(midpoint, STANDARD_RADIUS, STANDARD_N)
             except ValueError:
                 return JsonResponse({'error': 'One or more users have invalid addresses'}, status=400)
             except ExternalAPIError:
@@ -163,14 +160,14 @@ def get_locations(request):
                     # Store a backpointer to the specific location in case we have invalid routes
                     times.append((
                         i,
-                        [handler.get_travel_time(options[i].get_lat_long(), lat_long) for lat_long in lat_longs]
+                        [ApiHandler.get_travel_time(options[i].get_lat_long(), lat_long) for lat_long in lat_longs]
                     ))
                 except NoRouteFound:
                     # Pass for now - if at the end of this, we have any empty list we found no routes
                     pass
             if len(times) == 0:
                 # We found no valid routes
-                return JsonResponse({'error': 'No route found between given users', 'options': options, 'midpoint': midpoint}, status=500)
+                return JsonResponse({'error': 'No route found betwen given users'}, status=500)
 
             # Step 5 - Returns results
             return JsonResponse({
@@ -186,7 +183,6 @@ def get_locations(request):
     except:
         return HttpResponse(status=500)
 
-
 def calculate_midpoint(lat_longs):
     """
     Given a list of lat long coords, finds the midpoint and returns it
@@ -197,6 +193,7 @@ def calculate_midpoint(lat_longs):
         x += math.cos(lat_rads) * math.cos(long_rads)
         y += math.cos(lat_rads) * math.sin(long_rads)
         z += math.sin(lat_rads)
+
     x /= len(lat_longs)
     y /= len(lat_longs)
     z /= len(lat_longs)

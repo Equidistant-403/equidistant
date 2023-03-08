@@ -33,8 +33,7 @@ def test_travel_time_lat_long():
         json=json.load(open(response_files + "/cs_plaza_walk.json")),
         status=200
     )
-    handler = ApiHandler()
-    result = handler.get_travel_time(start_lat_long, end_lat_long)
+    result = ApiHandler.get_travel_time(start_lat_long, end_lat_long)
 
     assert (result is not None)
     assert (abs(result - 427.8) <= epsilon)
@@ -70,8 +69,7 @@ def test_travel_time_address():
         json=json.load(open(response_files + "/cs_plaza_walk.json")),
         status=200
     )
-    handler = ApiHandler()
-    result = handler.get_travel_time(start, end)
+    result = ApiHandler.get_travel_time(start, end)
 
     assert (result is not None)
     assert (abs(result - 427.8) <= epsilon)
@@ -100,8 +98,7 @@ def test_travel_time_mix():
         json=json.load(open(response_files + "/cs_plaza_walk.json")),
         status=200
     )
-    handler = ApiHandler()
-    result = handler.get_travel_time(start_lat_long, end)
+    result = ApiHandler.get_travel_time(start_lat_long, end)
 
     assert (result is not None)
     assert (abs(result - 427.8) <= epsilon)
@@ -119,9 +116,8 @@ def test_travel_time_error_one():
         status=400
     )
     end = "1959 Northeast Pacific Street Seattle 98195"
-    handler = ApiHandler()
     with pytest.raises(ExternalAPIError):
-        handler.get_travel_time(start, end)
+        ApiHandler.get_travel_time(start, end)
 
 
 @responses.activate
@@ -139,9 +135,8 @@ def test_travel_time_error_two():
         ),
         status=400
     )
-    handler = ApiHandler()
     with pytest.raises(ExternalAPIError):
-        handler.get_travel_time(start_lat_long, end_lat_long)
+        ApiHandler.get_travel_time(start_lat_long, end_lat_long)
 
 
 @responses.activate
@@ -160,8 +155,7 @@ def test_nearby_options_lat_long():
         json=json.load(open(response_files + '/nearby_cs_building.json')),
         status=200
     )
-    handler = ApiHandler()
-    result = handler.get_nearby_options(lat_long, radius, 10)
+    result = ApiHandler.get_nearby_options(lat_long, radius, 10)
 
     assert (result is not None)
     assert (len(result) == 3)
@@ -190,8 +184,7 @@ def test_nearby_options_lat_long_n():
         json=json.load(open(response_files + '/nearby_cs_building.json')),
         status=200
     )
-    handler = ApiHandler()
-    result = handler.get_nearby_options(lat_long, radius, 1)
+    result = ApiHandler.get_nearby_options(lat_long, radius, 1)
 
     assert (result is not None)
     assert (len(result) == 1)
@@ -219,8 +212,7 @@ def test_nearby_options_address():
         json=json.load(open(response_files + '/nearby_cs_building.json')),
         status=200
     )
-    handler = ApiHandler()
-    result = handler.get_nearby_options(start, radius, 10)
+    result = ApiHandler.get_nearby_options(start, radius, 10)
 
     assert (result is not None)
     assert (len(result) == 3)
