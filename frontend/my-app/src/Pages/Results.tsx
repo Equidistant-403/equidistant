@@ -87,8 +87,9 @@ const Results: React.FC = () => {
                       <iframe
                         width="550"
                         height="350"
+                        /* eslint-disable no-alert, no-console */
                         src={`https://www.google.com/maps/embed/v1/view
-                        ?key=${process.env.REACT_APP_MAP_API_KEY}
+                        ?key=${process.env.REACT_APP_MAP_API_KEY as string} 
                         &center=${result.place[0]},${result.place[1]}
                         &zoom=18
                         &maptype=satellite`}
