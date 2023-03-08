@@ -98,6 +98,9 @@ New test files can be added either to specific files that already exist within t
 ​
 Some tests that run directly on the server may require running within Django, in which case tests can be added to the `equidistant/backend/src/httpserver/myapp/test.py` file.
 
+### Live Testing
+If you want to test on the live deployment located [here](https://equidistant-403.github.io/equidistant/) you'll have to make two accounts with different addresses such that a location query is possible.
+
 ## Building a release
 Version number should be updated in the top level `README.md` file, and again in the `frontend/my-app/package.json` file.
 Then, once the changes are merged to main, [go here](https://github.com/Equidistant-403/equidistant/releases/new) and create a new release.
