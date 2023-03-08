@@ -9,13 +9,13 @@ export const handlers: RequestHandler[] = [
       ctx.json({
         locations: [
           {
-            place: [1, 1],
+            place: [47.65330539770633, -122.3058139748984],
             name: 'CSE1',
             rating: 4,
             travel_times: [12, 20, 8, 15, 16]
           },
           {
-            place: [2, 2],
+            place: [47.653025641208494, -122.30501278858901],
             name: 'CSE2',
             rating: 5,
             travel_times: [1, 2, 38, 4, 5]
@@ -69,9 +69,11 @@ export const handlers: RequestHandler[] = [
           ],
           friend_requests: [
             {
-
+              email: 'requester@gmail.com',
+              address: 'Pierce Ln, Seattle, WA 98195'
             }
-          ]
+          ],
+          bearer: 'token'
         })
       )
     }
@@ -79,7 +81,7 @@ export const handlers: RequestHandler[] = [
     return res(
       ctx.status(401),
       ctx.json({
-        errorMessage: 'Invalid login credentials'
+        error: 'Invalid login credentials'
       })
     )
   }),
