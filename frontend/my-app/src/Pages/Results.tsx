@@ -43,68 +43,73 @@ const Results: React.FC = () => {
           }}>
             Results
         </Typography>
-          <Stack // result card
+          <Stack
+            direction="row"
             justifyContent="flex-start"
-            alignItems="center"
-            spacing={2}
-            sx={{
-              display: 'flex',
-              flexWarp: 'wrap',
-              backgroundColor: 'primary.main',
-              mt: 10,
-              borderRadius: '40px',
-              width: '600px',
-              height: '600px',
-              px: 1,
-              pb: 2
-            }}>
-              <Paper
-                sx={{
-                  mt: 3,
-                  width: '550px',
-                  height: '344px',
-                  // TODO: get image of restaurant instad of placeholder. Image could be photo or google maps static map
-                  backgroundImage: 'url("https://www.richaven.com/wp-content/uploads/2012/10/uw-ee-cse-11.jpg")',
-                  borderRadius: '10px',
-                  backgroundSize: 'cover',
-                  border: 2
-                }}>
-                <Stack
-                  justifyContent="flex-start"
-                  alignItems="center"
-                  spacing={2}
-                  sx={{
-                    display: 'flex',
-                    flexWarp: 'wrap'
-                  }}>
-                  <Paper
+            alignItems="center">
+            <Stack // result card
+              justifyContent="flex-start"
+              alignItems="center"
+              spacing={2}
+              sx={{
+                display: 'flex',
+                flexWarp: 'wrap',
+                backgroundColor: 'primary.main',
+                mt: 10,
+                borderRadius: '40px',
+                width: '600px',
+                height: '600px',
+                px: 1,
+                pb: 2
+              }}>
+                  <Stack
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    spacing={2}
                     sx={{
-                      mt: 2,
-                      mx: 2,
-                      p: 2,
-                      borderRadius: '10px',
-                      border: 2
+                      display: 'flex',
+                      flexWarp: 'wrap'
                     }}>
-                    <Typography
-                      variant="h5"
-                      component="h2"
-                      textAlign="center">
-                      {result.name}
-                    </Typography>
-                  </Paper>
-                </Stack>
-              </Paper>
-              <Typography // TODO: get description of restaurant, can omit
-                  variant="body1"
-                  textAlign="center"
-                  color="text.secondary">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                    anim id est laborum.
-                </Typography>
+                    <Paper
+                      sx={{
+                        mt: 2,
+                        mx: 2,
+                        p: 2,
+                        borderRadius: '10px',
+                        border: 2
+                      }}>
+                      <Typography
+                        variant="h5"
+                        component="h2"
+                        textAlign="center">
+                        {result.name}
+                      </Typography>
+                      <iframe
+                        width="550"
+                        height="350"
+                        /* eslint-disable no-alert, no-console */
+                        src={`https://www.google.com/maps/embed/v1/view
+                        ?key=${process.env.REACT_APP_MAP_API_KEY as string} 
+                        &center=${result.place[0]},${result.place[1]}
+                        &zoom=18
+                        &maptype=satellite`}
+                        >
+                      </iframe>
+                    </Paper>
+                  </Stack>
+                <Typography // TODO: get description of restaurant, can omit
+                    variant="body1"
+                    textAlign="center"
+                    color="text.secondary">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                      incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                      dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+                      anim id est laborum.
+                  </Typography>
+            </Stack>
+            <Stack>
               <Paper
                 sx={{
                   mt: 2,
@@ -125,11 +130,13 @@ const Results: React.FC = () => {
                 size="large"
                 value={result.rating} readOnly
                 sx={{
-                  backgroundColor: 'rgba(52, 52, 52, 0.05)',
+                  backgroundColor: 'primary.main',
                   borderColor: 'secondary.main',
                   border: 3,
+                  m: 2,
                   borderRadius: '10px'
                 }}/>
+            </Stack>
           </Stack>
         <Stack
           direction="row"
