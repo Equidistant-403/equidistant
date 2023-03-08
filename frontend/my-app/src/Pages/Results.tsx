@@ -88,7 +88,7 @@ const Results: React.FC = () => {
                         width="550"
                         height="350"
                         src={`https://www.google.com/maps/embed/v1/view
-                        ?key=${MAP_API_KEY}
+                        ?key=${process.env.MAP_API_KEY}
                         &center=-33.8569,151.2152
                         &zoom=18
                         &maptype=satellite`}
