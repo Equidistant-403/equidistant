@@ -112,6 +112,7 @@ def get_locations(request):
             # Step 0 - Make sure we're authenticated
             authentication = request.META['HTTP_AUTHORIZATION'][7:]  # starts with "Bearer "
             bearer_manager = Bearer.objects
+            email = users[0]
             if not bearer_manager.verify_token(authentication, email):
                 return JsonResponse({'error': 'access forbidden'}, status=401)
 
